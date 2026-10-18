@@ -80,7 +80,7 @@
 
 # Запуск для проверки
 
-- Нет билда и тестов — открыть `src/index.html` в браузере или:
+- Нет билда и тестов — открыть `example/index.html` в браузере или:
 
 ```bash
 python3 -m http.server 8000   # → http://localhost:8000

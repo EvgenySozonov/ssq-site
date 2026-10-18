@@ -20,22 +20,22 @@
 ## Стек (решение 2026-10-16, см. docs/memory.md)
 
 - **Astro** + React-острова + TypeScript + Tailwind CSS v4 — сборка в статику.
-- Контент: Content Collections (MDX) + JSON-данные (`src/data/`).
+- Контент: Content Collections (MDX) + JSON-данные (`site/src/data/`).
 - Форма заявок: Python 3 CGI-эндпоинт на хостинге (stdlib) → Telegram.
 - Хостинг: Beget Shared; деплой: `astro build` → rsync по SSH.
 - Git: приватный GitHub.
 
 ## Структура репозитория
 
-- `src/` — референс старой визитки (`index.html`), после старта шага 1 — исходники Astro-сайта.
+- `example/` — референс старой визитки (`index.html`); исходники Astro-сайта — в `site/src/`.
 - `docs/` — вся документация (см. таблицу выше).
 - `.superpowers/` — артефакты brainstorm-сессий (не коммитить, в `.gitignore`).
 - `graft/` — локальный граф кода (not committed).
-- `tmp/`, `src/example/` — черновики, к коду не относятся.
+- `tmp/`, `example/example/` — черновики, к коду не относятся.
 
 ## Запуск для проверки
 
-Пока — только старая визитка: открыть `src/index.html` в браузере, либо:
+Пока — только старая визитка: открыть `example/index.html` в браузере, либо:
 
 ```bash
 python3 -m http.server 8000   # → http://localhost:8000
