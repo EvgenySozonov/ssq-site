@@ -15,7 +15,8 @@
 | [docs/test-case.md](docs/test-case.md) | Сценарии приёмки «что увидеть глазами» |
 | [docs/memory.md](docs/memory.md) | Лог решений с обоснованием |
 | [docs/handoff.md](docs/handoff.md) | Состояние проекта прямо сейчас |
-| [docs/about.md](docs/about.md) | Факты о компании для страниц сайта |
+| [docs/about.md](docs/about.md) | AI-среда проекта: стек, правила, скиллы, доказательства работы |
+| [docs/content/strategy.md](docs/content/strategy.md) | Позиционирование и факты компании для страниц сайта |
 
 ## Стек (решение 2026-10-16, см. docs/memory.md)
 
@@ -29,25 +30,38 @@
 
 - `example/` — референс старой визитки (`index.html`); исходники Astro-сайта — в `site/src/`.
 - `docs/` — вся документация (см. таблицу выше).
+- `.claude/` — конфигурация агента: скиллы, правила по путям, хуки, permissions (см. «Как агент работает в проекте»).
 - `.superpowers/` — артефакты brainstorm-сессий (не коммитить, в `.gitignore`).
 - `graft/` — локальный граф кода (not committed).
 - `tmp/`, `example/example/` — черновики, к коду не относятся.
 
+## Как агент работает в проекте
+
+Полное описание AI-среды — [docs/about.md](docs/about.md); краткие указатели:
+
+- Правила работы и границы агента — `CLAUDE.md` (главный источник).
+- Скиллы, правила по путям, хуки — `.claude/skills/`, `.claude/rules/`, `.claude/hooks/`.
+- Памятка гейтов: `lint`, `check`, `build`, `test:e2e`, `test:server` — перед завершением любой правки (запуск — ниже, «Запуск для проверки»).
+
 ## Запуск для проверки
 
-Пока — только старая визитка: открыть `example/index.html` в браузере, либо:
+Новый сайт (Astro, каталог `site/`):
+
+```bash
+cd site && npm run dev          # дев-сервер → http://localhost:4321
+npm run build                   # сборка в dist/ (= проверка корректности)
+npm run lint && npm run check   # ESLint + astro check
+npm run test:e2e                # Playwright: 12 специ-тестов формы (Chromium)
+npm run test:server             # unittest cgi-bin/contact.py (сеть не трогается)
+```
+
+Референс старой визитки (`example/`): открыть `example/index.html` в браузере, либо:
 
 ```bash
 python3 -m http.server 8000   # → http://localhost:8000
 ```
 
-После шага 1 (каркас Astro):
-
-```bash
-npm run dev      # дев-сервер Astro
-npm run build    # сборка в dist/ (= проверка корректности)
-./deploy.sh      # деплой на Beget (после шага 10)
-```
+`./deploy.sh` — деплой на Beget (скрипт из плана шага 10, в репо ещё не создан).
 
 ## С чего начать
 

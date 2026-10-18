@@ -8,6 +8,12 @@ astro dev --background
 
 Manage the background server with `astro dev stop`, `astro dev status`, and `astro dev logs`.
 
+## Project rules for agents
+
+Repo-level rules and boundaries for AI agents live in `../CLAUDE.md` (work contract,
+gates, secrets policy) and `../docs/about.md` (AI-stack: skills, path-scoped rules,
+hooks, path-scoped rules). `../docs/qa.md` — acceptance checklists. Read them before changing code.
+
 ## Documentation
 
 Full documentation: https://docs.astro.build
