@@ -6,6 +6,7 @@
   --color-accent: #c9a15a;
   --color-accent-contrast: #101014;
   --color-line: #2a2d33;
+  --color-danger: #e5695c; /* ошибки валидации формы: текст/бордер, контраст AA на bg */
   --radius-s: 2px;
   --font-display: "Lora", Georgia, serif;
   --font-sans: "Manrope", system-ui, sans-serif;

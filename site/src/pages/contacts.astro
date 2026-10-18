@@ -1,0 +1,54 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import ContactForm from "../components/ContactForm.astro";
+import siteData from "../data/site.json";
+---
+
+<BaseLayout
+  title="Контакты"
+  description="Бесплатный выезд для замера: оставьте заявку или позвоните — электромонтаж и умный дом под ключ, Москва и область."
+>
+  <section class="mx-auto max-w-5xl px-5 py-12 sm:py-16">
+    <header class="mb-10 max-w-2xl">
+      <p class="mb-2 font-mono text-xs tracking-[0.2em] text-accent uppercase">01 // контакты</p>
+      <h1 class="mb-3 font-display text-3xl text-text sm:text-4xl">
+        Оставьте заявку на бесплатный выезд
+      </h1>
+      <p class="text-text-muted">
+        Приедем, посмотрим объект, измерим и подготовим смету — без обязательств. Заявки берём в
+        работу в течение рабочего дня; можно сразу звонить.
+      </p>
+    </header>
+
+    <div class="grid gap-10 lg:grid-cols-[1fr_380px]">
+      <ContactForm />
+
+      <aside
+        class="flex h-fit flex-col gap-6 border-l-3 border-accent bg-surface p-6"
+        style="border-radius: var(--radius-s)"
+      >
+        <div>
+          <p class="mb-1.5 font-mono text-xs tracking-[0.15em] text-text-muted uppercase">
+            Телефон
+          </p>
+          <a
+            href={siteData.phoneHref}
+            class="font-mono text-xl text-accent hover:text-text motion-safe:transition-colors"
+          >
+            {siteData.phone}
+          </a>
+        </div>
+        <div>
+          <p class="mb-1.5 font-mono text-xs tracking-[0.15em] text-text-muted uppercase">
+            Часы работы
+          </p>
+          <p class="text-text">Пн–Сб, 9:00–20:00</p>
+        </div>
+        <div>
+          <p class="mb-1.5 font-mono text-xs tracking-[0.15em] text-text-muted uppercase">Регион</p>
+          <p class="text-text">Москва и область</p>
+        </div>
+      </aside>
+    </div>
+  </section>
+</BaseLayout>

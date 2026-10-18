@@ -1,0 +1,287 @@
+---
+/**
+ * Форма заявки — единственная интерактивная kpi-функция сайта (Astro + vanilla JS,
+ * React-остров не обоснован: валидация и состояния формы — ~100 строк, без state-графа).
+ * Контракт: docs/architecture.md «Форма и заявки», docs/specs/ssq-site-stack-design.md §6.1.
+ * E2E-испытания контракта: site/e2e/form.spec.ts.
+ */
+import siteData from "../data/site.json";
+---
+
+<form
+  class="relative border-l-3 border-accent bg-surface p-6 sm:p-8"
+  style="border-radius: var(--radius-s)"
+  novalidate
+  data-contact-form
+  data-endpoint={siteData.endpoint}
+  data-phone={siteData.phone}
+  data-phone-href={siteData.phoneHref}
+>
+  <!-- honeypot: для человека invisible, заполняют только боты; сервер маскирует успех -->
+  <input
+    type="text"
+    name="website"
+    id="contact-website"
+    class="hidden"
+    tabindex="-1"
+    autocomplete="off"
+    aria-hidden="true"
+  />
+
+  <div class="flex flex-col gap-5">
+    <div>
+      <label
+        for="contact-name"
+        class="mb-1.5 block font-mono text-xs tracking-[0.15em] text-text-muted uppercase"
+      >
+        Имя <span class="text-accent">*</span>
+      </label>
+      <input
+        type="text"
+        id="contact-name"
+        name="name"
+        autocomplete="name"
+        placeholder="Как к вам обращаться"
+        aria-describedby="contact-name-error"
+        class="w-full border border-line bg-bg px-3 py-2.5 text-text placeholder:text-text-muted focus:border-accent focus:outline-none motion-safe:transition-colors"
+        style="border-radius: var(--radius-s)"
+      />
+      <p
+        id="contact-name-error"
+        hidden
+        class="mt-1.5 text-sm text-danger"
+        data-error-for="contact-name"
+      ></p>
+    </div>
+
+    <div>
+      <label
+        for="contact-phone"
+        class="mb-1.5 block font-mono text-xs tracking-[0.15em] text-text-muted uppercase"
+      >
+        Телефон <span class="text-accent">*</span>
+      </label>
+      <input
+        type="tel"
+        id="contact-phone"
+        name="phone"
+        autocomplete="tel"
+        inputmode="tel"
+        placeholder="+7 (___) ___-__-__"
+        aria-describedby="contact-phone-error"
+        class="w-full border border-line bg-bg px-3 py-2.5 text-text placeholder:text-text-muted focus:border-accent focus:outline-none motion-safe:transition-colors"
+        style="border-radius: var(--radius-s)"
+      />
+      <p
+        id="contact-phone-error"
+        hidden
+        class="mt-1.5 text-sm text-danger"
+        data-error-for="contact-phone"
+      ></p>
+    </div>
+
+    <div>
+      <label
+        for="contact-comment"
+        class="mb-1.5 block font-mono text-xs tracking-[0.15em] text-text-muted uppercase"
+      >
+        Комментарий
+      </label>
+      <textarea
+        id="contact-comment"
+        name="comment"
+        rows="4"
+        placeholder="Объект, этап ремонта, что нужно сделать"
+        aria-describedby="contact-comment-error"
+        class="w-full border border-line bg-bg px-3 py-2.5 text-text placeholder:text-text-muted focus:border-accent focus:outline-none motion-safe:transition-colors"
+        style="border-radius: var(--radius-s)"
+      ></textarea>
+      <p
+        id="contact-comment-error"
+        hidden
+        class="mt-1.5 text-sm text-danger"
+        data-error-for="contact-comment"
+      ></p>
+    </div>
+
+    <div>
+      <label
+        for="contact-consent"
+        class="flex cursor-pointer items-start gap-2.5 text-sm text-text"
+      >
+        <input
+          type="checkbox"
+          id="contact-consent"
+          name="agree"
+          class="mt-0.5 size-4 shrink-0 accent-accent"
+        />
+        <span>
+          Я согласен на обработку персональных данных в соответствии с
+          <a
+            href="/legal/privacy/"
+            class="text-accent underline decoration-dotted underline-offset-4 hover:text-text"
+          >
+            политикой конфиденциальности
+          </a>
+        </span>
+      </label>
+      <p
+        id="contact-consent-error"
+        hidden
+        class="mt-1.5 text-sm text-danger"
+        data-error-for="contact-consent"
+      ></p>
+    </div>
+
+    <div class="pt-1">
+      <button
+        type="submit"
+        class="w-full bg-accent px-6 py-3 font-mono text-sm font-medium tracking-[0.1em] text-accent-contrast uppercase focus-visible:outline-2 focus-visible:outline-accent hover:opacity-85 disabled:cursor-wait disabled:opacity-60 motion-safe:transition-opacity"
+        style="border-radius: var(--radius-s)"
+      >
+        Отправить заявку
+      </button>
+      <p id="contact-status" role="status" hidden class="mt-4 text-sm leading-relaxed"></p>
+    </div>
+  </div>
+</form>
+
+<script>
+  const form = document.querySelector<HTMLFormElement>("[data-contact-form]");
+  if (form) {
+    const endpoint = form.dataset.endpoint;
+    const phone = form.dataset.phone;
+    const phoneHref = form.dataset.phoneHref;
+
+    const nameInput = form.querySelector<HTMLInputElement>("#contact-name")!;
+    const phoneInput = form.querySelector<HTMLInputElement>("#contact-phone")!;
+    const commentInput = form.querySelector<HTMLTextAreaElement>("#contact-comment")!;
+    const consentInput = form.querySelector<HTMLInputElement>("#contact-consent")!;
+    const honeypot = form.querySelector<HTMLInputElement>("#contact-website")!;
+    const submitButton = form.querySelector<HTMLButtonElement>("button[type=submit]")!;
+    const statusEl = form.querySelector<HTMLParagraphElement>("#contact-status")!;
+
+    // Нормализация телефона РФ: +7 (999) 123-45-67 | +79991234567 | 8 999 123-45-67
+    const isRuPhone = (value: string): boolean => {
+      const digits = value.replace(/\D/g, "");
+      const normalized = digits.length === 11 && digits[0] === "8" ? "7" + digits.slice(1) : digits;
+      return /^7\d{10}$/.test(normalized);
+    };
+
+    const setError = (el: HTMLInputElement | HTMLTextAreaElement, message: string | null): void => {
+      const errorEl = document.querySelector<HTMLElement>(`[data-error-for="${el.id}"]`)!;
+      if (message) {
+        el.setAttribute("aria-invalid", "true");
+        errorEl.textContent = message;
+        errorEl.hidden = false;
+      } else {
+        el.removeAttribute("aria-invalid");
+        errorEl.hidden = true;
+        errorEl.textContent = "";
+      }
+    };
+
+    const validators: Record<
+      string,
+      (el: HTMLInputElement | HTMLTextAreaElement) => string | null
+    > = {
+      "contact-name": (el) => (el.value.trim() ? null : "Обязательное поле — заполните имя"),
+      "contact-phone": (el) =>
+        el.value.trim() === ""
+          ? "Обязательное поле — заполните телефон"
+          : isRuPhone(el.value)
+            ? null
+            : "Некорректный номер телефона",
+      "contact-comment": () => null,
+    };
+
+    // Подсветка снимается, как только поле становится валидным (qa.md, поведение формы).
+    const revalidate = (el: HTMLInputElement | HTMLTextAreaElement): void => {
+      const validator = validators[el.id];
+      if (!validator) return;
+      if (el.getAttribute("aria-invalid") !== "true") return;
+      setError(el, validator(el));
+    };
+    form.addEventListener("input", (event) => {
+      revalidate(event.target as HTMLInputElement | HTMLTextAreaElement);
+    });
+    consentInput.addEventListener("change", () => {
+      if (consentInput.checked) setError(consentInput, null);
+    });
+
+    const setStatus = (message: string, withPhone: boolean): void => {
+      statusEl.textContent = message;
+      if (withPhone && phone && phoneHref) {
+        statusEl.append(
+          document.createTextNode(" "),
+          Object.assign(document.createElement("a"), {
+            href: phoneHref,
+            textContent: phone,
+          }),
+        );
+      }
+      statusEl.hidden = false;
+      statusEl.scrollIntoView({ block: "nearest", behavior: "smooth" });
+    };
+
+    form.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      if (submitButton.disabled || !endpoint) return;
+
+      // Валидация: ошибки показываем под полями, фокус на первую ошибку, запрос не отправляется.
+      const invalids = [nameInput, phoneInput].flatMap((el) => {
+        const message = validators[el.id]?.(el) ?? null;
+        setError(el, message);
+        return message === null ? [] : [el];
+      });
+      const consentError = consentInput.checked
+        ? null
+        : "Без согласия на обработку персональных данных заявка не может быть отправлена";
+      setError(consentInput, consentError);
+      (invalids.length ? invalids : consentError ? [consentInput] : [])[0]?.focus();
+      if (invalids.length || consentError) return;
+
+      // idle → sending
+      submitButton.disabled = true;
+      submitButton.textContent = "Отправляем…";
+      statusEl.hidden = true;
+
+      try {
+        const response = await fetch(endpoint, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            name: nameInput.value.trim(),
+            phone: phoneInput.value.trim(),
+            comment: commentInput.value,
+            agree: consentInput.checked,
+            website: honeypot.value,
+          }),
+        });
+        const data = (await response.json().catch(() => null)) as {
+          ok?: boolean;
+          error?: string;
+        } | null;
+        if (response.ok && data?.ok) {
+          // ok: форма сбрасывается, подтверждение в role=status
+          form.reset();
+          for (const el of [nameInput, phoneInput, consentInput]) setError(el, null);
+          setStatus("Спасибо! Заявка отправлена — вернёмся с ответом в рабочее время.", false);
+        } else {
+          // Серверное нарушение/ошибка: текст эндпоинта + телефон как альтернативный канал
+          const serverMessage = data && typeof data.error === "string" ? data.error : null;
+          setStatus(
+            serverMessage ?? "Не удалось отправить заявку. Попробуйте ещё раз или позвоните нам:",
+            true,
+          );
+        }
+      } catch {
+        // Эндпоинт недоступен — «тихая потеря» невозможна: явная ошибка + телефон
+        setStatus("Не удалось отправить заявку. Попробуйте ещё раз или позвоните нам:", true);
+      } finally {
+        submitButton.disabled = false;
+        submitButton.textContent = "Отправить заявку";
+      }
+    });
+  }
+</script>

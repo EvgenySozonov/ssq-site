@@ -1,0 +1,6 @@
+{
+  "name": "Умный квадрат",
+  "phone": "+7 (495) 000-00-00",
+  "phoneHref": "tel:+74950000000",
+  "endpoint": "/cgi-bin/contact.py"
+}
