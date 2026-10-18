@@ -80,7 +80,8 @@
 
 # Запуск для проверки
 
-- Нет билда и тестов — открыть `example/index.html` в браузере или:
+- Новый сайт (Astro, `site/`): `cd site && npm run dev` → http://localhost:4321
+- Референс-визитка: открыть `example/index.html` в браузере или:
 
 ```bash
 python3 -m http.server 8000   # → http://localhost:8000
