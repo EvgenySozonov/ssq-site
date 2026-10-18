@@ -22,7 +22,16 @@
     "tailwindcss": "^4.3.3"
   },
   "devDependencies": {
+    "@astrojs/check": "^0.9.10",
+    "@eslint-react/eslint-plugin": "^5.28.1",
+    "@eslint/js": "^10.0.1",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-astro": "^3.2.1",
+    "eslint-plugin-jsx-a11y-x": "^0.2.0",
+    "globals": "^17.13.0",
     "prettier": "^3.9.10",
-    "prettier-plugin-astro": "^1.1.1"
+    "prettier-plugin-astro": "^1.1.1",
+    "typescript": "^6.0.3",
+    "typescript-eslint": "^8.71.2"
   }
 }

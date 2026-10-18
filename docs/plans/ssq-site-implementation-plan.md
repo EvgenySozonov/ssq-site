@@ -61,7 +61,7 @@ git commit -m "docs: спека и документация сайта; рефе
 npm create astro@latest site -- --template minimal --typescript strict --install --no-git --yes
 ```
 
-- [~] **Шаг 3: Tailwind v4 + Prettier** _(частично: tailwind+prettier готовы; ESLint-блок ждёт решения владельца по jsx-a11y: классический плагин не поддерживает ESLint 10)_
+- [x] **Шаг 3: Tailwind v4 + Prettier** _(готово; ESLint-стек: jsx-a11y-x вместо классического по решению владельца; lint clean, check clean_)
 
 ```bash
 cd site
@@ -93,7 +93,10 @@ ESLint (flat config, ESLint 9-совместимый набор):
 
 ```bash
 cd site
-npm install -D eslint @eslint/js typescript-eslint eslint-plugin-astro eslint-plugin-jsx-a11y @eslint-react/eslint-plugin eslint-config-prettier globals
+npm install -D eslint @eslint/js typescript-eslint eslint-plugin-astro eslint-plugin-jsx-a11y-x @eslint-react/eslint-plugin eslint-config-prettier globals
+```
+
+_(правка против первоначального плана: классический `eslint-plugin-jsx-a11y` не поддерживает ESLint 10 (требование plugin-astro); по решению владельца 2026-10-18 поставлен форк `eslint-plugin-jsx-a11y-x` — поддержан в peerDeps plugin-astro. Дополнительно к списку: `@astrojs/check` + `typescript` — требование скрипта `check`. Дополнительно при пуске: `@eslint-react`-плагин регистрируется в том же объекте конфига, где применяется его правило (ESLint 10), `globals` не нужен — см. фактический конфиг ниже._)
 ```
 
 `site/eslint.config.mjs`:
