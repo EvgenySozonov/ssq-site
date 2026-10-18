@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Умный квадрат — электромонтаж и умный дом под ключ</title>
+  <meta name="description" content="Электромонтаж и системы умного дома под ключ: разводка, электрощиты, освещение, сценарии автоматизации. Смета до начала работ, договор, гарантия.">
+  <meta property="og:title" content="Умный квадрат — электромонтаж и умный дом">
+  <meta property="og:description" content="Электрика и автоматизация умного дома под ключ. Договор, смета, гарантия.">
+  <meta property="og:type" content="website">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='24' fill='%23101010'/><g stroke='%23b9975f' stroke-width='7' stroke-linecap='round' fill='none'><path d='M50 66V53M50 53 37 41M50 53 64 42'/></g><circle cx='50' cy='67' r='7' fill='%23b9975f'/><circle cx='36' cy='40' r='7' fill='%23b9975f'/><circle cx='65' cy='41' r='7' fill='%23b9975f'/></svg>">
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+  <!-- ===== Шапка поверх hero ===== -->
+  <header class="site-head">
+    <nav class="site-head__nav" aria-label="Основная навигация">
+      <a href="#about">Студия</a>
+      <a href="#works">Работы</a>
+      <a href="#pricing">Цены</a>
+      <a href="#contacts">Контакты</a>
+      <button type="button" class="menu-btn" id="menu-open" aria-haspopup="dialog" aria-expanded="false" aria-controls="overlay-menu">Меню</button>
+    </nav>
+    <div class="site-head__social" aria-label="Мессенджеры и соцсети">
+      <a href="#" aria-label="Telegram">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M21.9 4.6 19 19.3c-.2 1-.8 1.2-1.6.8l-4.5-3.3-2.2 2.1c-.2.2-.4.4-.9.4l.3-4.6 8.4-7.6c.4-.3-.1-.5-.6-.2L7.5 13.1 3 11.7c-1-.3-1-1 .2-1.5L20.5 3.3c.8-.3 1.6.2 1.4 1.3z"/></svg>
+      </a>
+      <a href="#" aria-label="WhatsApp">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm5 13.9c-.2.6-1.2 1.1-1.7 1.2-.4 0-1 .1-3.3-.9-2.8-1.2-4.6-4-4.7-4.2-.1-.2-1.1-1.5-1.1-2.9s.7-2 1-2.3c.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5s.8 1.9.8 2c.1.1.1.3 0 .5-.4.8-.9 1-.4 1.8a7.4 7.4 0 0 0 3.4 3c.3.1.5.1.6-.1l.9-1.1c.2-.2.4-.2.6-.1l1.9.9c.2.1.4.2.5.3-.1.1-.1.5-.3.8z"/></svg>
+      </a>
+      <a href="#" aria-label="Instagram">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.4" cy="6.6" r="1.1" fill="currentColor" stroke="none"/></svg>
+      </a>
+    </div>
+  </header>
+
+  <!-- ===== Полноэкранное меню (мобильное) ===== -->
+  <div class="overlay-menu" id="overlay-menu" role="dialog" aria-modal="true" aria-label="Меню" hidden>
+    <div class="overlay-menu__bar">
+      <span class="overlay-menu__brand">Умный квадрат</span>
+      <button type="button" class="menu-btn" id="menu-close">Закрыть</button>
+    </div>
+    <nav class="overlay-menu__nav" aria-label="Навигация меню">
+      <a href="#about">Студия</a>
+      <a href="#works">Работы</a>
+      <a href="#process">Процесс</a>
+      <a href="#pricing">Цены</a>
+      <a href="#faq">Вопросы</a>
+      <a href="#contacts">Контакты</a>
+    </nav>
+    <p class="overlay-menu__contact"><a href="tel:+70000000000">+7 (000) 000-00-00</a></p>
+  </div>
+
+  <main>
+    <!-- ===== Hero ===== -->
+    <section class="hero" id="hero">
+      <div class="hero__bg" role="img" aria-label="Умный город в золотом свете"></div>
+      <div class="hero__scrim"></div>
+      <div class="hero__content">
+        <h1 class="hero__title"><span class="hero__serif">Создаём</span><span class="hero__caps">умный дом под ключ</span></h1>
+        <p class="hero__lead">Электромонтаж и автоматизация: от разводки и щита до сценариев, которые работают одним касанием. Договор, смета до старта, гарантия.</p>
+        <a href="#contacts" class="btn-outline">Обсудить проект</a>
+      </div>
+
+      <div class="hero__scroll" aria-hidden="true"><span></span></div>
+    </section>
+
+    <!-- ===== Студия / о нас ===== -->
+    <section class="section" id="about">
+      <div class="container about">
+        <div class="about__text">
+          <h2 class="about__title">Мы — инженеры, а не строители</h2>
+          <p>«Умный квадрат» — электромонтажная студия с фокусом на автоматизацию. Проектируем электрику и умный дом как одно целое: щит, освещение, климат, безопасность и сценарии работают вместе.</p>
+          <p>Работаем по договору. Считаем и фиксируем смету до старта, сдаём объект в срок и держим гарантию 3 года.</p>
+          <a href="#works" class="btn-outline">Смотреть работы</a>
+        </div>
+        <div class="about__collage" aria-hidden="true">
+          <div class="about__photo about__photo--main placeholder">
+            <div class="ph-inner">
+              <svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1.2"><rect x="4" y="4" width="16" height="16" rx="4.5"/><path d="M12 15.6V14M12 14 8.9 10.6M12 14l3.4-3.8" stroke-linecap="round"/><circle cx="12" cy="16.6" r="1.8" fill="currentColor" stroke="none"/><circle cx="8" cy="9.6" r="1.8" fill="currentColor" stroke="none"/><circle cx="16" cy="9.2" r="1.8" fill="currentColor" stroke="none"/></svg>
+              <span>Фото объекта</span>
+            </div>
+          </div>
+          <div class="about__photo about__photo--offset placeholder">
+            <div class="ph-inner"><span>Электрощит</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== Работы / кейсы ===== -->
+    <section class="section" id="works">
+      <div class="container">
+        <h2 class="section__title center">Наши работы</h2>
+        <p class="section__sub center">Недавние объекты: электрика и автоматизация под ключ.</p>
+        <div class="cases">
+          <a class="case" href="#contacts">
+            <div class="case__photo placeholder"><span>Фото объекта</span></div>
+            <div class="case__meta">
+              <h3>Квартира 84 м²</h3>
+              <p>Разводка, щит автоматизации, свет по сценариям</p>
+              <span class="case__arrow" aria-hidden="true">&#8594;</span>
+            </div>
+          </a>
+          <a class="case" href="#contacts">
+            <div class="case__photo placeholder"><span>Фото объекта</span></div>
+            <div class="case__meta">
+              <h3>Загородный дом 180 м²</h3>
+              <p>Электрика под ключ, резерв генератора с АВР</p>
+              <span class="case__arrow" aria-hidden="true">&#8594;</span>
+            </div>
+          </a>
+          <a class="case" href="#contacts">
+            <div class="case__photo placeholder"><span>Фото объекта</span></div>
+            <div class="case__meta">
+              <h3>Студия 32 м²</h3>
+              <p>Умный свет и климат, управление с телефона</p>
+              <span class="case__arrow" aria-hidden="true">&#8594;</span>
+            </div>
+          </a>
+          <a class="case" href="#contacts">
+            <div class="case__photo placeholder"><span>Фото объекта</span></div>
+            <div class="case__meta">
+              <h3>Офис 120 м²</h3>
+              <p>Силовая часть, освещение, видеонаблюдение</p>
+              <span class="case__arrow" aria-hidden="true">&#8594;</span>
+            </div>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== Процесс + преимущества ===== -->
+    <section class="section" id="process">
+      <div class="container">
+        <h2 class="section__title">Как мы работаем</h2>
+        <p class="section__sub">Гарантия 3 года · смета и договор до старта · сдача по графику.</p>
+        <ol class="rows">
+          <li class="rows__item">
+            <span class="rows__num">01</span>
+            <div class="rows__body">
+              <h3>Заявка и осмотр</h3>
+              <p>Пишете или звоните — обсуждаем задачу и записываемся на осмотр. Приезжаем, замеряем, уточняем пожелания и предлагаем решения.</p>
+            </div>
+          </li>
+          <li class="rows__item">
+            <span class="rows__num">02</span>
+            <div class="rows__body">
+              <h3>Смета и договор</h3>
+              <p>Фиксируем состав работ, материалы, цену и сроки. Без «внезапных доплат» в процессе — смета не меняется без вашего решения.</p>
+            </div>
+          </li>
+          <li class="rows__item">
+            <span class="rows__num">03</span>
+            <div class="rows__body">
+              <h3>Монтаж</h3>
+              <p>Работаем по графику, согласуем каждую стадию, убираем за собой. Стыкуемся с вашим ремонтом по дням.</p>
+            </div>
+          </li>
+          <li class="rows__item">
+            <span class="rows__num">04</span>
+            <div class="rows__body">
+              <h3>Сдача и гарантия</h3>
+              <p>Показываем, объясняем, настраиваем сценарии. Отдаём документы, протоколы и гарантию 3 года на работы.</p>
+            </div>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- ===== Цены ===== -->
+    <section class="section" id="pricing">
+      <div class="container">
+        <h2 class="section__title">Цены</h2>
+        <p class="section__sub">Ориентиры по пакетам. Точная стоимость — после осмотра, зафиксируем в смете.</p>
+        <div class="prices">
+          <article class="price">
+            <h3 class="price__name">Разводка</h3>
+            <p class="price__scope">Электромонтаж под ремонт</p>
+            <p class="price__value">от 1 800 ₽</p>
+            <p class="price__unit">за точку, с материалом заказчика</p>
+            <p class="price__note">Проект разводки, штробление, подрозетники, тест линий и протокол.</p>
+            <a href="#contacts" class="price__link">Получить расчёт &#8594;</a>
+          </article>
+          <article class="price">
+            <h3 class="price__name">Умный свет</h3>
+            <p class="price__scope">Свет и сценарии в квартире</p>
+            <p class="price__value">от 120 000 ₽</p>
+            <p class="price__unit">однокомнатная квартира, под ключ</p>
+            <p class="price__note">Диммеры и реле, сценарии, управление с телефона, обучение и поддержка.</p>
+            <a href="#contacts" class="price__link">Получить расчёт &#8594;</a>
+          </article>
+          <article class="price">
+            <h3 class="price__name">Дом под ключ</h3>
+            <p class="price__scope">Электрика + автоматизация</p>
+            <p class="price__value">Индивидуально</p>
+            <p class="price__unit">после осмотра и проекта</p>
+            <p class="price__note">Ввод и щит, резерв, полная разводка, климат, шторы, видео, сервис.</p>
+            <a href="#contacts" class="price__link">Получить расчёт &#8594;</a>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== Отзывы ===== -->
+    <section class="section" id="reviews">
+      <div class="container">
+        <h2 class="section__title center">Отзывы</h2>
+        <div class="quotes">
+          <blockquote class="quote">
+            <p>«Сделали щит и разводку в новостройке за неделю. Всё по смете, стены после штробления за собой убрали — редкость.»</p>
+            <footer>Алексей, новостройка «Северный парк»</footer>
+          </blockquote>
+          <blockquote class="quote">
+            <p>«Собрали умный свет: один сценарий на вечер — и квартира сама переключается. Объяснили всё, теперь сам добавляю датчики.»</p>
+            <footer>Марина, квартира 56 м²</footer>
+          </blockquote>
+          <blockquote class="quote">
+            <p>«Дом 180 м²: генератор с автозапуском, свет, камеры. Приятно, что по документам — гарантия реальная, а не на словах.»</p>
+            <footer>Дмитрий, загородный дом</footer>
+          </blockquote>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== FAQ ===== -->
+    <section class="section" id="faq">
+      <div class="container container--narrow">
+        <h2 class="section__title">Частые вопросы</h2>
+        <div class="faq">
+          <details class="faq__item">
+            <summary>Можно ли сделать только электрику, без умного дома?</summary>
+            <p>Да. Основная часть работ — классический электромонтаж. Но закладываем возможности автоматизации заранее: кабельные трассы, место в щите и в слаботочке, чтобы апгрейд потом стоил дешевле.</p>
+          </details>
+          <details class="faq__item">
+            <summary>Сколько занимают работы?</summary>
+            <p>Квартира-студия — 3–5 дней, двухкомнатная — 7–10 дней, дом — от 2–3 недель. Точный график фиксируем в договоре.</p>
+          </details>
+          <details class="faq__item">
+            <summary>Кто покупает материалы?</summary>
+            <p>Как удобно вам. Можем закупать сами с чеками и гарантией на комплектующие, можем работать с вашим материалом — на смете это отражается отдельно.</p>
+          </details>
+          <details class="faq__item">
+            <summary>А если ремонт уже сделан?</summary>
+            <p>Работаем и по чистовой: открытая проводка в кабель-канале, замена точек без штробления, беспроводные автоматизации (Zigbee, Wi-Fi) без лишних трасс.</p>
+          </details>
+          <details class="faq__item">
+            <summary>Что с гарантией после приёмки?</summary>
+            <p>На монтажные работы — 3 года. Гарантийные и сервисные вызовы обрабатываем без очереди «когда-нибудь» — по регламенту в договоре.</p>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== Контакты + форма ===== -->
+    <section class="section contacts" id="contacts">
+      <div class="contacts__bg" aria-hidden="true"></div>
+      <div class="contacts__scrim" aria-hidden="true"></div>
+      <div class="container contact">
+        <div class="contact__info">
+          <h2 class="contact__title">Запишитесь на осмотр</h2>
+          <p class="contact__lead">Расскажите про объект — предложу решение и назову ориентир по бюджету. Осмотр и консультация бесплатны.</p>
+          <ul class="contact__list">
+            <li class="contact__row">
+              <span class="contact__label">Телефон</span>
+              <a href="tel:+70000000000">+7 (000) 000-00-00</a>
+            </li>
+            <li class="contact__row">
+              <span class="contact__label">Мессенджеры</span>
+              <span class="contact__links"><a href="#">Telegram</a><a href="#">WhatsApp</a></span>
+            </li>
+            <li class="contact__row">
+              <span class="contact__label">Зона выезда</span>
+              <span>Город и область до 50 км</span>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Заглушка формы: отправка не выполняется -->
+        <form class="contact__form" id="lead-form" novalidate>
+          <label>Имя <input type="text" name="name" placeholder="Как к вам обращаться" required></label>
+          <label>Телефон <input type="tel" name="phone" placeholder="+7 (___) ___-__-__" required></label>
+          <label>Что нужно сделать <textarea name="task" rows="3" placeholder="Например: двухкомнатная квартира, разводка + умный свет"></textarea></label>
+          <button type="submit" class="btn-outline btn-outline--wide">Оставить заявку</button>
+          <p class="form__note" id="form-note">Нажимая кнопку, вы соглашаетесь на обработку персональных данных. Отправка данных сейчас не подключена — это макет.</p>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <!-- ===== Футер ===== -->
+  <footer class="footer">
+    <div class="container footer__inner">
+      <span class="footer__brand">Умный квадрат</span>
+      <nav class="footer__nav" aria-label="Навигация в подвале">
+        <a href="#works">Работы</a>
+        <a href="#pricing">Цены</a>
+        <a href="#contacts">Контакты</a>
+      </nav>
+      <span class="footer__copy">© 2026 «Умный квадрат». Электромонтаж и умный дом.</span>
+    </div>
+  </footer>
+
+  <script src="assets/js/main.js"></script>
+</body>
+</html>

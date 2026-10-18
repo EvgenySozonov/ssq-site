@@ -1,0 +1,176 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="2400" height="1600" viewBox="0 0 2400 1600">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#2f3c47"/>
+      <stop offset=".55" stop-color="#1b232b"/>
+      <stop offset="1" stop-color="#10151a"/>
+    </linearGradient>
+    <radialGradient id="glow" cx=".72" cy=".28" r=".5">
+      <stop offset="0" stop-color="#c08a28" stop-opacity=".55"/>
+      <stop offset=".5" stop-color="#c08a28" stop-opacity=".14"/>
+      <stop offset="1" stop-color="#c08a28" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="glow2" cx=".12" cy=".88" r=".45">
+      <stop offset="0" stop-color="#bcdde3" stop-opacity=".16"/>
+      <stop offset="1" stop-color="#bcdde3" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="panel" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#3a4650"/>
+      <stop offset="1" stop-color="#232c33"/>
+    </linearGradient>
+    <linearGradient id="module" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#e8ebee"/>
+      <stop offset="1" stop-color="#c6ccd2"/>
+    </linearGradient>
+    <linearGradient id="moduleDark" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#39434c"/>
+      <stop offset="1" stop-color="#2a333b"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Фон -->
+  <rect width="2400" height="1600" fill="url(#bg)"/>
+  <rect width="2400" height="1600" fill="url(#glow)"/>
+  <rect width="2400" height="1600" fill="url(#glow2)"/>
+
+  <!-- Тонкая «чертёжная» сетка -->
+  <g stroke="#ffffff" stroke-opacity=".03" stroke-width="1">
+    <path d="M0 200h2400M0 400h2400M0 600h2400M0 800h2400M0 1000h2400M0 1200h2400M0 1400h2400"/>
+    <path d="M200 0v1600M400 0v1600M600 0v1600M800 0v1600M1000 0v1600M1200 0v1600M1400 0v1600M1600 0v1600M1800 0v1600M2000 0v1600M2200 0v1600"/>
+  </g>
+
+  <!-- Электрощит в перспективе: ряды модульной автоматики -->
+  <g transform="translate(1180 420) skewY(-6)">
+    <!-- Корпус щита -->
+    <rect x="-60" y="-80" width="980" height="760" rx="18" fill="#0d1115" opacity=".55"/>
+    <rect x="-40" y="-60" width="940" height="720" rx="14" fill="url(#panel)" stroke="#0a0d10" stroke-width="3"/>
+
+    <!-- DIN-рейки с модулями -->
+    <g>
+      <!-- Ряд 1 -->
+      <g transform="translate(10 10)">
+        <rect x="0" y="0" width="840" height="150" rx="8" fill="#171d22"/>
+        <g fill="url(#module)">
+          <rect x="20" y="18" width="66" height="114" rx="5"/>
+          <rect x="92" y="18" width="66" height="114" rx="5"/>
+          <rect x="164" y="18" width="66" height="114" rx="5"/>
+          <rect x="236" y="18" width="66" height="114" rx="5"/>
+          <rect x="308" y="18" width="66" height="114" rx="5"/>
+        </g>
+        <g fill="url(#moduleDark)">
+          <rect x="380" y="18" width="66" height="114" rx="5"/>
+          <rect x="452" y="18" width="66" height="114" rx="5"/>
+          <rect x="524" y="18" width="66" height="114" rx="5"/>
+          <rect x="596" y="18" width="66" height="114" rx="5"/>
+          <rect x="668" y="18" width="66" height="114" rx="5"/>
+        </g>
+        <!-- Рычажки автоматов: часть вверх (вкл), часть вниз -->
+        <g fill="#1d2429">
+          <rect x="36" y="38" width="34" height="44" rx="8"/>
+          <rect x="108" y="38" width="34" height="44" rx="8"/>
+          <rect x="180" y="38" width="34" height="44" rx="8"/>
+          <rect x="252" y="38" width="34" height="44" rx="8"/>
+          <rect x="324" y="38" width="34" height="44" rx="8"/>
+        </g>
+        <g fill="#d7dce1">
+          <rect x="396" y="70" width="34" height="44" rx="8"/>
+          <rect x="468" y="70" width="34" height="44" rx="8"/>
+          <rect x="540" y="70" width="34" height="44" rx="8"/>
+          <rect x="612" y="70" width="34" height="44" rx="8"/>
+          <rect x="684" y="70" width="34" height="44" rx="8"/>
+        </g>
+        <g fill="#c08a28">
+          <circle cx="53" cy="110" r="6"/>
+          <circle cx="125" cy="110" r="6"/>
+          <circle cx="197" cy="110" r="6"/>
+          <circle cx="269" cy="110" r="6"/>
+          <circle cx="341" cy="110" r="6"/>
+        </g>
+      </g>
+      <!-- Ряд 2 -->
+      <g transform="translate(10 190)" opacity=".92">
+        <rect x="0" y="0" width="840" height="150" rx="8" fill="#171d22"/>
+        <g fill="url(#moduleDark)">
+          <rect x="20" y="18" width="66" height="114" rx="5"/>
+          <rect x="92" y="18" width="66" height="114" rx="5"/>
+          <rect x="164" y="18" width="66" height="114" rx="5"/>
+        </g>
+        <g fill="url(#module)">
+          <rect x="236" y="18" width="66" height="114" rx="5"/>
+          <rect x="308" y="18" width="66" height="114" rx="5"/>
+          <rect x="380" y="18" width="66" height="114" rx="5"/>
+          <rect x="452" y="18" width="66" height="114" rx="5"/>
+        </g>
+        <g fill="url(#moduleDark)">
+          <rect x="524" y="18" width="66" height="114" rx="5"/>
+          <rect x="596" y="18" width="66" height="114" rx="5"/>
+          <rect x="668" y="18" width="66" height="114" rx="5"/>
+        </g>
+        <g fill="#d7dce1">
+          <rect x="36" y="38" width="34" height="44" rx="8"/>
+          <rect x="108" y="38" width="34" height="44" rx="8"/>
+          <rect x="180" y="38" width="34" height="44" rx="8"/>
+        </g>
+        <g fill="#1d2429">
+          <rect x="252" y="38" width="34" height="44" rx="8"/>
+          <rect x="324" y="38" width="34" height="44" rx="8"/>
+          <rect x="396" y="38" width="34" height="44" rx="8"/>
+          <rect x="468" y="38" width="34" height="44" rx="8"/>
+          <rect x="540" y="38" width="34" height="44" rx="8"/>
+          <rect x="612" y="38" width="34" height="44" rx="8"/>
+          <rect x="684" y="38" width="34" height="44" rx="8"/>
+        </g>
+        <g fill="#c08a28">
+          <circle cx="269" cy="110" r="6"/>
+          <circle cx="341" cy="110" r="6"/>
+          <circle cx="413" cy="110" r="6"/>
+          <circle cx="485" cy="110" r="6"/>
+        </g>
+      </g>
+      <!-- Ряд 3: реле/диммеры умного дома -->
+      <g transform="translate(10 370)" opacity=".88">
+        <rect x="0" y="0" width="840" height="150" rx="8" fill="#171d22"/>
+        <g fill="url(#moduleDark)">
+          <rect x="20" y="18" width="130" height="114" rx="5"/>
+          <rect x="160" y="18" width="130" height="114" rx="5"/>
+          <rect x="300" y="18" width="130" height="114" rx="5"/>
+          <rect x="440" y="18" width="130" height="114" rx="5"/>
+        </g>
+        <!-- Индикаторные LEDs -->
+        <g fill="#35c78c">
+          <circle cx="52" cy="46" r="6"/>
+          <circle cx="192" cy="46" r="6"/>
+          <circle cx="332" cy="46" r="6"/>
+          <circle cx="472" cy="46" r="6"/>
+        </g>
+        <g fill="#e8ebee">
+          <rect x="40" y="76" width="90" height="10" rx="5" opacity=".5"/>
+          <rect x="180" y="76" width="90" height="10" rx="5" opacity=".5"/>
+          <rect x="320" y="76" width="90" height="10" rx="5" opacity=".5"/>
+          <rect x="460" y="76" width="90" height="10" rx="5" opacity=".5"/>
+        </g>
+        <g fill="url(#module)">
+          <rect x="590" y="18" width="240" height="114" rx="5"/>
+        </g>
+        <circle cx="710" cy="75" r="34" fill="none" stroke="#1d2429" stroke-width="8"/>
+        <circle cx="710" cy="75" r="6" fill="#1d2429"/>
+      </g>
+    </g>
+  </g>
+
+  <!-- Кабельные трассы (декоративные линии) -->
+  <g fill="none" stroke="#bcdde3" stroke-opacity=".12" stroke-width="2">
+    <path d="M120 1600V1130c0-90 70-160 160-160h560"/>
+    <path d="M190 1600v-410c0-90 70-160 160-160h450"/>
+  </g>
+  <g fill="none" stroke="#c08a28" stroke-opacity=".35" stroke-width="2">
+    <path d="M260 1600V1190c0-90 70-160 160-160h380"/>
+  </g>
+
+  <!-- Виньетка -->
+  <radialGradient id="vig" cx=".5" cy=".45" r=".85">
+    <stop offset=".55" stop-color="#000" stop-opacity="0"/>
+    <stop offset="1" stop-color="#000" stop-opacity=".5"/>
+  </radialGradient>
+  <rect width="2400" height="1600" fill="url(#vig)"/>
+</svg>

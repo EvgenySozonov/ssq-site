@@ -1,0 +1,537 @@
+{
+  "configuration" : { },
+  "description" : "Архитектура сайта «Умный квадрат» — статика + CGI-форма, деплой на Beget Shared",
+  "documentation" : { },
+  "id" : 1,
+  "lastModifiedDate" : "2026-10-16T22:00:48Z",
+  "model" : {
+    "deploymentNodes" : [ {
+      "containerInstances" : [ {
+        "containerId" : "4",
+        "environment" : "Production",
+        "id" : "18",
+        "instanceId" : 1,
+        "properties" : {
+          "structurizr.dsl.identifier" : "ci1"
+        },
+        "tags" : "Container Instance"
+      }, {
+        "containerId" : "5",
+        "environment" : "Production",
+        "id" : "19",
+        "instanceId" : 1,
+        "properties" : {
+          "structurizr.dsl.identifier" : "ci2"
+        },
+        "tags" : "Container Instance"
+      } ],
+      "description" : "Apache + CGI, docroot фиксирован",
+      "environment" : "Production",
+      "id" : "17",
+      "infrastructureNodes" : [ {
+        "description" : "Секреты вне docroot, chmod 600",
+        "environment" : "Production",
+        "id" : "20",
+        "name" : "env-ssq",
+        "properties" : {
+          "structurizr.dsl.identifier" : "envFile"
+        },
+        "tags" : "Element,Infrastructure Node",
+        "technology" : "файл"
+      }, {
+        "description" : "Файлы-счётчики rate-limit",
+        "environment" : "Production",
+        "id" : "21",
+        "name" : "tmp",
+        "properties" : {
+          "structurizr.dsl.identifier" : "tmpc"
+        },
+        "tags" : "Element,Infrastructure Node",
+        "technology" : "/tmp"
+      } ],
+      "instances" : "1",
+      "name" : "Beget Shared",
+      "properties" : {
+        "structurizr.dsl.identifier" : "beget"
+      },
+      "tags" : "Element,Deployment Node"
+    }, {
+      "containerInstances" : [ {
+        "containerId" : "4",
+        "environment" : "DeployPipeline",
+        "id" : "23",
+        "instanceId" : 1,
+        "properties" : {
+          "structurizr.dsl.identifier" : "ci_build"
+        },
+        "relationships" : [ {
+          "description" : "git push",
+          "destinationId" : "25",
+          "id" : "29",
+          "sourceId" : "23",
+          "tags" : "Relationship"
+        }, {
+          "description" : "deploy.sh: rsync -az --delete --backup",
+          "destinationId" : "28",
+          "id" : "30",
+          "sourceId" : "23",
+          "tags" : "Relationship"
+        }, {
+          "description" : "снимок предыдущей версии",
+          "destinationId" : "27",
+          "id" : "31",
+          "sourceId" : "23",
+          "tags" : "Relationship"
+        } ],
+        "tags" : "Container Instance"
+      } ],
+      "description" : "Node 24, npm",
+      "environment" : "DeployPipeline",
+      "id" : "22",
+      "instances" : "1",
+      "name" : "MacBook владельца",
+      "properties" : {
+        "structurizr.dsl.identifier" : "mac"
+      },
+      "tags" : "Element,Deployment Node"
+    }, {
+      "environment" : "DeployPipeline",
+      "id" : "24",
+      "infrastructureNodes" : [ {
+        "description" : "main",
+        "environment" : "DeployPipeline",
+        "id" : "25",
+        "name" : "ssq-site (private)",
+        "properties" : {
+          "structurizr.dsl.identifier" : "repo"
+        },
+        "tags" : "Element,Infrastructure Node",
+        "technology" : "репозиторий"
+      } ],
+      "instances" : "1",
+      "name" : "GitHub",
+      "properties" : {
+        "structurizr.dsl.identifier" : "ghn"
+      },
+      "tags" : "Element,Deployment Node"
+    }, {
+      "environment" : "DeployPipeline",
+      "id" : "26",
+      "infrastructureNodes" : [ {
+        "description" : "rollback-снимок rsync --backup",
+        "environment" : "DeployPipeline",
+        "id" : "27",
+        "name" : "releases/backup-ts",
+        "properties" : {
+          "structurizr.dsl.identifier" : "rel"
+        },
+        "tags" : "Element,Infrastructure Node",
+        "technology" : "каталог"
+      }, {
+        "description" : "статика + cgi-bin/",
+        "environment" : "DeployPipeline",
+        "id" : "28",
+        "name" : "public_html",
+        "properties" : {
+          "structurizr.dsl.identifier" : "docroot"
+        },
+        "tags" : "Element,Infrastructure Node",
+        "technology" : "docroot"
+      } ],
+      "instances" : "1",
+      "name" : "Beget Shared",
+      "properties" : {
+        "structurizr.dsl.identifier" : "beget2"
+      },
+      "tags" : "Element,Deployment Node"
+    } ],
+    "people" : [ {
+      "description" : "Владелец квартиры/дома: смотрит сайт, отправляет заявку",
+      "id" : "1",
+      "name" : "Посетитель",
+      "properties" : {
+        "structurizr.dsl.identifier" : "visitor"
+      },
+      "relationships" : [ {
+        "description" : "Просматривает услуги/цены/кейсы",
+        "destinationId" : "4",
+        "id" : "8",
+        "sourceId" : "1",
+        "tags" : "Relationship",
+        "technology" : "HTTPS"
+      }, {
+        "description" : "Просматривает услуги/цены/кейсы",
+        "destinationId" : "3",
+        "id" : "9",
+        "linkedRelationshipId" : "8",
+        "sourceId" : "1",
+        "technology" : "HTTPS"
+      }, {
+        "description" : "POST заявки (JSON)",
+        "destinationId" : "5",
+        "id" : "10",
+        "sourceId" : "1",
+        "tags" : "Relationship",
+        "technology" : "HTTPS"
+      } ],
+      "tags" : "Element,Person"
+    }, {
+      "description" : "Получает заявки в Telegram, правит контент через git",
+      "id" : "2",
+      "name" : "Владелец компании (PO)",
+      "properties" : {
+        "structurizr.dsl.identifier" : "po"
+      },
+      "relationships" : [ {
+        "description" : "git push (контент: JSON/MDX)",
+        "destinationId" : "4",
+        "id" : "14",
+        "sourceId" : "2",
+        "tags" : "Relationship",
+        "technology" : "HTTPS"
+      }, {
+        "description" : "git push (контент: JSON/MDX)",
+        "destinationId" : "3",
+        "id" : "15",
+        "linkedRelationshipId" : "14",
+        "sourceId" : "2",
+        "technology" : "HTTPS"
+      }, {
+        "description" : "rsync-деплой dist/ (deploy.sh)",
+        "destinationId" : "4",
+        "id" : "16",
+        "sourceId" : "2",
+        "tags" : "Relationship",
+        "technology" : "SSH"
+      } ],
+      "tags" : "Element,Person"
+    } ],
+    "softwareSystems" : [ {
+      "containers" : [ {
+        "description" : "Astro SSG: маршруты из lines.json, коллекции MDX, JSON-данные",
+        "documentation" : { },
+        "id" : "4",
+        "name" : "Статические страницы",
+        "properties" : {
+          "structurizr.dsl.identifier" : "static"
+        },
+        "tags" : "Element,Container",
+        "technology" : "HTML/CSS/TS"
+      }, {
+        "description" : "CGI-эндпоинт формы: валидация, honeypot, rate-limit, доставка в Telegram",
+        "documentation" : { },
+        "id" : "5",
+        "name" : "contact.py",
+        "properties" : {
+          "structurizr.dsl.identifier" : "form"
+        },
+        "relationships" : [ {
+          "description" : "sendMessage — заявка",
+          "destinationId" : "6",
+          "id" : "11",
+          "sourceId" : "5",
+          "tags" : "Relationship",
+          "technology" : "HTTPS, таймаут 5 с"
+        }, {
+          "description" : "Внутренние проверки: honeypot, валидация, rate-limit",
+          "destinationId" : "5",
+          "id" : "13",
+          "sourceId" : "5",
+          "tags" : "Relationship",
+          "technology" : "локально"
+        } ],
+        "tags" : "Element,Container",
+        "technology" : "Python 3 stdlib"
+      } ],
+      "documentation" : { },
+      "id" : "3",
+      "name" : "Сайт «Умный квадрат»",
+      "properties" : {
+        "structurizr.dsl.identifier" : "ssq"
+      },
+      "relationships" : [ {
+        "description" : "sendMessage — заявка",
+        "destinationId" : "6",
+        "id" : "12",
+        "linkedRelationshipId" : "11",
+        "sourceId" : "3",
+        "technology" : "HTTPS, таймаут 5 с"
+      } ],
+      "tags" : "Element,Software System"
+    }, {
+      "description" : "Доставляет заявки в чат владельца",
+      "documentation" : { },
+      "id" : "6",
+      "name" : "Telegram Bot API",
+      "properties" : {
+        "structurizr.dsl.identifier" : "tg"
+      },
+      "tags" : "Element,Software System,Внешняя"
+    }, {
+      "description" : "Приватный репозиторий исходников",
+      "documentation" : { },
+      "id" : "7",
+      "name" : "GitHub",
+      "properties" : {
+        "structurizr.dsl.identifier" : "gh"
+      },
+      "tags" : "Element,Software System,Внешняя"
+    } ]
+  },
+  "name" : "SSQ Site",
+  "properties" : {
+    "structurizr.inspection.error" : "21",
+    "structurizr.dsl" : "d29ya3NwYWNlIHsKICBuYW1lICJTU1EgU2l0ZSIKICBkZXNjcmlwdGlvbiAi0JDRgNGF0LjRgtC10LrRgtGD0YDQsCDRgdCw0LnRgtCwIMKr0KPQvNC90YvQuSDQutCy0LDQtNGA0LDRgsK7IOKAlCDRgdGC0LDRgtC40LrQsCArIENHSS3RhNC+0YDQvNCwLCDQtNC10L/Qu9C+0Lkg0L3QsCBCZWdldCBTaGFyZWQiCgogIG1vZGVsIHsKICAgIHZpc2l0b3IgPSBwZXJzb24gItCf0L7RgdC10YLQuNGC0LXQu9GMIiAi0JLQu9Cw0LTQtdC70LXRhiDQutCy0LDRgNGC0LjRgNGLL9C00L7QvNCwOiDRgdC80L7RgtGA0LjRgiDRgdCw0LnRgiwg0L7RgtC/0YDQsNCy0LvRj9C10YIg0LfQsNGP0LLQutGDIgogICAgcG8gPSBwZXJzb24gItCS0LvQsNC00LXQu9C10YYg0LrQvtC80L/QsNC90LjQuCAoUE8pIiAi0J/QvtC70YPRh9Cw0LXRgiDQt9Cw0Y/QstC60Lgg0LIgVGVsZWdyYW0sINC/0YDQsNCy0LjRgiDQutC+0L3RgtC10L3RgiDRh9C10YDQtdC3IGdpdCIKCiAgICBzc3EgPSBzb2Z0d2FyZVN5c3RlbSAi0KHQsNC50YIgwqvQo9C80L3Ri9C5INC60LLQsNC00YDQsNGCwrsiIHsKICAgICAgc3RhdGljID0gY29udGFpbmVyICLQodGC0LDRgtC40YfQtdGB0LrQuNC1INGB0YLRgNCw0L3QuNGG0YsiICJBc3RybyBTU0c6INC80LDRgNGI0YDRg9GC0Ysg0LjQtyBsaW5lcy5qc29uLCDQutC+0LvQu9C10LrRhtC40LggTURYLCBKU09OLdC00LDQvdC90YvQtSIgIkhUTUwvQ1NTL1RTIgogICAgICBmb3JtID0gY29udGFpbmVyICJjb250YWN0LnB5IiAiQ0dJLdGN0L3QtNC/0L7QuNC90YIg0YTQvtGA0LzRizog0LLQsNC70LjQtNCw0YbQuNGPLCBob25leXBvdCwgcmF0ZS1saW1pdCwg0LTQvtGB0YLQsNCy0LrQsCDQsiBUZWxlZ3JhbSIgIlB5dGhvbiAzIHN0ZGxpYiIKICAgIH0KCiAgICB0ZyA9IHNvZnR3YXJlU3lzdGVtICJUZWxlZ3JhbSBCb3QgQVBJIiAi0JTQvtGB0YLQsNCy0LvRj9C10YIg0LfQsNGP0LLQutC4INCyINGH0LDRgiDQstC70LDQtNC10LvRjNGG0LAiICLQktC90LXRiNC90Y/RjyIKICAgIGdoID0gc29mdHdhcmVTeXN0ZW0gIkdpdEh1YiIgItCf0YDQuNCy0LDRgtC90YvQuSDRgNC10L/QvtC30LjRgtC+0YDQuNC5INC40YHRhdC+0LTQvdC40LrQvtCyIiAi0JLQvdC10YjQvdGP0Y8iCgogICAgdmlzaXRvciAtPiBzdGF0aWMgItCf0YDQvtGB0LzQsNGC0YDQuNCy0LDQtdGCINGD0YHQu9GD0LPQuC/RhtC10L3Riy/QutC10LnRgdGLIiAiSFRUUFMiCiAgICB2aXNpdG9yIC0+IGZvcm0gIlBPU1Qg0LfQsNGP0LLQutC4IChKU09OKSIgIkhUVFBTIgogICAgZm9ybSAtPiB0ZyAic2VuZE1lc3NhZ2Ug4oCUINC30LDRj9Cy0LrQsCIgIkhUVFBTLCDRgtCw0LnQvNCw0YPRgiA1INGBIgogICAgZm9ybSAtPiBmb3JtICLQktC90YPRgtGA0LXQvdC90LjQtSDQv9GA0L7QstC10YDQutC4OiBob25leXBvdCwg0LLQsNC70LjQtNCw0YbQuNGPLCByYXRlLWxpbWl0IiAi0LvQvtC60LDQu9GM0L3QviIKICAgIHBvIC0+IHN0YXRpYyAiZ2l0IHB1c2ggKNC60L7QvdGC0LXQvdGCOiBKU09OL01EWCkiICJIVFRQUyIKICAgIHBvIC0+IHN0YXRpYyAicnN5bmMt0LTQtdC/0LvQvtC5IGRpc3QvIChkZXBsb3kuc2gpIiAiU1NIIgoKICAgIGRlcGxveW1lbnRFbnZpcm9ubWVudCAiUHJvZHVjdGlvbiIgewogICAgICBiZWdldCA9IGRlcGxveW1lbnROb2RlICJCZWdldCBTaGFyZWQiICJBcGFjaGUgKyBDR0ksIGRvY3Jvb3Qg0YTQuNC60YHQuNGA0L7QstCw0L0iIHsKICAgICAgICBjaTEgPSBjb250YWluZXJJbnN0YW5jZSBzdGF0aWMKICAgICAgICBjaTIgPSBjb250YWluZXJJbnN0YW5jZSBmb3JtCiAgICAgICAgZW52RmlsZSA9IGluZnJhc3RydWN0dXJlTm9kZSAiZW52LXNzcSIgItCh0LXQutGA0LXRgtGLINCy0L3QtSBkb2Nyb290LCBjaG1vZCA2MDAiICLRhNCw0LnQuyIKICAgICAgICB0bXBjID0gaW5mcmFzdHJ1Y3R1cmVOb2RlICJ0bXAiICLQpNCw0LnQu9GLLdGB0YfRkdGC0YfQuNC60LggcmF0ZS1saW1pdCIgIi90bXAiCiAgICAgIH0KICAgIH0KCiAgICBkZXBsb3ltZW50RW52aXJvbm1lbnQgIkRlcGxveVBpcGVsaW5lIiB7CiAgICAgIG1hYyA9IGRlcGxveW1lbnROb2RlICJNYWNCb29rINCy0LvQsNC00LXQu9GM0YbQsCIgIk5vZGUgMjAsIG5wbSIgewogICAgICAgIGNpX2J1aWxkID0gY29udGFpbmVySW5zdGFuY2Ugc3RhdGljCiAgICAgIH0KICAgICAgZ2huID0gZGVwbG95bWVudE5vZGUgIkdpdEh1YiIgewogICAgICAgIHJlcG8gPSBpbmZyYXN0cnVjdHVyZU5vZGUgInNzcS1zaXRlIChwcml2YXRlKSIgIm1haW4iICLRgNC10L/QvtC30LjRgtC+0YDQuNC5IgogICAgICB9CiAgICAgIGJlZ2V0MiA9IGRlcGxveW1lbnROb2RlICJCZWdldCBTaGFyZWQiIHsKICAgICAgICByZWwgPSBpbmZyYXN0cnVjdHVyZU5vZGUgInJlbGVhc2VzL2JhY2t1cC10cyIgInJvbGxiYWNrLdGB0L3QuNC80L7QuiByc3luYyAtLWJhY2t1cCIgItC60LDRgtCw0LvQvtCzIgogICAgICAgIGRvY3Jvb3QgPSBpbmZyYXN0cnVjdHVyZU5vZGUgInB1YmxpY19odG1sIiAi0YHRgtCw0YLQuNC60LAgKyBjZ2ktYmluLyIgImRvY3Jvb3QiCiAgICAgIH0KICAgICAgY2lfYnVpbGQgLT4gcmVwbyAiZ2l0IHB1c2giCiAgICAgIGNpX2J1aWxkIC0+IGRvY3Jvb3QgImRlcGxveS5zaDogcnN5bmMgLWF6IC0tZGVsZXRlIC0tYmFja3VwIgogICAgICBjaV9idWlsZCAtPiByZWwgItGB0L3QuNC80L7QuiDQv9GA0LXQtNGL0LTRg9GJ0LXQuSDQstC10YDRgdC40LgiCiAgICB9CiAgfQoKICB2aWV3cyB7CiAgICBzeXN0ZW1Db250ZXh0IHNzcSAiQ29udGV4dCIgewogICAgICBpbmNsdWRlICoKICAgICAgYXV0b2xheW91dAogICAgICBkZXNjcmlwdGlvbiAi0JrRgtC+INGBINGH0LXQvCDQvtCx0YnQsNC10YLRgdGPIgogICAgfQoKICAgIGNvbnRhaW5lciBzc3EgIkNvbnRhaW5lcnMiIHsKICAgICAgaW5jbHVkZSAqCiAgICAgIGF1dG9sYXlvdXQKICAgICAgZGVzY3JpcHRpb24gItCa0L7QvdGC0LXQudC90LXRgNGLINGB0LDQudGC0LA6INGB0YLQsNGC0LjQutCwINC4IENHSSIKICAgIH0KCiAgICBkeW5hbWljIHNzcSAiRm9ybUZsb3ciIHsKICAgICAgdmlzaXRvciAtPiBmb3JtICIxLiBQT1NUIC9jZ2ktYmluL2NvbnRhY3QucHkge25hbWUsIHBob25lLCBjb25zZW50LCB3ZWJzaXRlKGhvbmV5cG90KX0iCiAgICAgIGZvcm0gLT4gZm9ybSAiMi4gaG9uZXlwb3Qg0L3QtSDQv9GD0YHRgiDihpIgMjAwIHtva30g0LzQvtC70YfQsCIKICAgICAgZm9ybSAtPiBmb3JtICIzLiDQstCw0LvQuNC00LDRhtC40Y8gLyDRgdC+0LPQu9Cw0YHQuNC1IC8gcmF0ZS1saW1pdCDihpIgNDAwIC8gNDI5IgogICAgICBmb3JtIC0+IHRnICI0LiBzZW5kTWVzc2FnZSDihpIgMjAwIHtvazp0cnVlfSIKICAgICAgZm9ybSAtPiBmb3JtICI1LiBUZWxlZ3JhbSDQvdC10LTQvtGB0YLRg9C/0LXQvSDihpIgNTAyIHtvazpmYWxzZX0sINC90LUg0LzQsNGB0LrQuNGA0YPQtdC8IgogICAgfQoKICAgIGRlcGxveW1lbnQgKiAiUHJvZHVjdGlvbiIgewogICAgICBpbmNsdWRlICoKICAgICAgYXV0b2xheW91dAogICAgICBkZXNjcmlwdGlvbiAi0J/RgNC+0LQt0L7QutGA0YPQttC10L3QuNC1INC90LAgQmVnZXQiCiAgICB9CgogICAgZGVwbG95bWVudCAqICJEZXBsb3lQaXBlbGluZSIgewogICAgICBpbmNsdWRlICoKICAgICAgYXV0b2xheW91dAogICAgICBkZXNjcmlwdGlvbiAi0JrQsNC6INGA0LXQu9C40Lcg0L/QvtC/0LDQtNCw0LXRgiDQsiDQv9GA0L7QtCIKICAgIH0KCiAgICBzdHlsZXMgewogICAgICBlbGVtZW50ICJQZXJzb24iIHsKICAgICAgICBiYWNrZ3JvdW5kICIjMTAxMDE0IgogICAgICAgIGNvbG9yICIjZWNlYWU2IgogICAgICB9CiAgICAgIGVsZW1lbnQgIlNvZnR3YXJlIFN5c3RlbSIgewogICAgICAgIGJhY2tncm91bmQgIiMxNzE5MWQiCiAgICAgICAgY29sb3IgIiNlY2VhZTYiCiAgICAgIH0KICAgICAgZWxlbWVudCAiQ29udGFpbmVyIiB7CiAgICAgICAgYmFja2dyb3VuZCAiIzJhMmQzMyIKICAgICAgICBjb2xvciAiI2VjZWFlNiIKICAgICAgfQogICAgICBlbGVtZW50ICJFeHRlcm5hbCBTeXN0ZW0iIHsKICAgICAgICBiYWNrZ3JvdW5kICIjNWE1MjQ1IgogICAgICAgIGNvbG9yICIjZWNlYWU2IgogICAgICB9CiAgICAgIGVsZW1lbnQgIkluZnJhc3RydWN0dXJlIE5vZGUiIHsKICAgICAgICBiYWNrZ3JvdW5kICIjOGY3YjUzIgogICAgICAgIGNvbG9yICIjMTAxMDE0IgogICAgICB9CiAgICB9CiAgfQp9",
+    "structurizr.inspection.info" : "0",
+    "structurizr.inspection.ignore" : "0",
+    "structurizr.inspection.warning" : "0"
+  },
+  "views" : {
+    "configuration" : {
+      "styles" : {
+        "elements" : [ {
+          "background" : "#2a2d33",
+          "color" : "#eceae6",
+          "tag" : "Container"
+        }, {
+          "background" : "#5a5245",
+          "color" : "#eceae6",
+          "tag" : "External System"
+        }, {
+          "background" : "#8f7b53",
+          "color" : "#101014",
+          "tag" : "Infrastructure Node"
+        }, {
+          "background" : "#101014",
+          "color" : "#eceae6",
+          "tag" : "Person"
+        }, {
+          "background" : "#17191d",
+          "color" : "#eceae6",
+          "tag" : "Software System"
+        } ]
+      },
+      "terminology" : { }
+    },
+    "containerViews" : [ {
+      "automaticLayout" : {
+        "edgeSeparation" : 50,
+        "nodeSeparation" : 50,
+        "rankDirection" : "LeftRight",
+        "rankSeparation" : 100,
+        "vertices" : true
+      },
+      "description" : "Контейнеры сайта: статика и CGI",
+      "elements" : [ {
+        "id" : "1",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "2",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "4",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "5",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "6",
+        "x" : 0,
+        "y" : 0
+      } ],
+      "externalSoftwareSystemBoundariesVisible" : false,
+      "key" : "Containers",
+      "name" : "Container View: Сайт «Умный квадрат»",
+      "order" : 2,
+      "relationships" : [ {
+        "id" : "10"
+      }, {
+        "id" : "11"
+      }, {
+        "id" : "13"
+      }, {
+        "id" : "14"
+      }, {
+        "id" : "16"
+      }, {
+        "id" : "8"
+      } ],
+      "softwareSystemId" : "3"
+    } ],
+    "deploymentViews" : [ {
+      "automaticLayout" : {
+        "edgeSeparation" : 50,
+        "nodeSeparation" : 50,
+        "rankDirection" : "LeftRight",
+        "rankSeparation" : 100,
+        "vertices" : true
+      },
+      "description" : "Прод-окружение на Beget",
+      "elements" : [ {
+        "id" : "17",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "18",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "19",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "20",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "21",
+        "x" : 0,
+        "y" : 0
+      } ],
+      "environment" : "Production",
+      "generatedKey" : true,
+      "key" : "Deployment-001",
+      "name" : "Deployment View: Production",
+      "order" : 4
+    }, {
+      "automaticLayout" : {
+        "edgeSeparation" : 50,
+        "nodeSeparation" : 50,
+        "rankDirection" : "LeftRight",
+        "rankSeparation" : 100,
+        "vertices" : true
+      },
+      "description" : "Как релиз попадает в прод",
+      "elements" : [ {
+        "id" : "22",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "23",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "24",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "25",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "26",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "27",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "28",
+        "x" : 0,
+        "y" : 0
+      } ],
+      "environment" : "DeployPipeline",
+      "generatedKey" : true,
+      "key" : "Deployment-002",
+      "name" : "Deployment View: DeployPipeline",
+      "order" : 5,
+      "relationships" : [ {
+        "id" : "29"
+      }, {
+        "id" : "30"
+      }, {
+        "id" : "31"
+      } ]
+    } ],
+    "dynamicViews" : [ {
+      "elementId" : "3",
+      "elements" : [ {
+        "id" : "1",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "5",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "6",
+        "x" : 0,
+        "y" : 0
+      } ],
+      "externalBoundariesVisible" : false,
+      "key" : "FormFlow",
+      "name" : "Dynamic View: Сайт «Умный квадрат»",
+      "order" : 3,
+      "relationships" : [ {
+        "description" : "1. POST /cgi-bin/contact.py {name, phone, consent, website(honeypot)}",
+        "id" : "10",
+        "order" : "1",
+        "response" : false
+      }, {
+        "description" : "2. honeypot не пуст → 200 {ok} молча",
+        "id" : "13",
+        "order" : "2",
+        "response" : false
+      }, {
+        "description" : "3. валидация / согласие / rate-limit → 400 / 429",
+        "id" : "13",
+        "order" : "3",
+        "response" : false
+      }, {
+        "description" : "4. sendMessage → 200 {ok:true}",
+        "id" : "11",
+        "order" : "4",
+        "response" : false
+      }, {
+        "description" : "5. Telegram недоступен → 502 {ok:false}, не маскируем",
+        "id" : "13",
+        "order" : "5",
+        "response" : false
+      } ]
+    } ],
+    "systemContextViews" : [ {
+      "automaticLayout" : {
+        "edgeSeparation" : 50,
+        "nodeSeparation" : 50,
+        "rankDirection" : "LeftRight",
+        "rankSeparation" : 100,
+        "vertices" : true
+      },
+      "description" : "Кто с чем общается",
+      "elements" : [ {
+        "id" : "1",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "2",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "3",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "6",
+        "x" : 0,
+        "y" : 0
+      } ],
+      "enterpriseBoundaryVisible" : true,
+      "key" : "Context",
+      "name" : "System Context View: Сайт «Умный квадрат»",
+      "order" : 1,
+      "relationships" : [ {
+        "id" : "12"
+      }, {
+        "id" : "15"
+      }, {
+        "id" : "9"
+      } ],
+      "softwareSystemId" : "3"
+    } ]
+  }
+}

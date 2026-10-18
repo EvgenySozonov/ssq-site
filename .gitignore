@@ -1,0 +1,12 @@
+# graft's local graph cache — regenerable, not committed (run `graft build`).
+/graft/
+
+# superpowers brainstorm artifacts
+/.superpowers/
+
+# secrets
+.env
+node_modules/
+dist/
+# Structurizr Lite runtime artifacts
+/docs/architecture/c4/.structurizr/
