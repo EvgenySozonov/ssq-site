@@ -84,7 +84,37 @@
       "Bash(graft:*)",
       "Bash(npx graft:*)",
       "Bash(graft-dev:*)",
-      "Bash(node dist/cli.js:*)"
+      "Bash(node dist/cli.js:*)",
+      "Bash(npm run lint:*)",
+      "Bash(npm run lint:fix:*)",
+      "Bash(npm run check:*)",
+      "Bash(npm run format:*)",
+      "Bash(npm run format:check:*)",
+      "Bash(npm test:*)",
+      "Bash(npx astro build:*)",
+      "Bash(npx astro check:*)",
+      "Bash(npx astro preview:*)",
+      "Bash(git status:*)",
+      "Bash(git diff:*)",
+      "Bash(git log:*)",
+      "Bash(git show:*)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)"
+    ],
+    "ask": [
+      "Bash(git push:*)"
+    ],
+    "deny": [
+      "Read(.env)",
+      "Read(./site/.env)",
+      "Bash(cat .env:*)",
+      "Bash(cat ./.env:*)",
+      "Bash(cat site/.env:*)",
+      "Bash(head .env:*)",
+      "Bash(less .env:*)",
+      "Bash(more .env:*)",
+      "Bash(rm -rf:*)",
+      "Bash(rm -fr:*)"
     ]
   }
 }

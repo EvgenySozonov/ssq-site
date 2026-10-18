@@ -21,3 +21,6 @@ site/.astro/
 c4-language-server.log
 .playwright-mcp/
 task1-acceptance.png
+
+# личные настройки держим вне git
+.claude/settings.local.json
