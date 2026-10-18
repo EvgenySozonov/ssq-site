@@ -8,7 +8,7 @@
 
 **Tech Stack:** Astro 5, TypeScript strict, Tailwind CSS v4, zod (сборка через Astro), React (остров), Python 3 stdlib (CGI на хостинге), rsync.
 
-**Spec:** `docs/specs/ssq-site-stack-design.md` (план ссылается на неё; тексты копирайта — `docs/about.md`, дизайн — `docs/design.md`).
+**Spec:** `docs/specs/ssq-site-stack-design.md` (план ссылается на неё; тексты копирайта — `docs/content/strategy.md`, дизайн — `docs/design.md`).
 
 ## Global Constraints
 
@@ -17,7 +17,7 @@
 - `html lang="ru"`; canonical и sitemap только на `https://smart-square.ru`.
 - Контактные данные (телефон, адрес, часы) — только из `site/src/data/site.json`, в компонентах не дублируются.
 - Анимации отключаются при `prefers-reduced-motion: reduce`.
-- Честный копирайтинг (docs/about.md): никаких непроверяемых цифр; страницы без реальных данных показывают осмысленные формулировки, не нули и не «N лет».
+- Честный копирайтинг (docs/content/strategy.md): никаких непроверяемых цифр; страницы без реальных данных показывают осмысленные формулировки, не нули и не «N лет».
 - Разметка копирует референс-дизайн: карточки `#17191d` с левым бордером 3px меди `#c9a15a`, нумерация `01/02/03` моно-шрифтом, логотип-метка `SSQ //`.
 - Каждая секция главной — отдельный компонент, данные из `site/src/data/`.
 - `.env` в git не попадает (в `.gitignore` уже есть). Коммиты — частые, по одному на задачу с проверенными шагами; каждая строка `git commit` завершается `-m "Co-Authored-By: Claude Code <noreply@anthropic.com>"`.
@@ -286,7 +286,7 @@ git commit -m "feat: каркас Astro+Tailwind v4, токены, BaseLayout" -
 ]
 ```
 
-`site/src/data/pricing.json`, `reviews.json`, `home/standards.json`, `home/process.json`, `home/faq.json` — состав по копирайту `docs/about.md` и тексту ниже; во всех ценах `priceFrom: 0` (значит «По смете»):
+`site/src/data/pricing.json`, `reviews.json`, `home/standards.json`, `home/process.json`, `home/faq.json` — состав по копирайту `docs/content/strategy.md` и тексту ниже; во всех ценах `priceFrom: 0` (значит «По смете»):
 
 ```json
 // pricing.json
@@ -306,7 +306,7 @@ git commit -m "feat: каркас Astro+Tailwind v4, токены, BaseLayout" -
 // reviews.json — пусто (блок скрывается)
 []
 
-// home/standards.json — дословно из about.md
+// home/standards.json — дословно из docs/content/strategy.md
 [
   { "n": "01", "title": "Фиксированная смета до начала работ", "text": "Цена утверждается до монтажа; внеплановых доплат по ходу не существует." },
   { "n": "02", "title": "Фотофиксация скрытых работ", "text": "Этап перед закрытием штробы или стяжки фотографируется — вы видите, что остаётся в стенах." },
@@ -1072,7 +1072,7 @@ git add -A && git commit -m "feat: политика ПДн, условия, 404"
 - Create: `site/src/content/portfolio/README.md` (пояснение формата кейса)
 
 **Interfaces:**
-- Consumes: коллекция `portfolio` (Task 4, шаг 1), `getLines`, `getReviews`, копирайт `docs/about.md`.
+- Consumes: коллекция `portfolio` (Task 4, шаг 1), `getLines`, `getReviews`, копирайт `docs/content/strategy.md`.
 
 - [ ] **Шаг 1: `PortfolioFilter.tsx`** (остров, показывается только при наличии кейсов; при пустой коллекции страница рендерит сообщение-пустоту):
 
@@ -1168,7 +1168,7 @@ const { Content } = await entry.render();
   </div>
 </BaseLayout>
 ```
-- [ ] **Шаг 3: `/about/`** — текст из `docs/about.md`: главная мысль «новая инженерная компания…», стандарты (Standards.astro уже есть — переиспользовать), предложение «почему вас должно хватать», «работаем с 2026». Без счётчиков.
+- [ ] **Шаг 3: `/about/`** — текст из `docs/content/strategy.md`: главная мысль «новая инженерная компания…», стандарты (Standards.astro уже есть — переиспользовать), предложение «почему вас должно хватать», «работаем с 2026». Без счётчиков.
 - [ ] **Шаг 4: `/reviews/`** — пустой (reviews.json пуст) → «Отзывы появятся с первыми объектами»; данные → карточки.
 - [ ] **Шаг 5: Проверка Review Focus п.3** — открыть `/portfolio/`, `/reviews/`, главную: пустые данные → сообщения, а не пустое; блоки с главной не рендерятся.
 - [ ] **Шаг 6: Коммит**
