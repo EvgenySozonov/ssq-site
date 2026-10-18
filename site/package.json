@@ -14,7 +14,9 @@
     "format:check": "prettier --check .",
     "check": "astro check",
     "lint": "eslint .",
-    "lint:fix": "eslint --fix ."
+    "lint:fix": "eslint --fix .",
+    "test:e2e": "playwright test",
+    "test:server": "PYTHONDONTWRITEBYTECODE=1 python3 tests/test_contact.py"
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.3.3",
@@ -25,6 +27,7 @@
     "@astrojs/check": "^0.9.10",
     "@eslint-react/eslint-plugin": "^5.28.1",
     "@eslint/js": "^10.0.1",
+    "@playwright/test": "^1.64.1",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-astro": "^3.2.1",
     "eslint-plugin-jsx-a11y-x": "^0.2.0",

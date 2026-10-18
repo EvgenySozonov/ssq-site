@@ -13,6 +13,11 @@ dist/
 site/node_modules/
 site/dist/
 site/.astro/
+# python bytecode артефакты CGI
+site/public/cgi-bin/__pycache__/
+# playwright e2e артефакты
+site/test-results/
+tmp/
 # Structurizr Lite runtime artifacts
 /docs/architecture/c4/.structurizr/
 
