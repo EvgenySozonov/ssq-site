@@ -15,3 +15,9 @@ site/dist/
 site/.astro/
 # Structurizr Lite runtime artifacts
 /docs/architecture/c4/.structurizr/
+
+# macOS / runtime artifacts
+.DS_Store
+c4-language-server.log
+.playwright-mcp/
+task1-acceptance.png
