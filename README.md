@@ -17,6 +17,7 @@
 | [docs/handoff.md](docs/handoff.md) | Состояние проекта прямо сейчас |
 | [docs/about.md](docs/about.md) | AI-среда проекта: стек, правила, скиллы, доказательства работы |
 | [docs/content/strategy.md](docs/content/strategy.md) | Позиционирование и факты компании для страниц сайта |
+| [docs/reports/](docs/reports/) | Отчёты приёмки по датам (принято / гейты / долги) |
 
 ## Стек (решение 2026-10-16, см. docs/memory.md)
 
