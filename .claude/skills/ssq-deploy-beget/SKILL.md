@@ -20,7 +20,7 @@ Node-сервера в прод: fullstack-фреймворки (Next и пр.) 
 
 ## Пайплайн выката
 
-`astro build` → `rsync dist/` по SSH → корень сайта (включая `cgi-bin/contact.py`
+`astro build` (в `site/`) → `rsync site/dist/` по SSH → корень сайта (включая `cgi-bin/contact.py`
 и `.htaccess`). Разовая настройка: CGI для `.py` включается в панели Beget —
 проверить до первого выката формы.
 
@@ -37,7 +37,7 @@ Node-сервера в прод: fullstack-фреймворки (Next и пр.) 
 
 Полный контракт эндпоинта (валидация, honeypot, rate-limit, доставка в
 Telegram, 400/502) — в скилле `.claude/skills/ssq-form-cgi/SKILL.md`;
-в этом скилле деплой-специфика: эндпоинт уходит в деплой вместе с `dist/`,
+в этом скилле деплой-специфика: эндпоинт уходит в деплой вместе с `site/dist/`,
 (`cgi-bin/contact.py` + `.htaccess` с `AddHandler cgi-script .py` + `ExecCGI`),
 CGI для `.py` включается в панели Beget до первого выката.
 

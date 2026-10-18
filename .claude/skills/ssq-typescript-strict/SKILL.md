@@ -23,8 +23,8 @@ description: "TypeScript strict в SSQ-site: конфиг Astro strict-mode, т�
 
 - Одна схема = источник и валидации, и типа: `z.infer`, никаких вторых
   ручных описаний тех же структур.
-- Схемы контент-коллекций — в `src/content/config.ts`; JSON-данные
-  (`src/data/**/*.json`) валидируются zod-схемами в `src/lib/` (см.
+- Схемы контент-коллекций — в `site/src/content/config.ts`; JSON-данные
+  (`site/src/data/**/*.json`) валидируются zod-схемами в `site/src/lib/` (см.
   ssq-astro-conventions); типы потребители берут из схемы.
 - Импорт типов данных — через `import type`.
 

@@ -22,7 +22,7 @@ description: "Контракт формы заявок SSQ-site: клиентс�
 - комментарий — опциональное
 - чекбокс согласия на обработку ПДн — обязательный, ссылка на `/legal/privacy/`
 - honeypot `website` — скрытое поле, видит только бот
-- контактные данные (телефон-фоллбек) — только из `src/data/site.json`, не хардкод
+- контактные данные (телефон-фоллбек) — только из `site/src/data/site.json`, не хардкод
 
 Поведение:
 
@@ -31,7 +31,7 @@ description: "Контракт формы заявок SSQ-site: клиентс�
   `error` (текст ошибки + телефон из site.json как альтернативный канал)
 - отправка — POST на `cgi-bin/contact.py` с JSON
 
-## 6.2 Серверная часть `public/cgi-bin/contact.py`
+## 6.2 Серверная часть `site/public/cgi-bin/contact.py`
 
 - Python 3, **только stdlib**; CGI на голом Python (не Passenger); `.htaccess`
   с `AddHandler cgi-script .py` + `ExecCGI`.
