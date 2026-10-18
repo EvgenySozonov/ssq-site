@@ -40,7 +40,7 @@
 # Структура репозиториев (целевая для src/ нового сайта)
 
 ```
-astro-pages/ (или src/ нового проекта)
+site/
 ├── src/pages/                  # маршруты из карты выше
 ├── src/components/             # Astro-компоненты секций (hero, services-блок, process...)
 ├── src/components/react/       # React-острова (калькулятор, фильтр портфолио)

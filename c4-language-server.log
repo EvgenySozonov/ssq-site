@@ -1,0 +1,85 @@
+00:46:22.531 [main] INFO  d.s.c.ls.C4LanguageServerLauncher - Starting ProcessIO Connection
+00:46:22.532 [main] INFO  d.s.c.ls.C4LanguageServerLauncher - Launching C4LanguageServer started
+00:46:22.936 [main] INFO  d.s.c.ls.service.C4LanguageServer - getTextDocumentService
+00:46:23.062 [main] INFO  d.s.c.ls.service.C4LanguageServer - getTextDocumentService
+00:46:23.064 [main] INFO  d.s.c.ls.service.C4LanguageServer - getWorkspaceService
+00:46:23.083 [main] INFO  d.s.c.ls.service.C4LanguageServer - connect
+00:46:23.156 [pool-1-thread-1] INFO  d.s.c.ls.service.C4LanguageServer - initialize
+00:46:23.208 [pool-1-thread-1] INFO  d.s.c.l.s.C4TextDocumentService - didOpen file:///Users/mac/Documents/_Projects/SSQ-site/docs/architecture/c4/workspace.dsl
+00:46:23.209 [ForkJoinPool.commonPool-worker-1] INFO  d.s.c.l.s.C4TextDocumentService - --> getDiagnostics 0
+00:46:23.213 [ForkJoinPool.commonPool-worker-2] INFO  d.s.c.ls.service.C4WorkspaceService - executeCommand c4-server.autoformat.indent
+00:46:23.215 [pool-1-thread-1] INFO  d.s.c.l.s.C4TextDocumentService - documentColor
+00:46:23.216 [ForkJoinPool.commonPool-worker-2] INFO  d.s.c.l.s.C4TextDocumentService - --> getDocument
+00:46:23.316 [ForkJoinPool.commonPool-worker-1] ERROR d.s.c.l.i.InterceptParserAspect - Cannot intercept parsed Model for execution(com.structurizr.model.Person com.structurizr.dsl.PersonParser.parse(com.structurizr.dsl.ModelDslContext, com.structurizr.dsl.Tokens)): Too many tokens, expected: person <name> [description] [tags]
+00:46:23.321 [ForkJoinPool.commonPool-worker-1] INFO  d.s.c.ls.model.C4DocumentManager - ParserException Too many tokens, expected: person <name> [description] [tags] at line 8 of /Users/mac/Documents/_Projects/SSQ-site/docs/architecture/c4/workspace.dsl: po2 = person "Инженер-обслуживающий" "Разворачивает релизы, откатывает деплой"  # на старте — тот же PO
+00:46:23.323 [ForkJoinPool.commonPool-worker-1] INFO  d.s.c.l.s.C4TextDocumentService - <-- getDiagnostics
+00:46:23.323 [ForkJoinPool.commonPool-worker-2] INFO  d.s.c.l.s.C4TextDocumentService - <-- getDocument
+00:46:23.456 [pool-1-thread-1] INFO  d.s.c.l.s.C4TextDocumentService - codeLens
+00:46:23.457 [ForkJoinPool.commonPool-worker-1] INFO  d.s.c.l.s.C4TextDocumentService - --> getDocument
+00:46:23.457 [ForkJoinPool.commonPool-worker-1] INFO  d.s.c.l.s.C4TextDocumentService - <-- getDocument
+00:46:23.658 [pool-1-thread-1] INFO  d.s.c.l.s.C4TextDocumentService - semanticTokensFull
+00:46:23.659 [ForkJoinPool.commonPool-worker-1] INFO  d.s.c.l.s.C4TextDocumentService - --> getDocument
+00:46:23.659 [ForkJoinPool.commonPool-worker-1] INFO  d.s.c.l.s.C4TextDocumentService - <-- getDocument
+00:52:56.085 [pool-1-thread-1] INFO  d.s.c.l.s.C4TextDocumentService - didChange file:///Users/mac/Documents/_Projects/SSQ-site/docs/architecture/c4/workspace.dsl
+00:52:56.103 [ForkJoinPool.commonPool-worker-4] INFO  d.s.c.ls.service.C4WorkspaceService - executeCommand c4-server.text-decorations
+00:52:56.103 [ForkJoinPool.commonPool-worker-3] INFO  d.s.c.l.s.C4TextDocumentService - --> getDiagnostics 1
+00:52:56.103 [ForkJoinPool.commonPool-worker-4] INFO  d.s.c.l.s.C4TextDocumentService - textDecorations
+00:52:56.105 [ForkJoinPool.commonPool-worker-4] INFO  d.s.c.l.s.C4TextDocumentService - --> getDocument
+00:52:56.129 [ForkJoinPool.commonPool-worker-3] ERROR d.s.c.l.i.InterceptParserAspect - Cannot intercept parsed Relationship for execution(com.structurizr.model.Relationship com.structurizr.dsl.ExplicitRelationshipParser.parse(com.structurizr.dsl.DslContext, com.structurizr.dsl.Tokens)): The destination element "ssq.static" does not exist
+00:52:56.130 [ForkJoinPool.commonPool-worker-3] INFO  d.s.c.ls.model.C4DocumentManager - ParserException The destination element "ssq.static" does not exist at line 17 of /Users/mac/Documents/_Projects/SSQ-site/docs/architecture/c4/workspace.dsl: visitor -> ssq.static "Просматривает услуги/цены/кейсы" "HTTPS"
+00:52:56.130 [ForkJoinPool.commonPool-worker-3] INFO  d.s.c.l.s.C4TextDocumentService - <-- getDiagnostics
+00:52:56.130 [ForkJoinPool.commonPool-worker-4] INFO  d.s.c.l.s.C4TextDocumentService - <-- getDocument
+00:52:56.131 [ForkJoinPool.commonPool-worker-4] ERROR d.s.c.l.s.C4TextDocumentService - textDecorations == null
+00:52:56.272 [pool-1-thread-1] INFO  d.s.c.ls.service.C4WorkspaceService - didChangeWatchedFiles
+00:52:56.292 [pool-1-thread-1] INFO  d.s.c.l.s.C4TextDocumentService - codeLens
+00:52:56.292 [ForkJoinPool.commonPool-worker-4] INFO  d.s.c.l.s.C4TextDocumentService - --> getDocument
+00:52:56.292 [ForkJoinPool.commonPool-worker-4] INFO  d.s.c.l.s.C4TextDocumentService - <-- getDocument
+00:52:56.340 [pool-1-thread-1] INFO  d.s.c.l.s.C4TextDocumentService - semanticTokensFull
+00:52:56.341 [ForkJoinPool.commonPool-worker-4] INFO  d.s.c.l.s.C4TextDocumentService - --> getDocument
+00:52:56.341 [ForkJoinPool.commonPool-worker-4] INFO  d.s.c.l.s.C4TextDocumentService - <-- getDocument
+00:52:57.041 [pool-1-thread-1] INFO  d.s.c.l.s.C4TextDocumentService - documentColor
+00:52:57.042 [ForkJoinPool.commonPool-worker-4] INFO  d.s.c.l.s.C4TextDocumentService - --> getDocument
+00:52:57.042 [ForkJoinPool.commonPool-worker-4] INFO  d.s.c.l.s.C4TextDocumentService - <-- getDocument
+00:53:41.000 [pool-1-thread-1] INFO  d.s.c.l.s.C4TextDocumentService - codeLens
+00:53:41.001 [ForkJoinPool.commonPool-worker-4] INFO  d.s.c.l.s.C4TextDocumentService - --> getDocument
+00:53:41.002 [ForkJoinPool.commonPool-worker-4] INFO  d.s.c.l.s.C4TextDocumentService - <-- getDocument
+00:53:48.427 [pool-1-thread-1] INFO  d.s.c.l.s.C4TextDocumentService - didClose file:///Users/mac/Documents/_Projects/SSQ-site/docs/architecture/c4/workspace.dsl
+00:54:28.817 [pool-1-thread-1] INFO  d.s.c.ls.service.C4WorkspaceService - didChangeWatchedFiles
+00:55:22.677 [pool-1-thread-1] INFO  d.s.c.ls.service.C4WorkspaceService - didChangeWatchedFiles
+00:55:23.980 [pool-1-thread-1] INFO  d.s.c.ls.service.C4WorkspaceService - didChangeWatchedFiles
+00:56:08.645 [pool-1-thread-1] INFO  d.s.c.ls.service.C4WorkspaceService - didChangeWatchedFiles
+00:56:43.253 [pool-1-thread-1] INFO  d.s.c.ls.service.C4WorkspaceService - didChangeWatchedFiles
+00:57:39.788 [pool-1-thread-1] INFO  d.s.c.ls.service.C4WorkspaceService - didChangeWatchedFiles
+00:58:28.715 [pool-1-thread-1] INFO  d.s.c.ls.service.C4WorkspaceService - didChangeWatchedFiles
+00:58:29.660 [pool-1-thread-1] INFO  d.s.c.ls.service.C4WorkspaceService - didChangeWatchedFiles
+00:59:09.911 [pool-1-thread-1] INFO  d.s.c.ls.service.C4WorkspaceService - didChangeWatchedFiles
+00:59:11.071 [pool-1-thread-1] INFO  d.s.c.ls.service.C4WorkspaceService - didChangeWatchedFiles
+00:59:54.167 [pool-1-thread-1] INFO  d.s.c.ls.service.C4WorkspaceService - didChangeWatchedFiles
+01:03:45.759 [pool-1-thread-1] INFO  d.s.c.l.s.C4TextDocumentService - didOpen file:///Users/mac/Documents/_Projects/SSQ-site/docs/architecture/c4/workspace.dsl
+01:03:45.761 [ForkJoinPool.commonPool-worker-5] INFO  d.s.c.l.s.C4TextDocumentService - --> getDiagnostics 2
+01:03:45.781 [pool-1-thread-1] INFO  d.s.c.l.s.C4TextDocumentService - documentColor
+01:03:45.782 [ForkJoinPool.commonPool-worker-6] INFO  d.s.c.ls.service.C4WorkspaceService - executeCommand c4-server.text-decorations
+01:03:45.782 [ForkJoinPool.commonPool-worker-6] INFO  d.s.c.l.s.C4TextDocumentService - textDecorations
+01:03:45.782 [pool-1-thread-1] INFO  d.s.c.l.s.C4TextDocumentService - semanticTokensFull
+01:03:45.783 [ForkJoinPool.commonPool-worker-6] INFO  d.s.c.l.s.C4TextDocumentService - --> getDocument
+01:03:45.782 [ForkJoinPool.commonPool-worker-7] INFO  d.s.c.l.s.C4TextDocumentService - --> getDocument
+01:03:45.783 [ForkJoinPool.commonPool-worker-8] INFO  d.s.c.l.s.C4TextDocumentService - --> getDocument
+01:03:45.879 [ForkJoinPool.commonPool-worker-6] INFO  d.s.c.l.s.C4TextDocumentService - <-- getDocument
+01:03:45.879 [ForkJoinPool.commonPool-worker-5] INFO  d.s.c.l.s.C4TextDocumentService - <-- getDiagnostics
+01:03:45.880 [ForkJoinPool.commonPool-worker-7] INFO  d.s.c.l.s.C4TextDocumentService - <-- getDocument
+01:03:45.880 [ForkJoinPool.commonPool-worker-8] INFO  d.s.c.l.s.C4TextDocumentService - <-- getDocument
+01:03:46.024 [pool-1-thread-1] INFO  d.s.c.l.s.C4TextDocumentService - codeLens
+01:03:46.025 [ForkJoinPool.commonPool-worker-6] INFO  d.s.c.l.s.C4TextDocumentService - --> getDocument
+01:03:46.025 [ForkJoinPool.commonPool-worker-6] INFO  d.s.c.l.s.C4TextDocumentService - <-- getDocument
+01:03:57.578 [ForkJoinPool.commonPool-worker-6] INFO  d.s.c.ls.service.C4WorkspaceService - executeCommand c4-server.text-decorations
+01:03:57.579 [ForkJoinPool.commonPool-worker-6] INFO  d.s.c.l.s.C4TextDocumentService - textDecorations
+01:03:57.582 [ForkJoinPool.commonPool-worker-6] INFO  d.s.c.l.s.C4TextDocumentService - --> getDocument
+01:03:57.582 [ForkJoinPool.commonPool-worker-6] INFO  d.s.c.l.s.C4TextDocumentService - <-- getDocument
+01:03:57.859 [pool-1-thread-1] INFO  d.s.c.l.s.C4TextDocumentService - codeLens
+01:03:57.859 [ForkJoinPool.commonPool-worker-6] INFO  d.s.c.l.s.C4TextDocumentService - --> getDocument
+01:03:57.859 [ForkJoinPool.commonPool-worker-6] INFO  d.s.c.l.s.C4TextDocumentService - <-- getDocument
+11:56:27.503 [pool-1-thread-1] INFO  d.s.c.l.s.C4TextDocumentService - codeLens
+11:56:27.536 [ForkJoinPool.commonPool-worker-9] INFO  d.s.c.l.s.C4TextDocumentService - --> getDocument
+11:56:27.541 [ForkJoinPool.commonPool-worker-9] INFO  d.s.c.l.s.C4TextDocumentService - <-- getDocument
+11:56:40.337 [pool-1-thread-1] INFO  d.s.c.l.s.C4TextDocumentService - didClose file:///Users/mac/Documents/_Projects/SSQ-site/docs/architecture/c4/workspace.dsl
+12:34:09.303 [pool-1-thread-1] INFO  d.s.c.ls.service.C4WorkspaceService - didChangeWatchedFiles

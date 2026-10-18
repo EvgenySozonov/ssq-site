@@ -8,5 +8,10 @@
 .env
 node_modules/
 dist/
+
+# astro scaffold target
+site/node_modules/
+site/dist/
+site/.astro/
 # Structurizr Lite runtime artifacts
 /docs/architecture/c4/.structurizr/

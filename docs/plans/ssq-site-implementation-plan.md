@@ -44,7 +44,7 @@
 **Interfaces:**
 - Produces: `BaseLayout.astro` с пропсами `{ title: string; description?: string; og?: boolean }` — им пользуются все следующие задачи; токены секции §5 спеки доступны как CSS-переменные (`--color-bg`, `--color-accent`, `--font-display`, `--font-mono` и т.д.).
 
-- [ ] **Шаг 1: Инициализировать git и первый коммит текущего состояния**
+- [x] **Шаг 1: Инициализировать git и первый коммит текущего состояния**
 
 ```bash
 cd /Users/mac/Documents/_Projects/SSQ-site
@@ -55,13 +55,13 @@ git commit -m "docs: спека и документация сайта; рефе
 
 `.env` не добавляется (проверить: `git status` — не в списке).
 
-- [ ] **Шаг 2: Скаффолд Astro**
+- [x] **Шаг 2: Скаффолд Astro**
 
 ```bash
 npm create astro@latest site -- --template minimal --typescript strict --install --no-git --yes
 ```
 
-- [ ] **Шаг 3: Tailwind v4 + Prettier**
+- [~] **Шаг 3: Tailwind v4 + Prettier** _(частично: tailwind+prettier готовы; ESLint-блок ждёт решения владельца по jsx-a11y: классический плагин не поддерживает ESLint 10)_
 
 ```bash
 cd site
@@ -129,7 +129,7 @@ export default tseslint.config(
 
 Первый прогон `npm run lint` обязателен ещё до Task 2; замечания a11y-правил в шаблонах `.astro` — не глушить без комментария-объяснения (qa.md «Доступность и рендер»).
 
-- [ ] **Шаг 4: Токены и глобальные стили**
+- [x] **Шаг 4: Токены и глобальные стили** _(правка против плана: в global.css добавлен @import "./tokens.css" — без него Tailwind v4 не генерил утилиты; проверено билдом)_
 
 `site/src/styles/tokens.css` (значения — дословно из спеки §5):
 
@@ -166,7 +166,7 @@ body {
 }
 ```
 
-- [ ] **Шаг 5: BaseLayout.astro**
+- [x] **Шаг 5: BaseLayout.astro**
 
 `site/src/layouts/BaseLayout.astro` — полностью:
 
@@ -217,7 +217,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 <BaseLayout title="Умный квадрат"><div class="p-10">Каркас собран</div></BaseLayout>
 ```
 
-- [ ] **Шаг 6: Проверка**
+- [x] **Шаг 6: Проверка** _(build ✓, format:check ✓, скриншот task1-acceptance.png — фон #101014/медь #c9a15a/Manrope ✓)_
 
 ```bash
 cd site && npx astro build
@@ -226,7 +226,7 @@ cd site && npx astro build
 Expected: сборка без ошибок; открыть `dist/index.html` в браузере — тёмный фон, медная метка `SSQ //.`
 Также: `npm run format && npm run format:check` — проходит.
 
-- [ ] **Шаг 7: Синхронизировать docs и закоммитить**
+- [~] **Шаг 7: Синхронизировать docs и закоммитить** _(докс синхронизированы; коммит ниже)_
 
 В `docs/architecture.md` заменить `astro-pages/` на `site/`; в `.gitignore` дописать `site/node_modules/`, `site/dist/`, `site/.astro/`.
 

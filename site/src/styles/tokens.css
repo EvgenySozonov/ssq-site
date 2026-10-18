@@ -1,0 +1,13 @@
+@theme {
+  --color-bg: #101014;
+  --color-surface: #17191d;
+  --color-text: #eceae6;
+  --color-text-muted: #9a9a9a;
+  --color-accent: #c9a15a;
+  --color-accent-contrast: #101014;
+  --color-line: #2a2d33;
+  --radius-s: 2px;
+  --font-display: "Lora", Georgia, serif;
+  --font-sans: "Manrope", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+}

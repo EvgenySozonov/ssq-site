@@ -1,0 +1,22 @@
+- generic [active] [ref=e1]:
+  - banner [ref=e2]:
+    - navigation [ref=e3]:
+      - link "SSQ //" [ref=e4] [cursor=pointer]:
+        - /url: /
+      - list [ref=e5]:
+        - listitem [ref=e6]:
+          - link "Услуги" [ref=e7] [cursor=pointer]:
+            - /url: /services/
+        - listitem [ref=e8]:
+          - link "Цены" [ref=e9] [cursor=pointer]:
+            - /url: /pricing/
+        - listitem [ref=e10]:
+          - link "Работы" [ref=e11] [cursor=pointer]:
+            - /url: /portfolio/
+        - listitem [ref=e12]:
+          - link "Контакты" [ref=e13] [cursor=pointer]:
+            - /url: /contacts/
+  - main [ref=e14]:
+    - generic [ref=e15]: Каркас собран
+  - contentinfo [ref=e16]:
+    - paragraph [ref=e17]: Умный квадрат · электромонтаж и умный дом · Москва и область

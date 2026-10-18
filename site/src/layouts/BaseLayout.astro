@@ -1,0 +1,64 @@
+---
+interface Props {
+  title: string;
+  description?: string;
+}
+const {
+  title,
+  description = "Электромонтаж и умный дом под ключ — проект, монтаж, автоматизация. Москва и область. Гарантия по договору.",
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title} — Умный квадрат</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={new URL(Astro.url.pathname, Astro.site)} />
+    <meta name="theme-color" content="#101014" />
+    <style>
+      @import "../styles/global.css";
+    </style>
+  </head>
+  <body class="bg-bg text-text font-sans font-normal">
+    <header class="border-b border-line">
+      <nav class="mx-auto flex max-w-5xl items-center justify-between px-5 py-4">
+        <a href="/" class="font-mono text-sm tracking-[0.2em] text-accent uppercase">
+          SSQ //
+        </a>
+        <ul class="flex gap-6 font-mono text-xs uppercase tracking-[0.15em] text-text-muted">
+          <li>
+            <a href="/services/" class="hover:text-text">
+              Услуги
+            </a>
+          </li>
+          <li>
+            <a href="/pricing/" class="hover:text-text">
+              Цены
+            </a>
+          </li>
+          <li>
+            <a href="/portfolio/" class="hidden sm:list-item hover:text-text">
+              Работы
+            </a>
+          </li>
+          <li>
+            <a href="/contacts/" class="text-text">
+              Контакты
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </header>
+    <main>
+      <slot />
+    </main>
+    <footer class="border-t border-line py-8 text-center font-mono text-xs text-text-muted">
+      <slot name="footer">
+        <p>Умный квадрат · электромонтаж и умный дом · Москва и область</p>
+      </slot>
+    </footer>
+  </body>
+</html>
