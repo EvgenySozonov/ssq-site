@@ -1,0 +1,13 @@
+{
+  "source_path": "/Users/mac/Documents/_Projects/SSQ-site/docs/plan.md",
+  "type": "DOC",
+  "confidence": "medium",
+  "manifest_override": false,
+  "title": "Назначение файла",
+  "summary": "Индекс порядка реализации сайта: 13 шагов первого релиза и после него со ссылками на детальный план-файл.",
+  "scope": ["порядок реализации", "первый релиз", "Astro", "деплой", "блог", "калькулятор"],
+  "cross_refs": ["plans/ssq-site-implementation-plan.md", "architecture.md", "product.md", "specs/ssq-site-stack-design.md"],
+  "locked": false,
+  "precedence": null,
+  "notes": "Дорожная карта/индекс шагов со статусами; нет Decision/Consequences, user stories, acceptance criteria или схем/эндпоинтов — по таксономии DOC. Не UNKNOWN, так как назначение (план-индекс) выражено явно."
+}

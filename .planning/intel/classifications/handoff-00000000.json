@@ -1,0 +1,13 @@
+{
+  "source_path": "/Users/mac/Documents/_Projects/SSQ-site/docs/handoff.md",
+  "type": "DOC",
+  "confidence": "medium",
+  "manifest_override": false,
+  "title": "Назначение файла",
+  "summary": "Handoff/status snapshot of project state as of 2026-10-16: what exists, session decisions, next step, open questions, infrastructure status.",
+  "scope": ["project status snapshot", "Astro stack", "Python CGI form", "Beget Shared", "implementation plan", "open questions"],
+  "cross_refs": ["product.md", "architecture.md", "plan.md", "memory.md", "content/strategy.md", "docs/specs/ssq-site-stack-design.md", "docs/plans/ssq-site-implementation-plan.md", "example/index.html"],
+  "locked": false,
+  "precedence": null,
+  "notes": "No ADR/PRD/SPEC signals: no status field, no decision/consequences structure, no user stories or acceptance criteria. Prose project-state handoff notes listing decisions made elsewhere — context only. Filename carries no type convention, hence medium not high."
+}

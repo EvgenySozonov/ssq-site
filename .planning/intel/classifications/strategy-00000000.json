@@ -1,0 +1,13 @@
+{
+  "source_path": "/Users/mac/Documents/_Projects/SSQ-site/docs/content/strategy.md",
+  "type": "DOC",
+  "confidence": "medium",
+  "manifest_override": false,
+  "title": "Назначение файла",
+  "summary": "Позиционирование компании «Умный квадрат», проверяемые стандарты доверия, факты и правила честности для продающих текстов сайта.",
+  "scope": ["позиционирование", "страница /about/", "секция доверия главной", "правовое лицо ИП", "правила честности", "политика ПДн"],
+  "cross_refs": ["../product.md", "../design.md", "../plan.md"],
+  "locked": false,
+  "precedence": null,
+  "notes": "Прозаический контент-стратегический документ: формулировки для сайта, факты, правила честности. Нет Decision/Consequences, нет user stories/acceptance criteria, нет endpoint/schema-сигналов → DOC (context only). Много незакрытых пунктов ⏳ (цифры и реквизиты не утверждены)."
+}

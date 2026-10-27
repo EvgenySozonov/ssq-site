@@ -1,0 +1,13 @@
+{
+  "source_path": "/Users/mac/Documents/_Projects/SSQ-site/docs/reports/2026-10-18-отчет-приемки-в-репо.md",
+  "type": "DOC",
+  "confidence": "medium",
+  "manifest_override": false,
+  "title": "Назначение файла",
+  "summary": "Acceptance report for repo state at end of 2026-10-18: accepted commits, gate results, open debts.",
+  "scope": ["acceptance report", "contact form", "CGI endpoint", "e2e tests", "deploy gates", "Playwright MCP"],
+  "cross_refs": ["../handoff.md", "../about.md", "../content/strategy.md"],
+  "locked": false,
+  "precedence": null,
+  "notes": "Acceptance/report document in docs/reports/; no frontmatter, no Decision/Consequences sections, no user stories, no schemas. Prose + gate checklist and open debts → DOC (context only). Filename slug used without SHA-256 suffix because no hashing tool (Bash) is available to this agent; original suffix 'sourcehash-unavailable' marks the deviation."
+}

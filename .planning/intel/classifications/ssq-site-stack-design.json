@@ -1,0 +1,13 @@
+{
+  "source_path": "/Users/mac/Documents/_Projects/SSQ-site/docs/specs/ssq-site-stack-design.md",
+  "type": "SPEC",
+  "confidence": "high",
+  "manifest_override": false,
+  "title": "Спека: сайт «Умный квадрат» (SSQ-site)",
+  "summary": "Техническая спека реализации сайта: маршруты, схемы данных, контракт формы CGI→Telegram, дизайн-токены, SEO и деплой на Beget Shared.",
+  "scope": ["Astro SSG", "React-острова", "TypeScript strict", "Tailwind v4", "lines.json", "MDX-коллекции", "форма заявки CGI", "Telegram Bot API", "SEO", "деплой rsync Beget"],
+  "cross_refs": ["../memory.md", "../product.md", "../architecture.md", "../design.md", "../plan.md", "../test-case.md", "../qa.md"],
+  "locked": false,
+  "precedence": null,
+  "notes": ""
+}

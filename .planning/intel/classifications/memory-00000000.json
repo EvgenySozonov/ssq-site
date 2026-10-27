@@ -1,0 +1,13 @@
+{
+  "source_path": "/Users/mac/Documents/_Projects/SSQ-site/docs/memory.md",
+  "type": "ADR",
+  "confidence": "medium",
+  "manifest_override": false,
+  "title": "Назначение файла (лог ключевых решений проекта с обоснованием)",
+  "summary": "Хронологический лог ключевых проектных решений со trade-off обоснованием: стек, хостинг, форма CGI, ESLint, тулинг качества, дизайн, копирайтинг.",
+  "scope": ["decision log", "Astro stack", "Beget Shared hosting", "Python CGI form", "ESLint flat config", "permissions policy", "C4 Structurizr", "design system «Ночная медь»", "152-ФЗ"],
+  "cross_refs": ["docs/architecture.md", "docs/design.md", "docs/handoff.md", "docs/about.md", "content/strategy.md", "docs/architecture/c4/workspace.dsl"],
+  "locked": false,
+  "precedence": null,
+  "notes": "Multi-decision log (many dated decisions with trade-offs and rejected alternatives — strong ADR-like content), but not a single-decision ADR: no Status field, no Context/Decision/Consequences sections, no frontmatter. locked=false because no Accepted status present. source_hash placeholder 00000000 — no hash tool available in this agent; slug part disambiguates."
+}

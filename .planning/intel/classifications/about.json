@@ -1,0 +1,13 @@
+{
+  "source_path": "/Users/mac/Documents/_Projects/SSQ-site/docs/about.md",
+  "type": "DOC",
+  "confidence": "high",
+  "manifest_override": false,
+  "title": "Назначение файла",
+  "summary": "Contextual documentation of the project's AI environment: stack of agent tools, path-scoped rules, project skills, and verification evidence.",
+  "scope": ["AI environment", "Claude Code", "graft", "claude-mem", "superpowers", "Playwright MCP", "path-scoped rules", "project skills", "hook evidence"],
+  "cross_refs": ["content/strategy.md", "README.md", "CLAUDE.md"],
+  "locked": false,
+  "precedence": null,
+  "notes": ""
+}

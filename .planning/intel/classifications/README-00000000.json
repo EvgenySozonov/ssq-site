@@ -1,0 +1,13 @@
+{
+  "source_path": "/Users/mac/Documents/_Projects/SSQ-site/docs/architecture/c4/README.md",
+  "type": "DOC",
+  "confidence": "medium",
+  "manifest_override": false,
+  "title": "C4-модель сайта (Structurizr DSL)",
+  "summary": "Runbook for rendering and maintaining the C4 architecture model (workspace.dsl) via Structurizr in Docker.",
+  "scope": ["C4 model", "Structurizr DSL", "workspace.dsl", "Docker", "Astro SSG", "CGI contact.py", "Beget deployment"],
+  "cross_refs": ["../../specs/ssq-site-stack-design.md", "../../qa.md", "workspace.dsl"],
+  "locked": false,
+  "precedence": null,
+  "notes": "Source hash omitted (no hashing tool available in allowed tool set); filename slug suffixed 00000000. Prose runbook + view table; no Decision/Consequences, no requirements, no API/schema contract — DOC, context only."
+}

@@ -1,0 +1,13 @@
+{
+  "source_path": "/Users/mac/Documents/_Projects/SSQ-site/docs/design.md",
+  "type": "SPEC",
+  "confidence": "medium",
+  "manifest_override": false,
+  "title": "Дизайн-система сайта: палитра, шрифты, композиция, компоненты",
+  "summary": "Design-system constraints for the SSQ site: dark palette, Lora/Manrope/JetBrains Mono fonts, hero composition, homepage section structure, and token/CSS rules.",
+  "scope": ["дизайн-система", "палитра «Ночная медь»", "типографика", "Hero-композиция", "структура главной", "CSS-токены tokens.css", "Astro-компоненты"],
+  "cross_refs": ["product.md", "architecture.md", "plan.md", "content/strategy.md", "/example/index.html"],
+  "locked": false,
+  "precedence": null,
+  "notes": "Content-signal classification only (no filename/frontmatter convention). Reads as implementation contract: fixed dated decisions, token/CSS rules, prefers-reduced-motion constraint, per-component structure → SPEC, not prose DOC. No ADR status markers, no user stories, so not ADR/PRD. File hash computed as unavailable in this tool environment (no Bash); used literal 00000000 placeholder in filename."
+}

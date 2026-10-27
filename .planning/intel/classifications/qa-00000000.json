@@ -1,0 +1,13 @@
+{
+  "source_path": "/Users/mac/Documents/_Projects/SSQ-site/docs/qa.md",
+  "type": "DOC",
+  "confidence": "medium",
+  "manifest_override": false,
+  "title": "Назначение файла",
+  "summary": "QA-правила ручного и автоматического тестирования сайта: гейты (astro check, lint, vitest), сценарии формы, 152-ФЗ, доступность.",
+  "scope": ["тестирование", "astro check", "ESLint", "vitest", "Playwright", "форма Telegram", "152-ФЗ", "доступность WCAG"],
+  "cross_refs": ["test-case.md", "plan.md", "memory.md", "architecture.md"],
+  "locked": false,
+  "precedence": null,
+  "notes": "No ADR/PRD hallmarks. Contains concrete verification gates and test scenarios (process contract for QA) but no endpoint/schema/API contracts; classified as runbook-style DOC (context/process rules). If the manifest prefers gating rules as SPEC constraints, override to SPEC is defensible."
+}

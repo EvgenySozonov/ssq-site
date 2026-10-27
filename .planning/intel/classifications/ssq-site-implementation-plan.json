@@ -1,0 +1,13 @@
+{
+  "source_path": "/Users/mac/Documents/_Projects/SSQ-site/docs/plans/ssq-site-implementation-plan.md",
+  "type": "SPEC",
+  "confidence": "medium",
+  "manifest_override": false,
+  "title": "План реализации сайта «Умный квадрат» (первый релиз)",
+  "summary": "Task-by-task implementation plan for the Astro static site: scaffolding, tokens, pages, JSON data, CGI form, and Beget deploy.",
+  "scope": ["Astro SSG", "site/", "Tailwind v4", "zod", "Python CGI форма", "Telegram", "Beget Shared", "lines.json", "tokens.css"],
+  "cross_refs": ["docs/specs/ssq-site-stack-design.md", "docs/content/strategy.md", "docs/design.md", "docs/architecture.md", "example/index.html"],
+  "locked": false,
+  "precedence": null,
+  "notes": "Executable plan (goal, architecture, tech stack, task checkboxes with commands and test hooks). Not an ADR (no status/decision) and not a PRD (no user stories). Fits SPEC as an implementation contract with technical constraints; ambiguity recorded because generic 'plan' is outside the five-type taxonomy."
+}

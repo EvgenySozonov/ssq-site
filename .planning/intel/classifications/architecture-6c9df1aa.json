@@ -1,0 +1,13 @@
+{
+  "source_path": "/Users/mac/Documents/_Projects/SSQ-site/docs/architecture.md",
+  "type": "SPEC",
+  "confidence": "medium",
+  "manifest_override": false,
+  "title": "architecture.md",
+  "summary": "Техническая спецификация сайта: стек (Astro + React-острова), карта маршрутов, структура репозитория, модель JSON-данных, CGI-форма, SEO и деплой на Beget.",
+  "scope": ["Astro", "React-острова", "Tailwind CSS v4", "Content Collections", "lines.json", "CGI-форма contact.py", "Telegram", "Beget Shared", "деплой", "SEO", "маршруты"],
+  "cross_refs": ["architecture/c4/README.md", "product.md", "design.md", "plan.md", "memory.md"],
+  "locked": false,
+  "precedence": null,
+  "notes": "No frontmatter. SPEC signals dominant: route map, repo/data structure, data schemas (JSON fields), endpoint (CGI contact.py), deploy contract. Contains a stack decision statement ('решение от 2026-10-16') with rationale referenced to memory.md (single ADR-like signal, not Context/Decision/Consequences structure) — insufficient for ADR. Classified SPEC, medium confidence."
+}

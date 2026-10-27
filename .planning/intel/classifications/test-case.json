@@ -1,0 +1,13 @@
+{
+  "source_path": "/Users/mac/Documents/_Projects/SSQ-site/docs/test-case.md",
+  "type": "DOC",
+  "confidence": "medium",
+  "manifest_override": false,
+  "title": "Назначение файла",
+  "summary": "Acceptance-test scenarios per implementation step for the site: page rendering, form to Telegram, deploy, photos.",
+  "scope": ["acceptance scenarios", "lines.json", "contact form", "Telegram", "Playwright", "vitest", "deploy.sh", "Beget", "CLS"],
+  "cross_refs": ["qa.md", "plan.md"],
+  "locked": false,
+  "precedence": null,
+  "notes": "Filename 'test-case' is not a type convention. Content is step-by-step acceptance/verification scenarios — QA checklist, not requirements or contracts. Classified as DOC (context only); user may re-tag via manifest."
+}

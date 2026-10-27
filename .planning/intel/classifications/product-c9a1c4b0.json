@@ -1,0 +1,13 @@
+{
+  "source_path": "/Users/mac/Documents/_Projects/SSQ-site/docs/product.md",
+  "type": "PRD",
+  "confidence": "high",
+  "manifest_override": false,
+  "title": "Назначение файла",
+  "summary": "Product description for the SSQ smart-home/electrical services site: goals, audience, service structure, features, and first-release success criteria.",
+  "scope": ["site «Умный квадрат» (SSQ)", "электромонтаж", "умный дом", "portfolio", "pricing", "заявка форма → Telegram", "152-ФЗ consent", "lines.json", "Astro"],
+  "cross_refs": ["architecture.md", "design.md", "plan.md", "example/index.html", "data/services/lines.json"],
+  "locked": false,
+  "precedence": null,
+  "notes": ""
+}
