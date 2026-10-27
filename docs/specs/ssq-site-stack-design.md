@@ -2,7 +2,7 @@
 
 - Дата: 2026-10-17. Статус: на ревью владельцем.
 - Источник решений: диалог 2026-10-16 (лог — [../memory.md](../memory.md)); визуальные вариации — `.superpowers/brainstorm/`.
-- Связанные документы: [product.md](../product.md), [architecture.md](../architecture.md), [design.md](../design.md); порядок реализации — `.planning/ROADMAP.md`. Спека не дублирует их — фиксирует контракт реализации.
+- Связанные документы: [product.md](../product.md), [design.md](../design.md), `.planning/codebase/ARCHITECTURE.md` (объединённый док архитектуры, был `docs/architecture.md`); порядок реализации — `.planning/ROADMAP.md`. Спека не дублирует их — фиксирует контракт реализации.
 
 ## 1. Цель и границы
 

@@ -2,7 +2,7 @@
 
 - Дизайн-система сайта: палитра, шрифты, композиция, компоненты.
 - Решения зафиксированы в brainstorm-сессии 2026-10-16 (визуальные варианты — в `.superpowers/brainstorm/`).
-- См. также: [product.md](product.md), [architecture.md](architecture.md).
+- См. также: [product.md](product.md), [`ARCHITECTURE.md`](../.planning/codebase/ARCHITECTURE.md).
 
 # Направление
 
@@ -32,7 +32,7 @@
 
 1. Hero (full-bleed) → 2. Услуги (карточки направлений) → 3. Стандарты работы (4 проверяемых обязательства — вместо «цифр», т.к. компания новая; тексты — [strategy.md](content/strategy.md)) → 4. Процесс (5 шагов) → 5. Работы (3 последних кейса; блок выводится только при наличии кейсов) → 6. Цены (превью «от …») → 7. Отзывы (блок скрывается, пока отзывов нет) → 8. FAQ (`<details>`, без JS) → 9. CTA-футер «Обсудим ваш проект?».
 
-Каждая секция — отдельный Astro-компонент, данные из `site/src/data/` (см. [architecture.md](architecture.md)).
+Каждая секция — отдельный Astro-компонент, данные из `site/src/data/` (см. [`ARCHITECTURE.md`](../.planning/codebase/ARCHITECTURE.md)).
 
 # Правила
 

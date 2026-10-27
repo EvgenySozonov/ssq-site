@@ -27,8 +27,8 @@
 Реестр: `.planning/REQUIREMENTS.md` (6 v1-требований из `docs/product.md`).
 
 <decisions locked="owner">
-- DEC-lines-contract (2026-10-27): контракт `lines.json` = `{ slug, title, tagline, order }`; `accentColor` отклонён. Правка `docs/architecture.md` (стр. 61) — синхронно с реализацией.
-- DEC-react-deferred (2026-10-27): React вне первого релиза; калькулятор/фильтр остаются в роадмапе как будущие фазы без React-инфраструктуры; `docs/architecture.md` + `docs/memory.md` правятся синхронно.
+- DEC-lines-contract (2026-10-27): контракт `lines.json` = `{ slug, title, tagline, order }`; `accentColor` отклонён. Внесён в `.planning/codebase/ARCHITECTURE.md` 2026-10-28.
+- DEC-react-deferred (2026-10-27): React вне первого релиза; калькулятор/фильтр остаются в роадмапе как будущие фазы без React-инфраструктуры; внесён в `.planning/codebase/ARCHITECTURE.md` + `docs/memory.md` 2026-10-28.
 </decisions>
 
 ### Ключевые решения, действующие по умолчанию (источник: docs/memory.md, 2026-10-15…18; формально «proposed», работают как принятые)
@@ -51,4 +51,4 @@
 - Гейты итерации: `npm run check`, `npm run lint`, `npm run build`, `npm test` (после введения vitest); мобильные ~400px без горизонтального скролла; `prefers-reduced-motion`.
 - Секреты вне docroot: `/home/<user>/.env-ssq`; `.env` не попадает в git (только `.env.example`).
 - TS strict не ослаблять; типы из zod через `z.infer`; ESLint flat config, a11y-правила.
-- Докс = источник правды: архитектурные решения правят `docs/architecture.md`/`docs/memory.md` синхронно с кодом.
+- Докс = источник правды: архитектурные решения правят `.planning/codebase/ARCHITECTURE.md`/`docs/memory.md` синхронно с кодом.

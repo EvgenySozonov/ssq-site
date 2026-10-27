@@ -7,7 +7,7 @@
 | Документ | О чём |
 |---|---|
 | [docs/product.md](docs/product.md) | Продукт: цели, аудитория, структура услуг по направлениям |
-| [docs/architecture.md](docs/architecture.md) | Стек, карта маршрутов, данные, форма, деплой |
+| [.planning/codebase/ARCHITECTURE.md](.planning/codebase/ARCHITECTURE.md) | Архитектура (объединённый док GSD): стек, карта маршрутов, данные, форма, деплой |
 | [docs/architecture/c4/](docs/architecture/c4/README.md) | C4-модель (Structurizr DSL): контекст, контейнеры, поток заявки, деплой |
 | [docs/design.md](docs/design.md) | Дизайн-система: палитра, шрифты, композиция |
 | [.planning/ROADMAP.md](.planning/ROADMAP.md) | Порядок реализации (фазы v1.0/v1.1), GSD |

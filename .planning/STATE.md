@@ -55,8 +55,8 @@ Progress: [░░░░░░░░░░] 0%
 Decisions are logged in PROJECT.md Key Decisions table.
 Recent decisions affecting current work:
 
-- [Owner 2026-10-27] DEC-lines-contract: `lines.json` = `{ slug, title, tagline, order }`; accentColor отклонён; править docs/architecture.md (стр. 61) синхронно (Phase 1).
-- [Owner 2026-10-27] DEC-react-deferred: React вне первого релиза; калькулятор/фильтр — будущие фазы без React-инфраструктуры; docs/architecture.md + docs/memory.md правятся синхронно.
+- [Owner 2026-10-27] DEC-lines-contract: `lines.json` = `{ slug, title, tagline, order }`; accentColor отклонён; внесён в .planning/codebase/ARCHITECTURE.md 2026-10-28.
+- [Owner 2026-10-27] DEC-react-deferred: React вне первого релиза; калькулятор/фильтр — будущие фазы без React-инфраструктуры; внесён в .planning/codebase/ARCHITECTURE.md + docs/memory.md 2026-10-28.
 
 ### Pending Todos
 

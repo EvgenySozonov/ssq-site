@@ -6,7 +6,7 @@ description: "Деплой SSQ-site на Beget Shared: astro build → rsync, о
 # Деплой SSQ-site на Beget Shared
 
 Источники решений: `docs/specs/ssq-site-stack-design.md` (§6.2, §8) и
-`docs/architecture.md`. Докс главнее скилла; при расхождении — править оба.
+`.planning/codebase/ARCHITECTURE.md`. Докс главнее скилла; при расхождении — править оба.
 
 > Примечание: в спеке нет отдельного файла deploy-документации; скилл — первая
 > выжимка. Держать в синхроне со специ.

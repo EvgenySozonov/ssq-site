@@ -5,7 +5,7 @@ description: "Контракт формы заявок SSQ-site: клиентс�
 
 # Форма заявок SSQ-site — контракт
 
-Источники решений: `docs/specs/ssq-site-stack-design.md` (§6) и `docs/architecture.md`
+Источники решений: `docs/specs/ssq-site-stack-design.md` (§6) и `.planning/codebase/ARCHITECTURE.md`
 («Форма и заявки»). Докс главнее скилла; при расхождении — править оба и сказать
 владельцу. Проверки формы после любых правок: qa.md, раздел «Форма».
 

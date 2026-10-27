@@ -5,7 +5,7 @@ description: "TypeScript strict в SSQ-site: конфиг Astro strict-mode, т�
 
 # TypeScript strict — SSQ-site
 
-Источники решений: `docs/architecture.md` («TypeScript (strict)») и
+Источники решений: `.planning/codebase/ARCHITECTURE.md` («TypeScript (strict)») и
 `docs/specs/ssq-site-stack-design.md` (§2, «TypeScript, strict»). Докс там
 главнее скилла; при расхождении — править оба и сказать владельцу. Скилл —
 правила применения strict-режима; общего TS-документа в проекте нет, при

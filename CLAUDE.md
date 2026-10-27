@@ -93,4 +93,4 @@ python3 -m http.server 8000   # → http://localhost:8000
 
 # Конвенции
 
-- Описсание приведено в docs/architecture.md
+- Описсание приведено в .planning/codebase/ARCHITECTURE.md (бывш. docs/architecture.md, объединён)

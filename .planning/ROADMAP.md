@@ -31,7 +31,7 @@
 Plans:
 - [ ] 01-01: TBD
 
-**Примечания**: контракт `lines.json` — DEC-lines-contract (`order`, без `accentColor`); синхронно правится `docs/architecture.md` (стр. 61). Здесь же — схемы коллекций (portfolio/blog/pricing/reviews по SCH-collections) и док-синхронизация React-формулировок (DEC-react-deferred: `docs/architecture.md` + `docs/memory.md`).
+**Примечания**: контракт `lines.json` — DEC-lines-contract (`order`, без `accentColor`); внесён в `.planning/codebase/ARCHITECTURE.md` (2026-10-28). Здесь же — схемы коллекций (portfolio/blog/pricing/reviews по SCH-collections) и React-формулировки (DEC-react-deferred, внесён 2026-10-28).
 
 ### Phase 2: Премиальная главная
 **Goal**: Главная продаёт премиальность без скидок: структура секций design.md, честный копирайтинг нового бренда, «Ночная медь» — до правового гейта и выката.
