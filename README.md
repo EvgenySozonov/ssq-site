@@ -20,22 +20,34 @@
 | [docs/content/strategy.md](docs/content/strategy.md) | Позиционирование и факты компании для страниц сайта |
 | [docs/reports/](docs/reports/) | Отчёты приёмки по датам (принято / гейты / долги) |
 
-## Стек (решение 2026-10-16, см. docs/memory.md)
+## Стек (решение 2026-10-16, уточнения 2026-10-27 — см. docs/memory.md)
 
-- **Astro** + React-острова + TypeScript + Tailwind CSS v4 — сборка в статику.
-- Контент: Content Collections (MDX) + JSON-данные (`site/src/data/`).
-- Форма заявок: Python 3 CGI-эндпоинт на хостинге (stdlib) → Telegram.
+- **Astro 7.4** + TypeScript strict + Tailwind CSS v4 — сборка в статику (исходники: `site/`).
+- React — **вне первого релиза** (решение 2026-10-27): в каркасе v1.0 React-зависимостей нет, интерактив формы — `<script>`; калькулятор/фильтр — фазы v1.1+.
+- Данные: JSON (`site/src/data/`) по контрактам spec §4 (zod-схемы — долг текущей фазы); Content Collections (MDX) — фазы портфолио/блога.
+- Форма заявок: Python 3 CGI-эндпоинт `site/public/cgi-bin/contact.py` (только stdlib) → Telegram.
 - Хостинг: Beget Shared; деплой: `astro build` → rsync по SSH.
 - Git: приватный GitHub.
 
 ## Структура репозитория
 
-- `example/` — референс старой визитки (`index.html`); исходники Astro-сайта — в `site/src/`.
+- `site/` — исходники Astro-сайта (`src/`), CGI-эндпоинт (`public/cgi-bin/contact.py`), тесты (`e2e/`, `tests/`).
+- `example/` — референс старой визитки (`index.html`); сохраняется, не мигрирует (решение из доков).
 - `docs/` — вся документация (см. таблицу выше).
+- `.planning/` — GSD Core: PROJECT, REQUIREMENTS, ROADMAP, STATE, `codebase/` (карта кодбейза), `intel/`, `archive/plans/`, `onboarding/` (обзор — [`onboarding/SUMMARY.md`](.planning/onboarding/SUMMARY.md)).
+- `.trail/` — граф кода Trail-code: индекс и learnings в `.trail/learnings/` (коммитятся); прежний `graft/` удалён при миграции 2026-10-19.
 - `.claude/` — конфигурация агента: скиллы, правила по путям, хуки, permissions (см. «Как агент работает в проекте»).
 - `.superpowers/` — артефакты brainstorm-сессий (не коммитить, в `.gitignore`).
-- `graft/` — локальный граф кода (not committed).
-- `tmp/`, `example/example/` — черновики, к коду не относятся.
+- `example/example/` — черновик-скриншот, к коду не относится.
+
+## Workflow (GSD Core)
+
+Работа ведётся по фазам из `.planning/ROADMAP.md` (4 фазы v1.0 + 3 фазы v1.1+):
+
+1. `/gsd-plan-phase 1` — план фазы (`PLAN.md` в `.planning/phases/…`).
+2. `/gsd-execute-phase 1` — исполнение (атомарные коммиты, гейты).
+3. `/gsd-verify-work` / `/gsd-ship` — приёмка и выкат.
+- Ситуативный вход: `/gsd-next` (определяет состояние и маршрут) и `/gsd-manager` (командный центр).
 
 ## Как агент работает в проекте
 
