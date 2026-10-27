@@ -10,11 +10,12 @@
 | [docs/architecture.md](docs/architecture.md) | Стек, карта маршрутов, данные, форма, деплой |
 | [docs/architecture/c4/](docs/architecture/c4/README.md) | C4-модель (Structurizr DSL): контекст, контейнеры, поток заявки, деплой |
 | [docs/design.md](docs/design.md) | Дизайн-система: палитра, шрифты, композиция |
-| [docs/plan.md](docs/plan.md) | Порядок реализации, чек-лист шагов |
+| [.planning/ROADMAP.md](.planning/ROADMAP.md) | Порядок реализации (фазы v1.0/v1.1), GSD |
+| [.planning/archive/plans/ssq-site-implementation-plan.md](.planning/archive/plans/ssq-site-implementation-plan.md) | Детальный план 13 шагов (архив, task-level детали) |
 | [docs/qa.md](docs/qa.md) | Правила тестирования до автоматизации |
 | [docs/test-case.md](docs/test-case.md) | Сценарии приёмки «что увидеть глазами» |
 | [docs/memory.md](docs/memory.md) | Лог решений с обоснованием |
-| [docs/handoff.md](docs/handoff.md) | Состояние проекта прямо сейчас |
+| [.planning/STATE.md](.planning/STATE.md) | Состояние проекта прямо сейчас (GSD) |
 | [docs/about.md](docs/about.md) | AI-среда проекта: стек, правила, скиллы, доказательства работы |
 | [docs/content/strategy.md](docs/content/strategy.md) | Позиционирование и факты компании для страниц сайта |
 | [docs/reports/](docs/reports/) | Отчёты приёмки по датам (принято / гейты / долги) |
@@ -66,5 +67,5 @@ python3 -m http.server 8000   # → http://localhost:8000
 
 ## С чего начать
 
-1. [docs/handoff.md](docs/handoff.md) — состояние «прямо сейчас» и следующий шаг.
-2. [docs/plan.md](docs/plan.md) — что за чем.
+1. [.planning/STATE.md](.planning/STATE.md) — состояние «прямо сейчас» и следующий шаг.
+2. [.planning/ROADMAP.md](.planning/ROADMAP.md) — что за чем.

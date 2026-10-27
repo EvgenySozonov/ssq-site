@@ -1,7 +1,7 @@
 # Назначение файла
 
 - Лог ключевых решений проекта с обоснованием. Даты внутри текста — принятия решений; имена файлов дат не содержат (правило нейминга из CLAUDE.md).
-- См. также: [architecture.md](architecture.md) — как это устроено; [design.md](design.md) — как выглядит; [handoff.md](handoff.md) — где сейчас.
+- См. также: [architecture.md](architecture.md) — как это устроено; [design.md](design.md) — как выглядит; `.planning/STATE.md` — где сейчас.
 
 # Решения
 
