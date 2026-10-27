@@ -33,12 +33,19 @@
 
 - `site/` — исходники Astro-сайта (`src/`), CGI-эндпоинт (`public/cgi-bin/contact.py`), тесты (`e2e/`, `tests/`).
 - `example/` — референс старой визитки (`index.html`); сохраняется, не мигрирует (решение из доков).
-- `docs/` — вся документация (см. таблицу выше).
-- `.planning/` — GSD Core: PROJECT, REQUIREMENTS, ROADMAP, STATE, `codebase/` (карта кодбейза), `intel/`, `archive/plans/`, `onboarding/` (обзор — [`onboarding/SUMMARY.md`](.planning/onboarding/SUMMARY.md)).
+- `.planning/` — вся документация, GSD Core: PROJECT, REQUIREMENTS, ROADMAP, STATE, `codebase/` (карта кодбейза), `intel/`, `archive/plans/`, `onboarding/` (обзор — [`onboarding/SUMMARY.md`](.planning/onboarding/SUMMARY.md)).
 - `.trail/` — граф кода Trail-code: индекс и learnings в `.trail/learnings/` (коммитятся); прежний `graft/` удалён при миграции 2026-10-19.
 - `.claude/` — конфигурация агента: скиллы, правила по путям, хуки, permissions (см. «Как агент работает в проекте»).
-- `.superpowers/` — артефакты brainstorm-сессий (не коммитить, в `.gitignore`).
-- `example/example/` — черновик-скриншот, к коду не относится.
+
+## Как агент работает в проекте
+
+Полное описание AI-среды и доказательства работы — [docs/about.md](docs/about.md); состав:
+
+- **Правила и границы** — `CLAUDE.md` (главный источник): границы («не удалить/не править вне проекта/не коммитить без спроса»), формат ответа, правило деплоя. Разрешительная политика — `.claude/settings.json` (allow: гейты+коммит; ask: push; deny: `.env` и разрушающие операции).
+- **Path-scoped rules** — `.claude/rules/*.md`: правило со своей зоны (`site/src/**`, `site/public/cgi-bin/**`, `docs/**`…) инжектится в контекст при обращении к файлу этой зоны — каркас Astro, strict TS, design-токены, контракт формы, секреты, синхронность доков.
+- **Скиллы** — `.claude/skills/`: 5 проектных (`ssq-astro-conventions`, `ssq-typescript-strict`, `ssq-tailwind-tokens`, `ssq-form-cgi`, `ssq-deploy-beget`) + официальный `webapp-testing` (Playwright).
+- **Стек AI-среды**: Trail-code (`.trail/` — граф кода и learnings; поиск по коду — `trail ask`/`trail grep`), claude-mem (перекрёстная сессийная память и to-do-стейт), superpowers (процессные скиллы: brainstorm → план → test-first), GSD Core (фазовый workflow — см. выше), Playwright MCP (браузерные проверки).
+- **Гейты перед завершением любой правки** — `lint`, `check`, `build`, `test:e2e`, `test:server` (команды — ниже, «Запуск для проверки»).
 
 ## Workflow (GSD Core)
 
@@ -48,14 +55,6 @@
 2. `/gsd-execute-phase 1` — исполнение (атомарные коммиты, гейты).
 3. `/gsd-verify-work` / `/gsd-ship` — приёмка и выкат.
 - Ситуативный вход: `/gsd-next` (определяет состояние и маршрут) и `/gsd-manager` (командный центр).
-
-## Как агент работает в проекте
-
-Полное описание AI-среды — [docs/about.md](docs/about.md); краткие указатели:
-
-- Правила работы и границы агента — `CLAUDE.md` (главный источник).
-- Скиллы, правила по путям, хуки — `.claude/skills/`, `.claude/rules/`, `.claude/hooks/`.
-- Памятка гейтов: `lint`, `check`, `build`, `test:e2e`, `test:server` — перед завершением любой правки (запуск — ниже, «Запуск для проверки»).
 
 ## Запуск для проверки
 

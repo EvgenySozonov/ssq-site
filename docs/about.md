@@ -6,7 +6,7 @@
 # Стек AI-среды
 
 - **Claude Code** (CLI) — основной агент; рабочие правила в `CLAUDE.md`, разрешительная политика в `.claude/settings.json` (allow: гейты+коммит; ask: push; deny: `.env`, разрушающие операции).
-- **graft** — граф кода: `graft/INDEX.md` + node-карточки; агенту запрещено искать по файлам напрямую, сначала — запрос в граф. Хуки перегоняют правки в Индекс.
+- **Trail-code** — граф кода: `.trail/` (карта узлов + learnings в `.trail/learnings/`); поиск по коду — сначала `trail ask`/`trail grep`, не перебор файлов вручную. (До 2026-10-19 — graft, миграция: `.trail/learnings/2026-10-19-migrate-ssq-site-wiring-from-graft-evgenysozonov.md`.)
 - **claude-mem** — перекрёстная сессийная память: `work_state_write/read` (канонический to-do), `mem_search` (поиск наблюдений), индекс сессии инжектится на старте.
 - **superpowers** — процессные скиллы: планирование (brainstorm → план → test-first → ревью).
 - **Playwright MCP** — браузер для e2e-испытаний и визуальной проверки (`webapp-testing`).
