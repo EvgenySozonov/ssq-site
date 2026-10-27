@@ -36,7 +36,7 @@
 
 # Стек
 
-- Полное описание стека и решений — [README.md](README.md), раздел «Стек» (Astro + React-острова + TypeScript strict + Tailwind v4, форма на Python-CGI → Telegram, Beget Shared). Дублей не плодим — README первичен.
+- Полное описание стека и решений — [README.md](README.md), раздел «Стек» (Astro 7.4 + TypeScript strict + Tailwind v4; React — вне первого релиза, форма на Python-CGI → Telegram, Beget Shared). Дублей не плодим — README первичен.
 
 # Правило нейминга файлов в проетках:
 
