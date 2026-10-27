@@ -99,3 +99,4 @@ Source doc: all from `/Users/mac/Documents/_Projects/SSQ-site/docs/memory.md` (�
 ### DEC-react-deferred
 Дословно: «React вне первого релиза: калькулятор/фильтр остаются в роадмапе как будущие фазы, React-инфраструктуры в каркасе нет; docs/architecture.md + docs/memory.md правятся синхронно с этим решением».
 Контекст: дрейф докс ↔ код (доки обещают React-острова, в коде их нет); решение снимает WARNING-2.
+> 2026-10-28: синхронная правка доков по обоим решениям выполнена (architecture.md, memory.md, plan.md, handoff.md, specs §4.6, скилл ssq-astro-conventions); классификации переименованы по канону `{slug}-{sha256(path)8}.json` — все 14.

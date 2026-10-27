@@ -6,7 +6,7 @@
 
 # Стек (решение от 2026-10-16)
 
-- **Astro** (генератор статических сайтов) + **React-острова** для интерактивности + **TypeScript** (strict).
+- **Astro** (генератор статических сайтов) + **TypeScript** (strict). React-острова — только для будущих интерактивных секций (калькулятор, фильтр портфолио), **вне первого релиза** (решение 2026-10-27 — см. [memory.md](memory.md)); в каркасе v1.0 React-зависимостей нет.
 - **Tailwind CSS v4** — стилизация; дизайн-токены как CSS-переменные (см. design.md).
 - Контент: **Content Collections** — MDX для портфолио и блога, JSON для структурированных данных.
 - Форма: **Python 3 CGI-скрипт (только stdlib) на хостинге Beget Shared** → Telegram. Никакого Node в проде.
@@ -25,7 +25,7 @@
 /portfolio/                    # работы, фильтр по направлению
 /portfolio/[slug]/             # кейс (MDX, поле line)
 /pricing/                      # цены
-/calculator/                   # калькулятор стоимости (React-остров, позже)
+/calculator/                   # калькулятор стоимости (React-остров, v1.1+) — заглушка в v1.0
 /about/                        # о компании
 /reviews/                      # отзывы
 /blog/ + /blog/[slug]/         # блог (эз-SEO, позже)
@@ -43,7 +43,7 @@
 site/
 ├── src/pages/                  # маршруты из карты выше
 ├── src/components/             # Astro-компоненты секций (hero, services-блок, process...)
-├── src/components/react/       # React-острова (калькулятор, фильтр портфолио)
+├── src/components/react/       # React-острова (калькулятор, фильтр) — v1.1+, в v1.0 каталога нет
 ├── src/layouts/Base.astro      # общий каркас страницы: head, nav, footer, meta
 ├── src/content/                # Content Collections: portfolio/*.mdx, blog/*.mdx
 ├── src/data/                   # данные:
@@ -58,7 +58,7 @@ site/
 
 # Модель данных направлений
 
-- `lines.json`: массив `{ slug, title, tagline, accentColor }`. Третье направление позже = новая запись.
+- `lines.json`: массив `{ slug, title, tagline, order }` (контракт — [specs/ssq-site-stack-design.md](specs/ssq-site-stack-design.md) §4.1; `accentColor` из этого дока отклонён владельцем 2026-10-27). Третье направление позже = новая запись.
 - `<line>.json`: список услуг `{ slug, title, summary, priceFrom?, order }`; страница услуги при наличии перелинковывается с кейсами и статьями по полю `line`.
 - Коллекции `portfolio`/`blog` (схема zod): заголовок, `line` (ссылка на направление), фото, текст.
 
@@ -83,7 +83,7 @@ site/
 
 # Конвенции
 
-- Компоненты: Astro (`src/components/`), React — только острова там, где нужна интерактивность.
+- Компоненты: Astro (`src/components/`); React — только острова там, где нужна интерактивность, и только с v1.1+ (решение 2026-10-27) — в v1.0 форма и интерактив на `<script>`.
 - Токены: все цвета/шрифты/отступы — CSS-переменные из `tokens.css`, в компонентах не хардкодить.
 - Анимации уважают `prefers-reduced-motion` (унаследовано с референса).
 - Активные данные (телефон, адрес, соцсети) — в data-файлах, не в компонентах.
