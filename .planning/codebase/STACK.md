@@ -1,6 +1,6 @@
 ---
-last_mapped_commit: 01a325d92ff12c345fd40ed162ac2b26f83cc6c2
-last_mapped_at: 2026-10-27
+last_mapped_commit: 2cfae5c18dc712ff0fa65f320ec3462adff60808
+last_mapped_at: 2026-10-28
 ---
 # Technology Stack
 
@@ -77,6 +77,28 @@ last_mapped_at: 2026-10-27
 ## CI/CD
 
 - Not detected — нет pipeline-конфигов; деплой вручную rsync
+
+## GIT
+
+- Git: приватный GitHub
+
+## Хостинг
+
+- Beget Shared 
+
+
+## Деплой
+
+- `astro build` → rsync по SSH.
+
+## Стек AI-среды
+
+- **Claude Code** (CLI) — основной агент; рабочие правила в `CLAUDE.md`, разрешительная политика в `.claude/settings.json` (allow: гейты+коммит; ask: push; deny: `.env`, разрушающие операции).
+- **Trail-code** — граф кода: `.trail/` (карта узлов + learnings в `.trail/learnings/`); поиск по коду — сначала `trail ask`/`trail grep`, не перебор файлов вручную. (До 2026-10-19 — graft, миграция: `.trail/learnings/2026-10-19-migrate-ssq-site-wiring-from-graft-evgenysozonov.md`.)
+- **claude-mem** — перекрёстная сессийная память: `work_state_write/read` (канонический to-do), `mem_search` (поиск наблюдений), индекс сессии инжектится на старте.
+- **superpowers** — процессные скиллы: планирование (brainstorm → план → test-first → ревью).
+- **GSD Core** (`@opengsd/gsd-core`, глобально) — фазовый workflow: `.planning/` (PROJECT/REQUIREMENTS/ROADMAP/STATE, карта кодбейза, phases).
+- **Playwright MCP** — браузер для e2e-испытаний и визуальной проверки (`webapp-testing`).
 
 ---
 

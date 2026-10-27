@@ -32,14 +32,16 @@ SSQ-site/
 │   └── dist/                  # сборка (gitignored артефакт)
 ├── example/                   # референс старой визитки (index.html + assets)
 ├── docs/                      # вся документация (индекс в README.md)
-│   ├── architecture.md        # первоисточник архитектуры
 │   ├── architecture/c4/       # C4-модель (Structurizr DSL)
-│   ├── design.md, product.md, plan.md, qa.md, test-case.md
-│   ├── memory.md, handoff.md, about.md
+│   ├── design.md, product.md, qa.md, test-case.md
+│   ├── memory.md              # лог решений
 │   ├── specs/ssq-site-stack-design.md
 │   ├── content/strategy.md    # материалы для контента страниц
-│   ├── img/                   # снимки AI-среды
-│   ├── plans/, reports/       # планы фаз, отчёты приёмки
+│   ├── img/                   # снимки AI-среды и приёмки
+│   └── reports/               # отчёты приёмки (2026-10-18 — с доказательствами AI-среды)
+├── .planning/codebase/        # карты GSD (этот файл и соседние; ARCHITECTURE/STACK — канонные доки)
+├── .planning/archive/plans/   # архив детального плана 13 шагов
+├── .claude/skills/            # 5 кастомных скиллов SSQ (astro, tailwind, form-cgi, deploy-beget, typescript-strict)
 ├── .planning/codebase/        # карты GSD (этот файл и соседние)
 ├── .claude/skills/            # 5 кастомных скиллов SSQ (astro, tailwind, form-cgi, deploy-beget, typescript-strict)
 ├── .trail/                    # trail-code: learnings, cache (не относится к коду)
