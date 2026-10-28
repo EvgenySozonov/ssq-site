@@ -1,0 +1,33 @@
+{
+  "contract": "1.0.0",
+  "flavor": "core",
+  "milestone": "v1.0 — (v1.1 и далее — будущие фазы)",
+  "phases": [
+    {
+      "number": "1",
+      "name": "Данные и каркас услуг",
+      "status": "pending"
+    },
+    {
+      "number": "2",
+      "name": "Премиальная главная",
+      "status": "pending"
+    },
+    {
+      "number": "3",
+      "name": "Страницы релиза и SEO",
+      "status": "pending"
+    },
+    {
+      "number": "4",
+      "name": "Правовой гейт 152-ФЗ и выкат",
+      "status": "pending"
+    }
+  ],
+  "next": {
+    "command": "/gsd-progress --next",
+    "label": "Advance to the next step",
+    "reason": "Phase 1 of 4 · executing"
+  },
+  "updated_at": "2026-10-28T21:27:16.097Z"
+}
