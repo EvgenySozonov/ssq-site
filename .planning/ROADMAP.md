@@ -26,10 +26,17 @@
   2. Тест добавляемости зелёный: строка `{ slug, title, tagline, order }` в `lines.json` собирает раздел `/services/<slug>/` с услугами без правки кода.
   3. Гейт `npm test` (vitest) существует в `site/package.json` и зелёный: zod-схемы (`lib/data.ts`) lines.json / услуг / pricing.json, инварианты (slug kebab-case и уникален, `priceFrom: 0` → «по смете»).
   4. `site.json` приведён к контракту спеки §4.6 (`phone`, `email`, `address`, `workingHours`, `telegram`, `phoneHref`); контакты и эндпоинт нигде не хардкодятся.
-**Plans**: TBD
+**Plans**: 3 plans
 
 Plans:
-- [ ] 01-01: TBD
+**Wave 1**
+- [ ] 01-01-PLAN.md — гейт vitest (npm test) + контрактный слой lib/data.ts: zod-схемы §4.1–§4.6, инварианты D-02/D-06/D-07, тест добавляемости на чистых функциях (checkpoint: легитимность vitest)
+
+**Wave 2** *(blocked on Wave 1 completion)*
+- [ ] 01-02-PLAN.md — данные услуг D-01…D-05 (lines/elektromontazh/umniy-dom/pricing.json) + каркас /services/, [line]/, [line]/[service]/ на getStaticPaths поверх glob-лоадеров
+
+**Wave 3** *(blocked on Wave 2 completion)*
+- [ ] 01-03-PLAN.md — site.json до контракта §4.6 + де-хардкод contacts.astro + финальная human-check приёмка test-case.md шаг 1
 
 **Примечания**: контракт `lines.json` — DEC-lines-contract (`order`, без `accentColor`); внесён в `.planning/codebase/ARCHITECTURE.md` (2026-10-28). Здесь же — схемы коллекций (portfolio/blog/pricing/reviews по SCH-collections) и React-формулировки (DEC-react-deferred, внесён 2026-10-28).
 
@@ -87,7 +94,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Данные и каркас услуг | 0/TBD | Not started | - |
+| 1. Данные и каркас услуг | 0/3 | Not started | - |
 | 2. Премиальная главная | 0/TBD | Not started | - |
 | 3. Страницы релиза и SEO | 0/TBD | Not started | - |
 | 4. Правовой гейт 152-ФЗ и выкат | 0/TBD | Not started | - |
