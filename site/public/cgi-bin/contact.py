@@ -6,15 +6,20 @@
 
 Логика: POST (JSON или form-encoded) → валидация → доставка в Telegram Bot API.
 - Honeypot заполнен → маскированный успех (200 {ok:true}), заявка не доставляется.
-- Нарушение лимита / валидации → 400 {ok:false, error: «...»} — текст русский, дружелюбный.
+- Origin/Referer вне разрешённых (строгий гейт) → 400 {ok:false} — POST принимается
+  только с сайта, прямой скриптовый POST без заголовков отклоняется.
+- Нарушение лимита / валидации / лимитов длины → 400 {ok:false, error: «...»} —
+  текст русский, дружелюбный.
 - Отказ доставки (в т.ч. нет секретов, таймаут) → 502 {ok:false}. Тихой потери заявки нет.
 """
 
 from __future__ import annotations
 
 import hashlib
+import ipaddress
 import json
 import os
+import sys
 import time
 import urllib.parse
 import urllib.request
@@ -23,6 +28,11 @@ from typing import Callable, Dict, Optional, Tuple, Union
 SEND_TIMEOUT_S = 5
 RATE_WINDOW_S = 3600
 DEFAULT_RATE_LIMIT = 10
+MAX_NAME_LENGTH = 100
+MAX_COMMENT_LENGTH = 1000
+# Строгий Origin-гейт (CONCERNS.md): браузер всегда шлёт Origin, прямой скриптовый
+# POST — нет. Тесты/локальная отладка — через переопределение SSQ_FORM_ALLOWED_ORIGINS.
+DEFAULT_ALLOWED_ORIGINS = ("https://smart-square.ru", "https://www.smart-square.ru")
 
 DeliverFn = Callable[[Optional[str], Optional[str], str], None]
 
@@ -68,17 +78,41 @@ def validation_error(payload: Dict[str, Union[str, bool]]) -> Optional[str]:
     errors = []
     if not payload["name"]:
         errors.append("Укажите имя — так мы поймём, как к вам обращаться")
+    elif len(payload["name"]) > MAX_NAME_LENGTH:
+        errors.append(f"Имя длиннее {MAX_NAME_LENGTH} символов — сократите, пожалуйста")
     if not is_ru_phone(str(payload["_phone_digits"])):
         errors.append("Проверьте номер телефона — похоже, есть опечатка")
+    if len(payload["comment"]) > MAX_COMMENT_LENGTH:
+        errors.append(f"Комментарий длиннее {MAX_COMMENT_LENGTH} символов — сократите, пожалуйста")
     if not payload["agree"]:
         errors.append("Без согласия на обработку персональных данных заявка не может быть отправлена")
     return "; ".join(errors) if errors else None
 
 
+def _is_public_ip(value: str) -> bool:
+    try:
+        return ipaddress.ip_address(value.strip()).is_global
+    except ValueError:
+        return False
+
+
 def client_ip(environ: Dict[str, str]) -> str:
-    forwarded = environ.get("HTTP_X_FORWARDED_FOR") or ""
-    first = forwarded.split(",")[0].strip()
-    return first or environ.get("REMOTE_ADDR") or "unknown"
+    """IP для rate-limit, с учётом прокси (CONCERNS.md «X-Forwarded-For»).
+
+    REMOTE_ADDR публичен → это и есть клиент, клиентские XFF-заголовки игнорируем.
+    REMOTE_ADDR приватный/loopback (Beget за фронт-прокси) → правая публичная
+    запись XFF: её дописал фронтальный прокси, слева клиент может подделать
+    сколько угодно записей. Публичной записи нет → REMOTE_ADDR (общий бакет;
+    nginx Beget всегда дописывает XFF, так что угол узкий).
+    """
+    remote = environ.get("REMOTE_ADDR") or ""
+    if _is_public_ip(remote):
+        return remote
+    for entry in reversed((environ.get("HTTP_X_FORWARDED_FOR") or "").split(",")):
+        candidate = entry.strip()
+        if _is_public_ip(candidate):
+            return candidate
+    return remote or "unknown"
 
 
 # ── Rate limit: счётчик в /tmp, окно 1 час ───────────────────────────────────
@@ -105,7 +139,9 @@ def rate_limit_exceeded(ip: str, limit: int, rate_dir: str, now: Optional[float]
         with open(path, "w", encoding="utf-8") as file:
             json.dump({"window_start": window_start, "count": count}, file)
     except OSError:
-        pass  # недоступен /tmp — лимит не работает, но приём заявок не блокируем
+        # /tmp недоступен — fail-open (заявки не блокируем, решение владельца),
+        # но не молча: предупреждение уйдёт в error-log хостинга (CONCERNS.md).
+        print(f"ssq-contact: rate-limit counter unavailable at {path}", file=sys.stderr, flush=True)
     return count > limit
 
 
@@ -153,6 +189,34 @@ def build_message(payload: Dict[str, Union[str, bool]], ip: str) -> str:
     )
 
 
+# ── Origin-гейт: POST только с разрешённых доменов ────────────────────────────
+
+def _allowed_origins(environ: Dict[str, str]) -> Tuple[str, ...]:
+    extra = environ.get("SSQ_FORM_ALLOWED_ORIGINS") or ""
+    if not extra:
+        return DEFAULT_ALLOWED_ORIGINS
+    return DEFAULT_ALLOWED_ORIGINS + tuple(
+        origin.strip() for origin in extra.split(",") if origin.strip()
+    )
+
+
+def origin_violation(environ: Dict[str, str]) -> Optional[str]:
+    """CONCERNS.md «Origin/Referer»: POST с чужого origin — спуфинг заявок.
+
+    Строгий гейт (решение владельца 2026-10-29): пустой Origin/Referer — тоже
+    отказ; браузер их всегда ставит, прямой скриптовый POST — нет. Локальная
+    отладка/смоук — через переопределение SSQ_FORM_ALLOWED_ORIGINS.
+    """
+    header = environ.get("HTTP_ORIGIN") or environ.get("HTTP_REFERER") or ""
+    if not header:
+        return "Заявка принимается только с сайта smart-square.ru — откройте страницу контактов и отправьте форму там."
+    origin = urllib.parse.urlsplit(header)
+    candidate = f"{origin.scheme.lower()}://{origin.netloc.lower()}"
+    if candidate not in _allowed_origins(environ):
+        return "Заявка принимается только с сайта smart-square.ru — откройте страницу контактов и отправьте форму там."
+    return None
+
+
 # ── Обработчик: чистая функция, CGI — тонкая обёртка в main() ────────────────
 
 def handle(
@@ -177,6 +241,10 @@ def handle(
     # Honeypot: заполняют только боты. Успех маскируем, ничего не доставляем.
     if payload["website"]:
         return 200, {"ok": True}
+
+    origin_error = origin_violation(environ)
+    if origin_error:
+        return 400, {"ok": False, "error": origin_error}
 
     try:
         limit = int(environ.get("FORM_RATE_LIMIT_PER_HOUR") or DEFAULT_RATE_LIMIT)

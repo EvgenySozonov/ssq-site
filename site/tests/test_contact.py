@@ -29,8 +29,11 @@ _spec = importlib.util.spec_from_file_location("contact", CONTACT_PY)
 contact = importlib.util.module_from_spec(_spec)
 _spec.loader.exec_module(contact)
 
-TEST_IP = "203.0.113.10"
-OTHER_IP = "203.0.113.99"
+# Тестовые IP — из публичных диапазонов (не TEST-NET/документационные):
+# client_ip() отбрасывает незарезервированные для маршрутизации адреса через
+# ipaddress.is_global — документационные 203.0.113.x/198.51.100.x он бы отбросил.
+TEST_IP = "1.2.3.4"
+OTHER_IP = "5.6.7.8"
 VALID_PAYLOAD = {
     "name": "Иван Тестов",
     "phone": "+7 (999) 123-45-67",
@@ -45,6 +48,8 @@ def make_environ(method: str = "POST", content_type: str = "application/json", i
         "CONTENT_TYPE": content_type,
         "REMOTE_ADDR": ip,
         "HTTP_X_FORWARDED_FOR": f"{ip}, 10.0.0.1",
+        # В проде браузер всегда шлёт Origin; по умолчанию — разрешённый домен.
+        "HTTP_ORIGIN": "https://smart-square.ru",
         "TELEGRAM_BOT_TOKEN": "test-token",
         "TELEGRAM_CHAT_ID": "test-chat",
         **extra,
@@ -144,13 +149,37 @@ class RateLimitTest(EndpointTestCase):
             self.assertEqual(statuses[-1], 400)
             self.setUp()
 
-    def test_counter_keyed_by_forwarded_for_first_value(self):
-        # Beget за прокси: изолированные IP из X-Forwarded-For не смешиваются.
-        self.assertEqual(self.call(ip="198.51.100.1", rate_dir=self.rate_dir)[0], 200)
-        self.assertEqual(self.call(ip="198.51.100.2", rate_dir=self.rate_dir)[0], 200)
-        state_one, state_two = self.rate_state("198.51.100.1"), self.rate_state("198.51.100.2")
-        self.assertEqual(state_one["count"], 1)
-        self.assertEqual(state_two["count"], 1)
+    def test_counter_keyed_by_rightmost_public_ip_behind_proxy(self):
+        # Beget за прокси: REMOTE_ADDR — приватный, правая публичная запись XFF — клиент.
+        proxy_env = {"REMOTE_ADDR": "127.0.0.1", "HTTP_X_FORWARDED_FOR": "99.9.9.9, 80.80.80.1"}
+        self.assertEqual(self.call(**proxy_env, rate_dir=self.rate_dir)[0], 200)
+        self.assertEqual(self.rate_state("80.80.80.1")["count"], 1)
+        # Правые записи у разных клиентов не смешиваются в один бакет.
+        proxy_env_two = {"REMOTE_ADDR": "127.0.0.1", "HTTP_X_FORWARDED_FOR": "99.9.9.9, 80.80.80.2"}
+        self.assertEqual(self.call(**proxy_env_two, rate_dir=self.rate_dir)[0], 200)
+        self.assertEqual(self.rate_state("80.80.80.2")["count"], 1)
+
+    def test_spoofed_left_xff_entries_are_ignored_behind_proxy(self):
+        # Спуфинг слева не меняет ключ счётчика: правую запись дописал прокси.
+        spoofed = {"REMOTE_ADDR": "127.0.0.1", "HTTP_X_FORWARDED_FOR": "9.9.9.9, 80.80.80.1"}
+        clean = {"REMOTE_ADDR": "127.0.0.1", "HTTP_X_FORWARDED_FOR": "80.80.80.1"}
+        limit = {"FORM_RATE_LIMIT_PER_HOUR": "1"}
+        self.assertEqual(self.call(**spoofed, rate_dir=self.rate_dir, **limit)[0], 200)
+        self.assertEqual(self.call(**clean, rate_dir=self.rate_dir, **limit)[0], 400)  # тот же правый IP → лимит
+        self.assertEqual(self.rate_state("80.80.80.1")["count"], 2)
+
+    def test_proxy_without_public_xff_falls_back_to_remote_addr(self):
+        # Угол: XFF без публичной записи → общий бакет REMOTE_ADDR, не обход.
+        corner = {"REMOTE_ADDR": "127.0.0.1", "HTTP_X_FORWARDED_FOR": "10.0.0.1"}
+        limit = {"FORM_RATE_LIMIT_PER_HOUR": "1"}
+        self.assertEqual(self.call(**corner, rate_dir=self.rate_dir, **limit)[0], 200)
+        self.assertEqual(self.call(**corner, rate_dir=self.rate_dir, **limit)[0], 400)  # тот же бакет по REMOTE_ADDR
+        self.assertEqual(self.rate_state("127.0.0.1")["count"], 2)
+
+    def test_public_remote_addr_ignores_client_xff(self):
+        # REMOTE_ADDR публичен → клиентские XFF-заголовки вообще не учитываются.
+        self.assertEqual(self.call(**{"HTTP_X_FORWARDED_FOR": "9.9.9.9"}, rate_dir=self.rate_dir)[0], 200)
+        self.assertEqual(self.rate_state(TEST_IP)["count"], 1)
 
 
 class DeliveryFailureTest(EndpointTestCase):
@@ -255,6 +284,78 @@ class ValidationTest(EndpointTestCase):
         self.assertEqual(status, 400)
         self.assertFalse(result["ok"])
         self.assertIn("Не удалось прочитать", result["error"])
+
+
+class OriginGateTest(EndpointTestCase):
+    """Строгий Origin-гейт (CONCERNS.md): POST только с разрешённых доменов."""
+
+    def test_missing_origin_and_referer_is_rejected(self):
+        environ = make_environ()
+        environ.pop("HTTP_ORIGIN")
+        body = io.BytesIO(json.dumps(VALID_PAYLOAD).encode("utf-8"))
+        environ["CONTENT_LENGTH"] = str(len(body.getvalue()))
+        status, result = contact.handle(environ, body, rate_dir=self.rate_dir)
+        self.assertEqual(status, 400)
+        self.assertIn("только с сайта", result["error"])
+
+    def test_foreign_origin_is_rejected(self):
+        status, result = self.call(**{"HTTP_ORIGIN": "https://spam.example"})
+        self.assertEqual(status, 400)
+        self.assertIn("только с сайта", result["error"])
+
+    def test_referer_fallback_accepts_same_domain_with_path(self):
+        # Нет Origin (старые прокси) → Referer с того же домена проходит, путь не важен.
+        self.delivered.clear()
+        status, _ = self.call(
+            **{"HTTP_ORIGIN": "", "HTTP_REFERER": "https://smart-square.ru/contacts/"},
+        )
+        self.assertEqual(status, 200)
+        self.assertEqual(len(self.delivered), 1)
+
+    def test_origin_check_can_be_widened_for_local_debug(self):
+        # Локальная отладка/смоук: переопределение через SSQ_FORM_ALLOWED_ORIGINS.
+        self.delivered.clear()
+        status, _ = self.call(
+            **{
+                "HTTP_ORIGIN": "http://localhost:4321",
+                "SSQ_FORM_ALLOWED_ORIGINS": "http://localhost:4321,http://127.0.0.1:4321",
+            },
+        )
+        self.assertEqual(status, 200)
+        self.assertEqual(len(self.delivered), 1)
+
+    def test_case_and_www_variants_are_normalised(self):
+        status, result = self.call(**{"HTTP_ORIGIN": "HTTPS://WWW.SMART-SQUARE.RU"})
+        self.assertEqual(status, 200)
+        self.assertTrue(result["ok"])
+
+
+class LengthLimitTest(EndpointTestCase):
+    """Лимиты длины (CONCERNS.md): name ≤ 100, comment ≤ 1000 — 400, не обрезка."""
+
+    def test_long_name_rejected_with_friendly_message(self):
+        status, result = self.call(data={**VALID_PAYLOAD, "name": "И" * 101})
+        self.assertEqual(status, 400)
+        self.assertIn("Имя длиннее", result["error"])
+
+    def test_long_comment_rejected_with_friendly_message(self):
+        status, result = self.call(data={**VALID_PAYLOAD, "comment": "Х" * 1001})
+        self.assertEqual(status, 400)
+        self.assertIn("Комментарий длиннее", result["error"])
+
+    def test_limit_boundary_is_allowed(self):
+        status, _ = self.call(data={**VALID_PAYLOAD, "name": "И" * 100, "comment": "Х" * 1000})
+        self.assertEqual(status, 200)
+
+    def test_spam_comment_never_reaches_delivery(self):
+        def delivering(token, chat_id, text):
+            self.delivered.append(text)
+
+        body = json.dumps({**VALID_PAYLOAD, "comment": "Х" * 1001}).encode("utf-8")
+        environ = make_environ(CONTENT_LENGTH=str(len(body)))
+        status, _ = contact.handle(environ, io.BytesIO(body), deliver=delivering, rate_dir=self.rate_dir)
+        self.assertEqual(status, 400)
+        self.assertEqual(self.delivered, [])  # в Telegram длинный спам не уходит
 
 
 class ValidDeliveryTest(EndpointTestCase):

@@ -41,6 +41,7 @@ import siteData from "../data/site.json";
         id="contact-name"
         name="name"
         autocomplete="name"
+        maxlength={100}
         placeholder="Как к вам обращаться"
         aria-describedby="contact-name-error"
         class="w-full border border-line bg-bg px-3 py-2.5 text-text placeholder:text-text-muted focus:border-accent focus:outline-none motion-safe:transition-colors"
@@ -91,6 +92,7 @@ import siteData from "../data/site.json";
         id="contact-comment"
         name="comment"
         rows="4"
+        maxlength={1000}
         placeholder="Объект, этап ремонта, что нужно сделать"
         aria-describedby="contact-comment-error"
         class="w-full border border-line bg-bg px-3 py-2.5 text-text placeholder:text-text-muted focus:border-accent focus:outline-none motion-safe:transition-colors"
