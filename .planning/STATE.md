@@ -5,11 +5,11 @@ milestone_name: (v1.1 и далее — будущие фазы)
 current_phase: 1
 current_phase_name: Данные и каркас услуг
 status: executing
-stopped_at: Phase 1 context gathered
-last_updated: "2026-10-28T21:27:16.052Z"
+stopped_at: context exhaustion at 96% (2026-10-29)
+last_updated: "2026-10-29T19:43:15.302Z"
 last_activity: 2026-10-27
 last_activity_desc: роадмап создан из ingest-синтеза (6 v1-REQ, покрытие 6/6)
-state_head: c12de932f43963cb31c1da996e9a7320bf272849
+state_head: ccb70351ad2556b6964aca507472aabf04a2f2b5
 progress:
   total_phases: 4
   completed_phases: 0
@@ -99,6 +99,6 @@ Items acknowledged and deferred at milestone close, most recent first:
 
 ## Session Continuity
 
-Last session: 2026-10-28T20:59:36.882Z
-Stopped at: Phase 1 context gathered
+Last session: 2026-10-29T19:43:15.265Z
+Stopped at: context exhaustion at 96% (2026-10-29)
 Resume file: .planning/phases/01-dannye-i-karkas-uslug/01-CONTEXT.md

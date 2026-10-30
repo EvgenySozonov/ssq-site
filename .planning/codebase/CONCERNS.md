@@ -49,23 +49,27 @@ last_mapped_at: 2026-10-27
 - Files: `site/public/cgi-bin/contact.py:78-81`
 - Current mitigation: Частично — реальный прокси Beget тоже может добавлять/перезаписывать `X-Forwarded-For`; лимит 10/час и honeypot снижают вред.
 - Recommendations: Убедиться, что на фронте Apache/nginx Beget всегда перезаписывает `XFF`, а не аппендит; в противном случае использовать `REMOTE_ADDR`. Тест `site/tests/test_contact.py` отправляет XFF как основной IP — это фиксирует текущее поведение, нужно осознанно выбрать одно из двух.
+- Статус: **закрыто 2026-10-29** — `client_ip()` (contact.py) берёт правую публичную запись XFF за приватным `REMOTE_ADDR` (левые клиентские записи игнорируются); публичный `REMOTE_ADDR` — клиент напрямую. Тесты обновлены под новый резолв.
 
 **Нет валидации Origin/Referer (CSRF/спуфинг POST):**
 - Risk: POST принимается с любого origin. Атака: спуфинг заявок через rate-лимит по подменяемому XFF — лимит обнулится на другой IP, спам в Telegram через лимит токенов бота.
 - Files: `site/public/cgi-bin/contact.py:158-193` (handle), `site/src/components/ContactForm.astro:250` (fetch с того же origin)
 - Current mitigation: honeypot + rate limit (мягкие).
 - Recommendations: Добавить серверную проверку `HTTP_ORIGIN`/`HTTP_REFERER` на ожидаемый домен; дешёво на чистой stdlib.
+- Статус: **закрыто 2026-10-29** — строгий гейт `origin_violation()` в contact.py: пустой/чужой Origin/Referer → 400; дефолт `smart-square.ru`/www; отладка — `SSQ_FORM_ALLOWED_ORIGINS`.
 
 **Отправка нефильтрованного пользовательского текста в Telegram:**
 - Risk: `name`, `phone`, `comment` летят в Telegram без экранирования/ограничения длины. Telegram SendMessage ограничен 4096 символами; длинный comment может вернуть 400 от Telegram API → обработается как отказ доставки (402), но спам-комментарии уйдут в чат.
 - Files: `site/public/cgi-bin/contact.py:145-153` (build_message), `contact.py:52` (phone-нормализация, name/comment — без ограничения длины)
 - Current mitigation: Только валидация обязательности name и формата phone. Comment не ограничен даже на клиенте (`site/src/components/ContactForm.astro` — проверять `maxlength`).
 - Recommendations: Ввести `max` длины на уровне CGI (name ≤ 100, comment ≤ 1000) и `maxlength` на клиенте; нормализовать пустой payload.
+- Статус: **закрыто 2026-10-29** — серверные лимиты 100/1000 с 400 в `validation_error()`; на клиенте `maxlength` в ContactForm.astro.
 
 **Rate limit молча отклоняется при отсутствии /tmp:**
 - Risk: При недоступности/полном /tmp лимит исчезает (`except OSError: pass`), принимается любое количество заявок. Это осознанное решение (комментарий в `contact.py:108`), но на Beget Shared /tmp общий для процессов.
 - Files: `site/public/cgi-bin/contact.py:91-110`
 - Recommendations: Задокументировать в деплой-гейтах, рассмотреть файловый счётчик вне /tmp как fallback.
+- Статус: **принято 2026-10-29** — fail-open сохранён (решение владельца); при сбое записи — предупреждение в stderr (error-log Beget), молчание устранено.
 
 **Секреты:**
 - Risk: `.env` в корне содержит токены (файл присутствует; содержимое не читалось по правилам). Он в `.gitignore` (проверено — `git check-ignore .env` подтверждает), но физически в docroot проекта.

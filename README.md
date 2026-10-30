@@ -13,6 +13,7 @@
 | [.planning/ROADMAP.md](.planning/ROADMAP.md)                                                                       | Порядок реализации (фазы v1.0/v1.1), GSD                                         |
 | [.planning/archive/plans/ssq-site-implementation-plan.md](.planning/archive/plans/ssq-site-implementation-plan.md) | Детальный план 13 шагов (архив, task-level детали)                               |
 | [docs/qa.md](docs/qa.md)                                                                                           | Правила тестирования до автоматизации                                            |
+| [docs/security-checklist.md](docs/security-checklist.md)                                                           | Последовательная проверка безопасности перед выкатом (секреты, CGI, деплой, 152-ФЗ) |
 | [docs/test-case.md](docs/test-case.md)                                                                             | Сценарии приёмки «что увидеть глазами»                                           |
 | [docs/memory.md](docs/memory.md)                                                                                   | Лог решений с обоснованием                                                       |
 | [.planning/STATE.md](.planning/STATE.md)                                                                           | Состояние проекта прямо сейчас (GSD)                                             |
