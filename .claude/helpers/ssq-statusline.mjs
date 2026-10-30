@@ -5,8 +5,10 @@
 //
 // Вход — JSON статус-линии Claude Code (см. комментарии в
 // ~/.claude/statusline-command.sh). Если graft недоступен — остаётся личная строка.
-import { readFileSync, existsSync } from 'node:fs';
+import { readFileSync, existsSync, writeFileSync } from 'node:fs';
+import fs from 'node:fs';
 import path from 'node:path';
+import { tmpdir, homedir } from 'node:os';
 import { pathToFileURL } from 'node:url';
 import { execFileSync } from 'node:child_process';
 
@@ -97,6 +99,158 @@ const limitsSeg = C.green(
   `лимиты: всего ${totalSeg}, 5h:${fmtRem(input?.rate_limits?.five_hour?.used_percentage)}, ` +
   `7d:${fmtRem(input?.rate_limits?.seven_day?.used_percentage)}`
 );
+
+// --- бридж для gsd-context-monitor (~/.claude/hooks/gsd-context-monitor.js) ---
+// User-статуслиния (gsd-statusline.js:1186) в этом проекте не активна, поэтому
+// метрики для монитора записывает наша линия. Формат бриджа — тот же (#4985):
+// remaining_percentage считается до порога auto-compact, чтобы монитор бил
+// тревогу ДО сжатия, а не после. Best-effort: любая ошибка не роняет линию.
+// --- окно auto-compact: env → настройки /autocompact → окно модели ---
+// Возвращено по learning 2026-10-29 («вернуться, если появится /autocompact» —
+// и он появился в этой сборке). Разрешаем окно так же, как Claude Code
+// (gsd-statusline.js:348): CLAUDE_CODE_AUTO_COMPACT_WINDOW (нечисловое или
+// неположительное игнорируется; ограничение 1M, поднятие до 100k), иначе
+// настройка autoCompactWindow от /autocompact — per-model settings-цепочка
+// (см. readAutoCompactWindowSetting), иначе окно модели. Всегда ограничено
+// окном модели.
+const AUTO_COMPACT_WINDOW_MIN = 100_000;
+const AUTO_COMPACT_WINDOW_MAX = 1_000_000;
+const SETTINGS_FILE_MAX_BYTES = 1 << 20;
+const MODEL_KEY_MAX_LENGTH = 256;
+
+function isAutoCompactWindowValue(v) {
+  // «auto» (настроенное Claude Code окно) — null у вызывающего:
+  // считаем порог от окна модели.
+  return v === 'auto' ||
+    (Number.isInteger(v) && v >= AUTO_COMPACT_WINDOW_MIN && v <= AUTO_COMPACT_WINDOW_MAX);
+}
+
+function canonicalModelKey(id) {
+  if (typeof id !== 'string') return '';
+  let key = id.toLowerCase();
+  if (key.length > MODEL_KEY_MAX_LENGTH) return '';
+  for (let prev; prev !== key;) {
+    prev = key;
+    key = key.trim()
+      .replace(/(?:\[1m\])+$/, '')
+      .replace(/^(?:[a-z]+\.)?anthropic\./, '')
+      .replace(/(\d)-v\d+(?::\d+)?$/, '$1')
+      .replace(/@\d{8}$/, '')
+      .replace(/-\d{8}$/, '');
+  }
+  return key;
+}
+
+function readSettingsFile(file) {
+  try {
+    const st = fs.statSync(file);
+    if (!st.isFile() || st.size > SETTINGS_FILE_MAX_BYTES) return null;
+    const s = JSON.parse(fs.readFileSync(file, 'utf8'));
+    return s && typeof s === 'object' && !Array.isArray(s) ? s : null;
+    // отсутствие/нечитаемость — считаем отсутствующим и идём дальше
+  } catch { return null; }
+}
+
+function claudeSettingsPaths(dir, env) {
+  const candidates = [];
+  if (dir) {
+    candidates.push(path.join(dir, '.claude', 'settings.local.json'));
+    candidates.push(path.join(dir, '.claude', 'settings.json'));
+  }
+  let claudeDir;
+  try {
+    claudeDir = env.CLAUDE_CONFIG_DIR || path.join(homedir(), '.claude');
+  } catch { claudeDir = null; }
+  if (claudeDir) {
+    candidates.push(path.join(claudeDir, 'settings.local.json'));
+    candidates.push(path.join(claudeDir, 'settings.json'));
+  }
+  return candidates;
+}
+
+function readAutoCompactWindowSetting(dir, env, modelId) {
+  let fallback;
+  let byModel = {};
+  for (const settings of claudeSettingsPaths(dir, env).map(readSettingsFile).filter(Boolean).reverse()) {
+    const own = {};
+    const perModel = settings.modelSettings;
+    if (perModel && typeof perModel === 'object' && !Array.isArray(perModel)) {
+      for (const [name, entry] of Object.entries(perModel)) {
+        const v = entry && typeof entry === 'object' ? entry.autoCompactWindow : undefined;
+        if (!isAutoCompactWindowValue(v)) continue;
+        const key = canonicalModelKey(name);
+        // Правописание ключа модели каноничное выигрывает у другого написания.
+        if (name === key || !own[key]) own[key] = v;
+      }
+      if (isAutoCompactWindowValue(settings.autoCompactWindow)) {
+        fallback = settings.autoCompactWindow;
+        byModel = own; // top-level запись файла убирает per-model записи нижних файлов
+      } else {
+        byModel = { ...byModel, ...own };
+      }
+    } else if (isAutoCompactWindowValue(settings.autoCompactWindow)) {
+      fallback = settings.autoCompactWindow;
+      byModel = own;
+    } else {
+      byModel = { ...byModel, ...own };
+    }
+  }
+  const key = canonicalModelKey(modelId);
+  const value = key && Object.hasOwn(byModel, key) ? byModel[key] : fallback;
+  return Number.isInteger(value) ? value : null;
+}
+
+function autoCompactThreshold(size, env = process.env, modelId = '') {
+  if (!(size > 0)) return null;
+  if (env.DISABLE_AUTO_COMPACT) return size;
+  const envWindow = parseInt(env.CLAUDE_CODE_AUTO_COMPACT_WINDOW, 10);
+  let window = size;
+  if (envWindow > 0) {
+    window = Math.min(Math.max(envWindow, 100_000), 1_000_000, size);
+  } else {
+    const setting = readAutoCompactWindowSetting(
+      input?.workspace?.current_dir ?? input?.cwd ?? '', env, modelId);
+    if (setting) window = Math.min(setting, size);
+  }
+  const effective = window - 20_000; // резерв вывода модели (gsd-statusline.js:401)
+  let threshold = effective - 13_000; // буфер summary auto-compact (#4985)
+  const pct = parseFloat(env.CLAUDE_AUTOCOMPACT_PCT_OVERRIDE);
+  if (Number.isFinite(pct) && pct > 0 && pct <= 100) {
+    threshold = Math.min(threshold, Math.floor(effective * (pct / 100)));
+  }
+  return threshold > 0 ? threshold : null;
+}
+
+try {
+  const session = String(input?.session_id || '');
+  const usage = input?.context_window?.current_usage;
+  let usedTokens = null;
+  if (usage && typeof usage === 'object') {
+    usedTokens = (Number(usage.input_tokens) || 0) +
+      (Number(usage.cache_creation_input_tokens) || 0) +
+      (Number(usage.cache_read_input_tokens) || 0);
+  } else if (typeof input?.context_window?.remaining_percentage === 'number' && ctxSize > 0) {
+    usedTokens = Math.round(((100 - input.context_window.remaining_percentage) * ctxSize) / 100);
+  }
+  const threshold = usedTokens === null
+    ? null
+    : autoCompactThreshold(Number(ctxSize), process.env, input?.model?.id);
+  // Guard как в gsd-statusline: session_id с разделителями пути не пишет вне tmp.
+  if (session && !/[/\\]|\.\./.test(session) && Number(ctxSize) > 0 && threshold > 0) {
+    const used = Math.max(0, Math.min(100, Math.round((usedTokens / threshold) * 100)));
+    writeFileSync(
+      path.join(tmpdir(), `claude-ctx-${session}.json`),
+      JSON.stringify({
+        session_id: session,
+        remaining_percentage: 100 - used,
+        used_pct: used,
+        used_tokens: usedTokens,
+        threshold_tokens: threshold,
+        timestamp: Math.floor(Date.now() / 1000),
+      }),
+    );
+  }
+} catch { /* бридж best-effort — молча */ }
 
 const personal = [
   model ? C.cyan(model) : null,
