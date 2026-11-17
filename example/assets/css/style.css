@@ -107,6 +107,13 @@ h1, h2, h3 { font-weight: 500; line-height: 1.15; }
 .site-head__social a { opacity: .8; transition: opacity .15s ease; padding: 4px; }
 .site-head__social a:hover { opacity: 1; }
 
+/* На узких экранах ссылки и соц-иконки уходят в оверлей-меню — иначе шапка
+   не влезает и даёт горизонтальный скролл (usability-review, находка 2) */
+@media (max-width: 520px) {
+  .site-head__nav a { display: none; }
+  .site-head__social { display: none; }
+}
+
 /* ---------- Полноэкранное меню ---------- */
 .overlay-menu {
   position: fixed;
@@ -507,6 +514,21 @@ h1, h2, h3 { font-weight: 500; line-height: 1.15; }
 .contact__form input[type="tel"],
 .contact__form input[type="text"] { font-size: 17px; }
 .form__note { margin-top: 16px; font-size: 12px; color: var(--muted); line-height: 1.5; max-width: 420px; }
+
+/* Ошибки полей инлайн (usability-review, находка 3): заметный цвет, обычный
+   регистр (label-обёртка переводит текст в капс — сбрасываем), решение рядом */
+.contact__form .field-error {
+  display: block;
+  margin-top: 6px;
+  font-size: 12px;
+  letter-spacing: .02em;
+  text-transform: none;
+  color: #e0455c;
+  line-height: 1.5;
+}
+.contact__form .field-error a { color: inherit; text-decoration: underline; }
+.contact__form input.is-invalid,
+.contact__form textarea.is-invalid { border-bottom-color: #e0455c; }
 
 /* ---------- Футер ---------- */
 .footer {

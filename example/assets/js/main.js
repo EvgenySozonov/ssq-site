@@ -35,21 +35,48 @@
   /* ---------- Форма-заглушка (отправка не подключена) ---------- */
   var form = document.getElementById('lead-form');
   if (form) {
+    // Макет-заглушка: общий телефон-фолбэк для сообщений об ошибках формы
+    var FALLBACK_PHONE = '+7 (000) 000-00-00';
+
+    function clearError(input) {
+      input.classList.remove('is-invalid');
+      var label = input.closest('label');
+      var msg = label && label.querySelector('.field-error');
+      if (msg) msg.remove();
+    }
+
+    function setError(input, text) {
+      clearError(input);
+      input.classList.add('is-invalid');
+      var msg = document.createElement('span');
+      msg.className = 'field-error';
+      msg.setAttribute('role', 'alert');
+      msg.textContent = text;
+      input.closest('label').appendChild(msg);
+    }
+
     form.addEventListener('submit', function (e) {
       e.preventDefault();
 
-      // Простая валидация обязательных полей
+      // Валидация обязательных полей: сообщение объясняет, что не так и что делать
       var required = form.querySelectorAll('input[required]');
-      var valid = true;
+      var firstInvalid = null;
       required.forEach(function (input) {
         if (!input.value.trim()) {
-          input.style.borderBottomColor = '#e0455c';
-          valid = false;
+          if (input.type === 'tel') {
+            setError(input, 'Укажите телефон — ответим сразу после заявки. Или позвоните: ' + FALLBACK_PHONE);
+          } else {
+            setError(input, 'Укажите имя — так мы поймём, как к вам обращаться.');
+          }
+          if (!firstInvalid) firstInvalid = input;
         } else {
-          input.style.borderBottomColor = '';
+          clearError(input);
         }
       });
-      if (!valid) return;
+      if (firstInvalid) {
+        firstInvalid.focus();
+        return;
+      }
 
       form.reset();
       var note = document.getElementById('form-note');
@@ -61,6 +88,11 @@
           note.style.opacity = '';
         }, 5000);
       }
+    });
+
+    // Ошибка снимается сразу, как пользователь начал исправлять
+    form.addEventListener('input', function (e) {
+      if (e.target.matches && e.target.matches('input')) clearError(e.target);
     });
   }
 
