@@ -1,23 +1,23 @@
 @theme {
-  /* Рестайл под референс AYOCIN (design.md — AYOCIN Style Reference, цель владельца 2026-11-17).
-     Замены-адаптации помечены: Systemia нет на Google Fonts → Manrope (subst. из референса);
-     muted-текст и danger — вывод, у референса их нет. */
-  --color-bg: #fcf6ec; /* Porcelain Cream */
-  --color-surface: #f4e8d7; /* Ivory Sand: вторичная поверхность/карточки */
-  --color-text: #2e2521; /* Espresso Ink */
-  --color-text-muted: #8d7f72; /* адаптация: тёплый muted (у референса muted-текста нет) */
-  --color-accent: #2e2521; /* конверсионный пилл = Espresso; акцентный текст на крем-базе */
-  --color-accent-contrast: #fcf6ec;
-  --color-line: #d3ccc3; /* Parchment Border: hairline-разделители */
-  --color-stone: #cec1b2; /* Stone Haze: hero-бэкдроп / мягкие поля */
-  --color-wash-day: #fdf0c7; /* Daylight Wash: широкая тёплая секция-банд */
-  --color-wash-peach: #fdc6b3; /* Peach Wash: альтернирующая тёплая секция */
-  --color-espresso-surface: #2c2722; /* Espresso Content Card (тёмная карточка) */
-  --color-danger: #9c3324; /* адаптация: функциональный цвет ошибок формы (AA на крем) */
-  --radius-s: 10px; /* карточки */
-  --radius-btn: 20px; /* конверсионные кнопки */
-  --radius-pill: 9999px; /* компактные пиллы/теги (не для карточек) */
-  --font-display: "Manrope", system-ui, sans-serif; /* substitute for Systemia (референс) */
-  --font-sans: "Manrope", system-ui, sans-serif;
-  --font-mono: "Azeret Mono", ui-monospace, monospace; /* только крупные числовые выноски */
+  /* Редизайн 2026-11-18: тема Solstice (Hallmark, по выбору владельца).
+     Крем-бумага + тёплый коричневый чернильный, вермильон-сигнал, золотые hairline.
+     Adaptations vs. theme reference (docs/DESIGN.md): accent затемнён 54%→50% (AA-контраст
+     cream-текста на вермильоне), muted углублён 48%→41% (AA на креме); danger — вывод. */
+  --color-bg: oklch(94% 0.03 80); /* paper: крем-бумага, канва */
+  --color-surface: oklch(97% 0.02 85); /* paper-2: вторичная бумага, wells */
+  --color-well: oklch(89% 0.05 80); /* paper-3: жёсткая «бумажная» тень */
+  --color-text: oklch(27% 0.05 50); /* ink */
+  --color-text-muted: oklch(41% 0.06 55); /* muted: тёплый тёмно-коричневый (AA на креме) */
+  --color-line: oklch(84% 0.06 78); /* rule: тёплая hairline-линейка */
+  --color-accent: oklch(50% 0.19 24); /* vermilion: один сигнал */
+  --color-accent-contrast: oklch(97% 0.02 85); /* paper-2: текст на вермильоне */
+  --color-gold: oklch(74% 0.14 75); /* gold: линейки, никогда текст */
+  --color-gold-soft: oklch(84% 0.11 80); /* gold-2 */
+  --color-danger: oklch(46% 0.15 27); /* только ошибки формы (AA на креме) */
+  --radius-s: 0px; /* Solstice: квадратные поверхности */
+  --radius-btn: 9999px; /* пара управления: pill */
+  --radius-pill: 9999px;
+  --font-display: "Yeseva One", "Georgia", serif; /* дисплей, один вес 400 */
+  --font-sans: "Archivo", system-ui, sans-serif; /* чтение, 400/500 */
+  --font-narrow: "Archivo Narrow", system-ui, sans-serif; /* outlier: мелочёвка и кнопки, 600 */
 }

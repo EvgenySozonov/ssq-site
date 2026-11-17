@@ -1,15 +1,16 @@
 ---
 import siteData from "../data/site.json";
+import "../styles/global.css";
 
 interface Props {
   title: string;
   description?: string;
-  /** Страницы вне релиза (каркасы) — запрет индексации. */
+  /** Страницы вне релиза (каркасы): запрет индексации. */
   noindex?: boolean;
 }
 const {
   title,
-  description = "Электромонтаж и умный дом под ключ — проект, монтаж, автоматизация. Москва и область. Гарантия по договору.",
+  description = "Электромонтаж и умный дом под ключ: проект, монтаж, автоматизация. Москва и область. Гарантия по договору.",
   noindex = false,
 } = Astro.props;
 
@@ -24,27 +25,32 @@ const nav = [
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>{title} — Умный квадрат</title>
+    <title>{title}: Умный квадрат</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={new URL(Astro.url.pathname, Astro.site)} />
     {noindex && <meta name="robots" content="noindex, nofollow" />}
-    <meta name="theme-color" content="#fcf6ec" />
-    <style>
-      @import "../styles/global.css";
-    </style>
+    <meta name="theme-color" content="#f2e3cd" />
   </head>
   <body class="bg-bg text-text font-sans">
-    <!-- Навигация — прозрачная полоса, интегрированная с hero (AYOCIN «Transparent Hero Header»);
-         конверсионный пилл — Espresso (тёмный, крем-текст, радиус 20px, стрелка в правом кармане);
-         телефон в правой части, без фона (из site.json). -->
-    <header class="px-4 pt-5 sm:px-6">
-      <nav class="mx-auto flex max-w-5xl flex-wrap items-center gap-x-6 gap-y-3">
-        <a href="/" class="text-sm font-medium tracking-[0.2em] uppercase">SSQ //</a>
-        <ul class="flex gap-5 text-sm font-medium uppercase tracking-[0.12em]">
+    <!-- Навигация: плавающий пилл (draw 0f0a46) в материале Solstice: бумага-2,
+         1px чернильная рамка, золотая hairline inset; телефон и CTA тише кнопки hero -->
+    <header class="relative z-20 px-4 pt-2.5 sm:px-6">
+      <nav
+        class="mx-auto flex max-w-5xl flex-wrap items-center gap-x-5 gap-y-3 border border-text bg-surface px-5 py-2.5"
+        style="border-radius: var(--radius-pill); outline: 1px solid var(--color-gold); outline-offset: -4px"
+      >
+        <a
+          href="/"
+          class="font-display text-lg leading-none text-text no-underline"
+          aria-label="Умный квадрат, на главную"
+        >
+          Умный квадрат
+        </a>
+        <ul class="flex gap-5 text-sm">
           {
             nav.map((item) => (
               <li>
-                <a href={item.href} class="hover:text-text-muted motion-safe:transition-colors">
+                <a href={item.href} class="no-underline hover:text-accent motion-safe:transition-colors">
                   {item.label}
                 </a>
               </li>
@@ -53,26 +59,41 @@ const nav = [
         </ul>
         <a
           href={siteData.phoneHref}
-          class="ml-auto hidden text-sm font-medium hover:text-text-muted motion-safe:transition-colors sm:inline"
+          class="ml-auto hidden text-sm no-underline hover:text-accent motion-safe:transition-colors sm:inline"
         >
           {siteData.phone}
         </a>
         <a
           href="/contacts/"
-          class="inline-flex items-center gap-3 bg-accent py-2.5 pl-5 pr-4 text-sm font-medium uppercase tracking-[0.08em] text-accent-contrast hover:opacity-90 focus-visible:outline-2 focus-visible:outline-accent motion-safe:transition-opacity"
-          style="border-radius: var(--radius-btn); border: 1px solid var(--color-accent)"
+          class="ml-auto inline-flex items-center border border-text px-5 py-2 text-sm no-underline hover:border-accent hover:text-accent motion-safe:transition-colors sm:ml-0"
+          style="border-radius: var(--radius-pill)"
         >
-          Контакты <span aria-hidden="true">→</span>
+          Оставить заявку
         </a>
       </nav>
     </header>
     <main>
       <slot />
     </main>
-    <footer class="border-t border-line py-10 text-center text-sm text-text-muted">
-      <slot name="footer">
-        <p>Умный квадрат · электромонтаж и умный дом · Москва и область</p>
-      </slot>
+    <!-- Колофон: один блок под волосяной линейкой, ссылки в весе текста -->
+    <footer class="shell">
+      <div class="mt-32 border-t border-text pt-8 pb-10">
+        <div class="flex flex-col gap-6 md:flex-row md:items-start md:justify-between">
+          <div>
+            <p class="font-display text-xl text-text">Умный квадрат</p>
+            <p class="small-print mt-2">Электромонтаж и умный дом, Москва и область</p>
+            <p class="small-print mt-0.5">Пн-Сб, 9:00-20:00</p>
+          </div>
+          <ul class="flex flex-wrap gap-x-8 gap-y-2 text-sm">
+            <li><a href="/services/" class="no-underline hover:text-accent">Услуги</a></li>
+            <li><a href="/contacts/" class="no-underline hover:text-accent">Контакты</a></li>
+            <li>
+              <a href="/legal/privacy/" class="no-underline hover:text-accent">Политика конфиденциальности</a>
+            </li>
+          </ul>
+        </div>
+        <p class="small-print mt-8">© 2026 «Умный квадрат». Работаем по договору, гарантия 3 года.</p>
+      </div>
     </footer>
   </body>
 </html>

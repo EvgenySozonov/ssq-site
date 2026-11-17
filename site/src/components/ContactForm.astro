@@ -5,14 +5,14 @@
  * Контракт: .planning/codebase/ARCHITECTURE.md «Форма и заявки»,
  * docs/specs/ssq-site-stack-design.md §6.1.
  * E2E-испытания контракта: site/e2e/form.spec.ts.
- * Стилизация AYOCIN (2026-11-17): Espresso Underline Input (транспарентные поля
- * с подчёркиванием, радиус 0), конверсионный пилл Espresso c карманом-стрелкой.
+ * Стилизация Solstice (2026-11-18): квадратные поля на бумаге-2 (транспарентные поля
+ * с подчёркиванием, радиус 0), вермильон-пилл.
  */
 import siteData from "../data/site.json";
 ---
 
 <form
-  class="relative bg-bg p-6 sm:p-0"
+  class="relative"
   novalidate
   data-contact-form
   data-endpoint={siteData.endpoint}
@@ -34,7 +34,7 @@ import siteData from "../data/site.json";
     <div>
       <label
         for="contact-name"
-        class="mb-1.5 block text-xs font-medium tracking-[0.15em] text-text-muted uppercase"
+        class="small-print mb-1.5 block"
       >
         Имя <span class="text-danger">*</span>
       </label>
@@ -46,8 +46,7 @@ import siteData from "../data/site.json";
         maxlength={100}
         placeholder="Как к вам обращаться"
         aria-describedby="contact-name-error"
-        class="w-full border border-0 border-b border-line bg-transparent px-0 py-2.5 text-text placeholder:text-text-muted/70 focus:border-text focus:outline-none motion-safe:transition-colors"
-        style="border-radius: 0"
+        class="field"
       />
       <p
         id="contact-name-error"
@@ -60,7 +59,7 @@ import siteData from "../data/site.json";
     <div>
       <label
         for="contact-phone"
-        class="mb-1.5 block text-xs font-medium tracking-[0.15em] text-text-muted uppercase"
+        class="small-print mb-1.5 block"
       >
         Телефон <span class="text-danger">*</span>
       </label>
@@ -72,8 +71,7 @@ import siteData from "../data/site.json";
         inputmode="tel"
         placeholder="+7 (___) ___-__-__"
         aria-describedby="contact-phone-error"
-        class="w-full border border-0 border-b border-line bg-transparent px-0 py-2.5 text-text placeholder:text-text-muted/70 focus:border-text focus:outline-none motion-safe:transition-colors"
-        style="border-radius: 0"
+        class="field"
       />
       <p
         id="contact-phone-error"
@@ -86,7 +84,7 @@ import siteData from "../data/site.json";
     <div>
       <label
         for="contact-comment"
-        class="mb-1.5 block text-xs font-medium tracking-[0.15em] text-text-muted uppercase"
+        class="small-print mb-1.5 block"
       >
         Комментарий
       </label>
@@ -97,8 +95,7 @@ import siteData from "../data/site.json";
         maxlength={1000}
         placeholder="Объект, этап ремонта, что нужно сделать"
         aria-describedby="contact-comment-error"
-        class="w-full border border-0 border-b border-line bg-transparent px-0 py-2.5 text-text placeholder:text-text-muted/70 focus:border-text focus:outline-none motion-safe:transition-colors"
-        style="border-radius: 0"
+        class="field"
       ></textarea>
       <p
         id="contact-comment-error"
@@ -111,15 +108,14 @@ import siteData from "../data/site.json";
     <div>
       <label
         for="contact-source"
-        class="mb-1.5 block text-xs font-medium tracking-[0.15em] text-text-muted uppercase"
+        class="small-print mb-1.5 block"
       >
         Как вы нас нашли?
       </label>
       <select
         id="contact-source"
         name="source"
-        class="w-full border border-0 border-b border-line bg-transparent px-0 py-2.5 text-text focus:border-text focus:outline-none motion-safe:transition-colors"
-        style="border-radius: 0"
+        class="field"
       >
         <option value="">Не важно / пропустить</option>
         <option value="Google">Google</option>
@@ -162,11 +158,9 @@ import siteData from "../data/site.json";
     <div class="pt-1">
       <button
         type="submit"
-        class="flex w-full items-center justify-between gap-6 bg-accent py-3 pl-6 pr-5 text-sm font-medium uppercase tracking-[0.08em] text-accent-contrast hover:opacity-90 disabled:cursor-wait disabled:opacity-60 focus-visible:outline-2 focus-visible:outline-accent motion-safe:transition-opacity"
-        style="border-radius: var(--radius-btn)"
-      >
+        class="btn btn-primary w-full">
         <span>Отправить заявку</span>
-        <span aria-hidden="true" data-submit-arrow>→</span>
+        <span aria-hidden="true" data-submit-arrow></span>
       </button>
       <p id="contact-status" role="status" hidden class="mt-4 text-sm leading-relaxed"></p>
     </div>
@@ -310,7 +304,7 @@ import siteData from "../data/site.json";
         setStatus("Не удалось отправить заявку. Попробуйте ещё раз или позвоните нам:", true);
       } finally {
         submitButton.disabled = false;
-        submitArrow.textContent = "→";
+        submitArrow.textContent = "";
       }
     });
   }

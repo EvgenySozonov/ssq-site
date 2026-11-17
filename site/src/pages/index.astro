@@ -1,27 +1,19 @@
 ---
 /**
- * Главная (лендинг). Структура — по главной GWI (досье
- * docs/references/globalwaveintegration-reference.md §2–3): hero с двумя CTA →
- * строка доверия → сервис-грид «плитки-якоря» → блок «почему мы» → процесс → CTA.
- * Претензии наград/брендов не копируем (GWI §6) — вместо них честные обязательства.
- * Стилистика AYOCIN (design.md): крем-канва, тонкие espresso-иконки, hairline-карточки.
+ * Главная. Редизайн 2026-11-18: тема Solstice (Hallmark, draw 0f0a46),
+ * hero Ledge, сигнатура «рулированная смета» (well с золотыми пунктирами и Yeseva-цифрами).
+ * Претензии наград/брендов не копируем: только честные обязательства и цены из data/services.
  */
 import BaseLayout from "../layouts/BaseLayout.astro";
+import siteData from "../data/site.json";
 import { getLines, getLineServices } from "../lib/lines";
 
 const lines = getLines().map((line) => ({ ...line, services: getLineServices(line.slug) }));
 
-/* Тонкие моно-иконки (AYOCIN: небольшие тонкие утилитарные знаки, espresso). */
-const icons: Record<string, string> = {
-  razvodka: `<svg class="size-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 4 6 12h4l-1 8 8-11h-5l3-5H9Z"/></svg>`,
-  elektroshchit: `<svg class="size-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="4" y="4" width="16" height="16" rx="1"/><path d="M8 9v6M12 9v6M16 9v6"/></svg>`,
-  osveschenie: `<svg class="size-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 3a6 6 0 0 0-3 11v3h6v-3a6 6 0 0 0-3-11Z"/><path d="M10 20h4"/></svg>`,
-  "rezerv-avr": `<svg class="size-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="8" width="16" height="10" rx="1"/><path d="M3 12h5v2H3zM19 11h2M15 8V5"/></svg>`,
-  "umny-svet": `<svg class="size-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="7" cy="7" r="3"/><path d="M13 5h8M13 9h5"/><circle cx="7" cy="17" r="3"/><path d="M13 15h8M13 19h5"/></svg>`,
-  klimat: `<svg class="size-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 3v18"/><path d="M6 8c0-3 2.5-5 6-5s6 2 6 5-2 4-6 4-6 1-6 4 2.5 5 6 5 6-2 6-5"/></svg>`,
-  shtory: `<svg class="size-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 4h18M5 4v13a3 3 0 0 0 3 3M19 4v13a3 3 0 0 1-3 3M9 4v16M12 4v16M15 4v16"/></svg>`,
-  "bezopasnost-video": `<svg class="size-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="7" width="12" height="10" rx="1"/><path d="m15 10 6-3v10l-6-3"/><path d="m6 21 2-4M12 21l-2-4"/></svg>`,
-};
+const priceLabel = (priceFrom: number): string =>
+  priceFrom > 0
+    ? `от ${new Intl.NumberFormat("ru-RU", { maximumFractionDigits: 0 }).format(priceFrom)} ₽`
+    : "по смете";
 
 const whyValues = [
   {
@@ -29,14 +21,13 @@ const whyValues = [
     text: "Состав работ, материалы, цена и сроки фиксируются до монтажа.",
   },
   {
-    title: "Один подрядчик — две инженерии",
-    text: "Электрика и автоматизация проектируются вместе, без стыковки чужих подрядчиков.",
+    title: "Гарантия 3 года",
+    text: "По договору, с документами и протоколами тестов линий.",
   },
-  { title: "Гарантия 3 года", text: "По договору, с документами и протоколами тестов линий." },
   { title: "Чистый монтаж", text: "Убираем за собой, стыкуемся с вашим ремонтом по дням." },
   {
     title: "Обучение сценариям",
-    text: "Показываем и объясняем — вы управляете домом сами с первого дня.",
+    text: "Показываем и объясняем: вы управляете домом сами с первого дня.",
   },
   {
     title: "Сервис после сдачи",
@@ -46,172 +37,179 @@ const whyValues = [
 
 const steps = [
   {
-    num: "01",
     title: "Заявка и осмотр",
-    text: "Пишете или звоните — обсуждаем задачу и записываемся на осмотр. Приезжаем, замеряем, уточняем пожелания и предлагаем решения.",
+    text: "Звоните или пишете. Обсуждаем задачу, приезжаем, замеряем, предлагаем решения.",
   },
   {
-    num: "02",
     title: "Смета и договор",
-    text: "Фиксируем состав работ, материалы, цену и сроки. Без «внезапных доплат» — смета не меняется без вашего решения.",
+    text: "Состав работ, материалы, цену и сроки фиксируем до старта. Смета не меняется без вашего решения.",
   },
   {
-    num: "03",
     title: "Монтаж",
-    text: "Работаем по графику, согласуем каждую стадию, убираем за собой. Стыкуемся с вашим ремонтом по дням.",
+    text: "Работаем по графику, стыкуемся с вашим ремонтом по дням, убираем за собой.",
   },
   {
-    num: "04",
-    title: "Сдача и гарантия",
-    text: "Показываем, объясняем, настраиваем сценарии. Отдаём документы, протоколы и гарантию 3 года на работы.",
+    title: "Сдача",
+    text: "Показываем, объясняем, настраиваем сценарии. Отдаём документы и протоколы тестов линий.",
   },
 ];
 ---
 
 <BaseLayout
   title="Электромонтаж и умный дом под ключ"
-  description="Электромонтаж и умный дом под ключ: разводка, щит, свет и сценарии. Договор и смета до старта, гарантия 3 года. Бесплатный выезд для замера — Москва и область."
+  description="Электромонтаж и умный дом под ключ: разводка, щит, свет и сценарии. Договор и смета до старта, гарантия 3 года. Бесплатный выезд для замера по Москве и области."
 >
-  <!-- Hero: крем-канва; справа — «объект на светлом поле» (AYOCIN imagery: тёплый
-       светильник, мягкий нейтральный фон). CC0 StockSnap, атрибуция — docs/references/
-       landing-images-sources.md -->
-  <section class="px-5 py-16 sm:py-24">
-    <div class="mx-auto grid max-w-5xl items-center gap-10 lg:grid-cols-[1.1fr_440px]">
-      <div>
-        <p class="mb-4 text-xs font-medium uppercase tracking-[0.2em] text-text-muted">
-          01 // электромонтаж · умный дом
-        </p>
-        <h1 class="mb-6 max-w-3xl text-5xl font-medium leading-[1.05] sm:text-7xl">
-          Создаём умный дом под ключ
-        </h1>
-        <p class="mb-10 max-w-2xl text-lg text-text-muted">
-          Электромонтаж и автоматизация: от разводки и щита до сценариев, которые работают одним
-          касанием. Проектируем как одно целое — подключаемся на этапе ремонта.
-        </p>
-        <div class="flex flex-col gap-4 sm:flex-row sm:items-center">
-          <a
-            href="/contacts/"
-            class="inline-flex items-center justify-between gap-6 bg-accent py-3 pl-6 pr-5 text-sm font-medium uppercase tracking-[0.08em] text-accent-contrast hover:opacity-90 focus-visible:outline-2 focus-visible:outline-accent motion-safe:transition-opacity"
-            style="border-radius: var(--radius-btn)"
-          >
-            Бесплатный выезд для замера <span aria-hidden="true">→</span>
-          </a>
-          <a
-            href="#services"
-            class="px-2 py-3 text-sm font-medium uppercase tracking-[0.08em] text-text underline decoration-line underline-offset-8 hover:decoration-text motion-safe:transition-colors"
-          >
-            Смотреть услуги
-          </a>
-        </div>
-        <!-- Строка доверия — приём GWI (маш-выдача §2), но без чужих наград: наши обязательства -->
-        <p class="mt-10 text-xs font-medium uppercase tracking-[0.18em] text-text-muted">
-          Гарантия 3 года · Договор и смета до старта · Сдача по графику · Москва и область
-        </p>
-      </div>
+  <!-- Hero Ledge: поле фото сверху, заголовок в покое у подножия первого экрана -->
+  <section class="pt-2">
+    <div class="photo-frame relative overflow-hidden" style="height: clamp(300px, 40dvh, 640px)">
       <img
         src="/images/hero-living-room.jpg"
-        alt="Светлая гостиная с камином в отделке, выполненной после электромонтажа"
-        class="hidden h-[520px] w-full object-cover lg:block"
-        style="border-radius: var(--radius-s)"
+        alt="Светлая гостиная с камином, отделка после электромонтажа"
+        class="absolute inset-0 size-full object-cover"
         width="1024"
         height="694"
+        fetchpriority="high"
       />
     </div>
   </section>
-
-  <!-- Сервис-грид: группы-направления → плитки-якоря (приём GWI §2, AYOCIN: ivory-банд) -->
-  <section id="services" class="scroll-mt-24 bg-surface px-5 py-16">
-    <div class="mx-auto max-w-5xl">
-      <p class="mb-4 text-xs font-medium uppercase tracking-[0.2em] text-text-muted">
-        02 // услуги
+  <section class="shell pt-10 sm:pt-14">
+    <div class="max-w-[760px]">
+      <h1>Электрика и умный дом одним проектом</h1>
+      <p class="lead mt-5">
+        От разводки и щита до сценариев, которые работают одним касанием. Подключаемся на этапе
+        ремонта.
       </p>
-      <h2 class="mb-10 text-3xl font-medium sm:text-4xl">Что вы ищете?</h2>
-      <div class="flex flex-col gap-10">
-        {lines.map((line) => (
-          <div>
-            <a
-              href={`/services/${line.slug}/`}
-              class="mb-3 inline-block text-lg font-medium underline decoration-line underline-offset-4 hover:decoration-text motion-safe:transition-colors"
-            >
-              {line.title}
-            </a>
-            <ul class="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-              {line.services.map((service) => (
-                <li>
-                  <a
-                    href={`/services/${line.slug}/#${service.slug}`}
-                    class="flex h-full flex-col gap-3 border border-line bg-bg p-5 text-text no-underline hover:border-accent motion-safe:transition-colors"
-                    style="border-radius: var(--radius-s)"
-                  >
-                    <span class="text-text" set:html={icons[service.slug]} aria-hidden="true" />
-                    <span class="font-medium">{service.title}</span>
-                  </a>
-                </li>
-              ))}
-            </ul>
+      <div class="mt-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:gap-6">
+        <a href="/contacts/" class="btn btn-primary">
+          Заказать бесплатный замер
+        </a>
+        <a href="/services/" class="btn btn-secondary no-underline">
+          Смотреть услуги
+        </a>
+      </div>
+      <p class="small-print mt-6">Разводка электрики от 1 800 ₽. Гарантия 3 года. Договор и смета до старта. Москва и область.</p>
+    </div>
+  </section>
+
+  <!-- Сигнатура: рулированная смета. Offer первой секцией после hero (draw 0f0a46) -->
+  <section class="shell mt-32" aria-labelledby="pricing">
+    <div class="mb-12 max-w-[640px]">
+      <h2 id="pricing">Ориентиры по ценам</h2>
+      <p class="lead mt-4">Смета фиксируется до старта и не меняется без вашего решения.</p>
+    </div>
+    <div class="grid gap-8 lg:grid-cols-2">
+      {lines.map((line) => (
+        <div class="well p-7 sm:p-8">
+          <h3 class="text-base font-medium [font-family:var(--font-sans)]">{line.title}</h3>
+          <div class="mt-4">
+            {line.services.map((service) => (
+              <div class="price-row">
+                <span class="small-print">{service.title}</span>
+                <b>{priceLabel(service.priceFrom)}</b>
+                <span class="small-print col-span-full opacity-80">{service.summary}</span>
+              </div>
+            ))}
           </div>
-        ))}
+          <a href={`/services/${line.slug}/`} class="btn btn-secondary no-underline mt-6">
+            Все услуги направления
+          </a>
+        </div>
+      ))}
+    </div>
+    <div class="mt-10 flex flex-col items-start gap-4 sm:flex-row sm:items-center sm:gap-8">
+      <a href="/contacts/" class="btn btn-primary">
+        Заказать бесплатный замер
+      </a>
+      <p class="small-print">Выезд и замер бесплатны.</p>
+    </div>
+  </section>
+
+  <!-- Split: подход, фото справа -->
+  <section class="shell mt-36" aria-labelledby="approach">
+    <div class="grid items-center gap-10 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)]">
+      <div>
+        <h2 id="approach">Один подрядчик, две инженерии</h2>
+        <p class="mt-6 max-w-[52ch] text-text-muted">
+          Электрику и автоматизацию проектируем вместе: щит, освещение, климат, безопасность и
+          сценарии работают как одно целое.
+        </p>
+        <a href="/services/" class="btn btn-secondary no-underline mt-8">Услуги и цены по направлениям</a>
+      </div>
+      <div class="photo-frame relative overflow-hidden">
+        <img
+          src="/images/direction-umniy-dom.jpg"
+          alt="Тёплый вечерний свет в столовой загородного дома"
+          class="w-full object-cover"
+          style="aspect-ratio: 4/3"
+          width="960"
+          height="720"
+          loading="lazy"
+        />
       </div>
     </div>
   </section>
 
-  <!-- Почему мы: ценности (аналог GWI «Innovation. Integration. Impact», честные) -->
-  <section class="px-5 py-16">
-    <div class="mx-auto max-w-5xl">
-      <p class="mb-4 text-xs font-medium uppercase tracking-[0.2em] text-text-muted">
-        03 // почему мы
-      </p>
-      <h2 class="mb-3 text-3xl font-medium sm:text-4xl">Мы — инженеры, а не строители</h2>
-      <p class="mb-10 max-w-2xl text-text-muted">
-        Проектируем электрику и умный дом как одно целое: щит, освещение, климат, безопасность и
-        сценарии работают вместе.
-      </p>
-      <ul class="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+  <!-- Rows: обязательства -->
+  <section class="shell mt-36" aria-labelledby="values">
+    <div class="grid gap-10 lg:grid-cols-[minmax(0,4fr)_minmax(0,8fr)]">
+      <div>
+        <h2 id="values">Договор, гарантия и порядок</h2>
+      </div>
+      <ul>
         {whyValues.map((value) => (
-          <li class="border-t border-line pt-4">
-            <h3 class="mb-2 font-medium">{value.title}</h3>
-            <p class="text-sm leading-relaxed text-text-muted">{value.text}</p>
+          <li class="grid gap-1 border-t border-line py-5 sm:grid-cols-[minmax(0,2fr)_minmax(0,3fr)] sm:gap-6">
+            <h3 class="text-xl">{value.title}</h3>
+            <p class="self-end text-text-muted">{value.text}</p>
           </li>
         ))}
       </ul>
     </div>
   </section>
 
-  <!-- Процесс: сценарий выезда по шагам (приём 3 из досье GWI), Daylight Wash банд -->
-  <section id="process" class="scroll-mt-24 bg-[color:var(--color-wash-day)] px-5 py-16">
-    <div class="mx-auto max-w-5xl">
-      <p class="mb-4 text-xs font-medium uppercase tracking-[0.2em] text-text-muted">
-        04 // процесс
-      </p>
-      <h2 class="mb-10 text-3xl font-medium sm:text-4xl">Как мы работаем</h2>
-      <ol class="list-none grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-        {steps.map((step) => (
-          <li class="bg-bg p-6" style="border-radius: var(--radius-s)">
-            <p class="mb-3 font-mono text-2xl text-text-muted">{step.num}</p>
-            <h3 class="mb-2 font-medium">{step.title}</h3>
-            <p class="text-sm leading-relaxed text-text-muted">{step.text}</p>
-          </li>
-        ))}
-      </ol>
-    </div>
+  <!-- Steps: четыре стадии, настоящий <ol> -->
+  <section class="shell mt-36" aria-labelledby="process">
+    <h2 id="process">Как идёт работа</h2>
+    <ol class="mt-10 grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
+      {steps.map((step, i) => (
+        <li class="border-t-2 border-text pt-4">
+          <span class="block font-display text-3xl" aria-hidden="true">
+            {i + 1}
+          </span>
+          <h3 class="mt-3 text-xl">{step.title}</h3>
+          <p class="mt-2 text-sm leading-relaxed text-text-muted">{step.text}</p>
+        </li>
+      ))}
+    </ol>
   </section>
 
-  <!-- Финальный CTA: Espresso-банд, Porcelain-пилл (инверсия) -->
-  <section class="bg-espresso-surface px-5 py-16 text-accent-contrast">
-    <div class="mx-auto max-w-5xl">
-      <p class="mb-4 text-xs font-medium uppercase tracking-[0.2em] text-accent-contrast/60">
-        05 // обсуждение
-      </p>
-      <h2 class="mb-8 max-w-2xl text-3xl font-medium sm:text-4xl">
-        Обсудим ваш проект? Первый шаг — бесплатный выезд.
-      </h2>
-      <a
-        href="/contacts/"
-        class="inline-flex items-center justify-between gap-6 bg-bg py-3 pl-6 pr-5 text-sm font-medium uppercase tracking-[0.08em] text-text hover:opacity-90 focus-visible:outline-2 focus-visible:outline-bg motion-safe:transition-opacity"
-        style="border-radius: var(--radius-btn)"
-      >
-        Оставить заявку <span aria-hidden="true">→</span>
-      </a>
+  <!-- Закрытие: заявка рядом с последним фото (split зеркальный) -->
+  <section class="shell mt-40" aria-labelledby="closing">
+    <div class="grid items-center gap-10 lg:grid-cols-[minmax(0,7fr)_minmax(0,5fr)]">
+      <div class="photo-frame relative overflow-hidden">
+        <img
+          src="/images/hero-pendant-lights.jpg"
+          alt="Подвесные светильники в тёплом вечернем свете"
+          class="w-full object-cover"
+          style="aspect-ratio: 4/3"
+          width="1024"
+          height="694"
+          loading="lazy"
+        />
+      </div>
+      <div>
+        <h2 id="closing">Обсудим ваш проект?</h2>
+        <p class="mt-6 max-w-[48ch] text-text-muted">
+          Начнём с бесплатного выезда и замера. Заявки берём в работу в течение рабочего дня.
+        </p>
+        <div class="mt-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:gap-6">
+          <a href="/contacts/" class="btn btn-primary">
+            Оставить заявку
+          </a>
+          <a href={siteData.phoneHref} class="btn btn-secondary no-underline">
+            Позвонить: {siteData.phone}
+          </a>
+        </div>
+      </div>
     </div>
   </section>
 </BaseLayout>
