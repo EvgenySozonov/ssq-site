@@ -1,13 +1,11 @@
 # SSQ-site — сайт компании «Умный квадрат»
 
-Многостраничный сайт услуг: электромонтаж и умный дом. Русскоязычный, тёмный премиум-дизайн.
-
 ## Документация
 
 | Документ                                                                                                           | О чём                                                                            |
 | ------------------------------------------------------------------------------------------------------------------ | -------------------------------------------------------------------------------- |
 | [docs/product.md](docs/product.md)                                                                                 | Продукт: цели, аудитория, структура услуг по направлениям                        |
-| [.planning/codebase/ARCHITECTURE.md](.planning/codebase/ARCHITECTURE.md)                                           | Архитектура (объединённый док GSD): стек, карта маршрутов, данные, форма, деплой |
+| [.planning/codebase/ARCHITECTURE.md](.planning/codebase/ARCHITECTURE.md)                                           | Архитектура: карта маршрутов, данные, форма, деплой |
 | [docs/architecture/c4/](docs/architecture/c4/README.md)                                                            | C4-модель (Structurizr DSL): контекст, контейнеры, поток заявки, деплой          |
 | [docs/design.md](docs/design.md)                                                                                   | Дизайн-система: палитра, шрифты, композиция                                      |
 | [.planning/ROADMAP.md](.planning/ROADMAP.md)                                                                       | Порядок реализации (фазы v1.0/v1.1), GSD                                         |
@@ -22,18 +20,10 @@
 | [docs/reports/](docs/reports/)                                                                                     | Отчёты приёмки по датам (принято / гейты / долги)                                |
 | [.planning/codebase/STACK.md](.planning/codebase/STACK.md)                                                         | Полное описание стека и решений                                                  |
 
-## Стек
-
-- Полное описание стека и решений — , [.planning/codebase/STACK.md](.planning/codebase/STACK.md) 
-
 
 ## Структура репозитория
 
-- `site/` — исходники Astro-сайта (`src/`), CGI-эндпоинт (`public/cgi-bin/contact.py`), тесты (`e2e/`, `tests/`).
-- `example/` — референс старой визитки (`index.html`); сохраняется, не мигрирует (решение из доков).
-- `.planning/` — вся документация, GSD Core: PROJECT, REQUIREMENTS, ROADMAP, STATE, `codebase/` (карта кодбейза), `intel/`, `archive/plans/`, `onboarding/` (обзор — [`onboarding/SUMMARY.md`](.planning/onboarding/SUMMARY.md)).
-- `.trail/` — граф кода Trail-code: индекс и learnings в `.trail/learnings/` (коммитятся); прежний `graft/` удалён при миграции 2026-10-19.
-- `.claude/` — конфигурация агента: скиллы, правила по путям, хуки, permissions (см. «Как агент работает в проекте»).
+Структура репозитория приведена здесь: [.planning/codebase/STRUCTURE.md](.planning/codebase/STRUCTURE.md)
 
 ## Как агент работает в проекте
 

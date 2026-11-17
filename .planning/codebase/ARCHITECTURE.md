@@ -95,9 +95,9 @@ site/
 ├── src/layouts/BaseLayout.astro # общий каркас страницы: head, nav, footer, meta
 ├── src/content/                # Content Collections: portfolio/*.mdx, blog/*.mdx (фазы позже)
 ├── src/data/                   # данные:
-│   ├── services/lines.json     # направления услуг (единый источник маршрутов) — не создан
-│   ├── services/elektromontazh.json   # услуги направления
-│   ├── services/umniy-dom.json        # услуги направления
+│   ├── services/lines.json     # направления услуг (единый источник маршрутов) — создан 2026-11-17
+│   ├── services/elektromontazh.json   # услуги направления — создан 2026-11-17
+│   ├── services/umniy-dom.json        # услуги направления — создан 2026-11-17
 │   ├── pricing.json
 │   └── reviews.json
 ├── src/styles/tokens.css       # дизайн-токены (см. docs/design.md)
