@@ -268,6 +268,22 @@ class ValidationTest(EndpointTestCase):
         self.assertEqual(len(self.delivered), 1)
         self.assertIn("Иван Тестов", self.delivered[0])
 
+    def test_source_field_optional_but_included_in_delivery(self):
+        # Опциональный квалификатор источника: без него «Источник» не выводится вообще.
+        self.delivered.clear()
+        status, _ = self.call(data={**VALID_PAYLOAD, "source": "Рекомендация"})
+        self.assertEqual(status, 200)
+        self.assertIn("Источник: Рекомендация", self.delivered[0])
+        self.delivered.clear()
+        status, _ = self.call(data=VALID_PAYLOAD)
+        self.assertEqual(status, 200)
+        self.assertNotIn("Источник:", self.delivered[0])
+
+    def test_source_over_max_length_rejected(self):
+        status, result = self.call(data={**VALID_PAYLOAD, "source": "x" * 61})
+        self.assertEqual(status, 400)
+        self.assertIn("источника", result["error"])
+
     def test_malformed_json_is_friendly_400_not_500(self):
         status, result = self.call(raw="{not json", content_type="application/json")
         self.assertEqual(status, 400)

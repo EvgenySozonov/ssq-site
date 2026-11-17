@@ -1,6 +1,6 @@
 @import "tailwindcss";
 @import "./tokens.css";
-@import "https://fonts.googleapis.com/css2?family=Lora:wght@500;600&family=Manrope:wght@400;600&family=JetBrains+Mono:wght@400;500&display=swap";
+@import "https://fonts.googleapis.com/css2?family=Manrope:wght@400;500&family=Azeret+Mono:wght@500&display=swap";
 
 body {
   background: var(--color-bg);

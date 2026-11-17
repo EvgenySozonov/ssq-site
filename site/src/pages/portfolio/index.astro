@@ -1,0 +1,78 @@
+---
+/**
+ * Каркас портфолио (не в меню, noindex — решение владельца 2026-11-17).
+ * Включается в меню при появлении реальных фото объектов.
+ * Структура кейса — паттерн из досье GWI (задача → решение → результат + фото щита):
+ * docs/references/globalwaveintegration-reference.md §3 «/projects».
+ */
+import BaseLayout from "../../layouts/BaseLayout.astro";
+
+interface CaseCard {
+  title: string;
+  line: string;
+  problem: string;
+  result: string;
+}
+
+/** Плейсхолдеры до реальных съёмок: описания из референс-визитки, фото — «Фото объекта». */
+const caseCards: CaseCard[] = [
+  {
+    title: "Квартира 84 м²",
+    line: "Электромонтаж",
+    problem: "Новостройка: разводка, щит автоматизации, сценарный свет",
+    result: "Сдано за неделю, всё по смете",
+  },
+  {
+    title: "Загородный дом 180 м²",
+    line: "Электромонтаж",
+    problem: "Электрика под ключ, резерв генератора с АВР",
+    result: "Гарантия по документам, дом работает",
+  },
+  {
+    title: "Студия 32 м²",
+    line: "Умный дом",
+    problem: "Умный свет и климат, управление с телефона",
+    result: "Сценарии настроены, владелец сам добавляет датчики",
+  },
+  {
+    title: "Офис 120 м²",
+    line: "Электромонтаж",
+    problem: "Силовая часть, освещение, видеонаблюдение",
+    result: "Сдано по графику без остановки работы офиса",
+  },
+];
+---
+
+<BaseLayout
+  title="Работы"
+  description="Объекты «Умного квадрата»: электромонтаж и умный дом под ключ. Страница готовится — реальные фото и кейсы скоро."
+  noindex
+>
+  <section class="mx-auto max-w-5xl px-5 py-12 sm:py-16">
+    <header class="mb-10 max-w-2xl">
+      <p class="mb-2 text-xs font-medium uppercase tracking-[0.2em] text-accent">04 // работы</p>
+      <h1 class="mb-3 font-display text-3xl text-text sm:text-4xl">Наши работы</h1>
+      <p class="text-text-muted">
+        Каркас раздела. Кейсы публикуются с реальными фото объектов и протоколами тестов — до того
+        раздел остаётся вне навигации.
+      </p>
+    </header>
+    <div class="grid gap-5 sm:grid-cols-2">
+      {
+        caseCards.map((card) => (
+          <article
+            class="border border-line bg-bg p-6"
+            style="border-radius: var(--radius-s)"
+          >
+            <p class="mb-2 text-xs font-medium tracking-[0.15em] text-text-muted uppercase">
+              {card.line}
+            </p>
+            <h2 class="mb-2 font-display text-xl">{card.title}</h2>
+            <p class="mb-2 text-sm text-text-muted">{card.problem}</p>
+            <p class="text-sm text-accent">→ {card.result}</p>
+          </article>
+        ))
+      }
+    </div>
+  </section>
+</BaseLayout>

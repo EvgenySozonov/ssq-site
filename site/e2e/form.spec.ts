@@ -64,13 +64,14 @@ async function submit(page: Page) {
 // ─── Структура и honeypot ───────────────────────────────────────────────────
 
 test.describe("форма заявки: структура", () => {
-  test("на странице /contacts/ есть поля имя, телефон, комментарий и чекбокс согласия", async ({
+  test("на странице /contacts/ есть поля имя, телефон, комментарий, источник и чекбокс согласия", async ({
     page,
   }) => {
     await page.goto(FORM_URL);
     await expect(page.getByLabel(/имя/i)).toBeVisible();
     await expect(page.getByLabel(/телефон/i)).toBeVisible();
     await expect(page.getByLabel(/коммент/i)).toBeVisible();
+    await expect(page.getByLabel(/нашли/i)).toBeVisible();
     await expect(page.getByRole("checkbox", { name: /соглас|обработку/i })).toBeVisible();
   });
 
@@ -160,12 +161,14 @@ test.describe("форма заявки: отправка", () => {
     await page.goto(FORM_URL);
     const requests = spyContactEndpoint(page);
     await fillForm(page, VALID);
+    await page.getByLabel(/нашли/i).selectOption({ label: "Рекомендация" });
     await submit(page);
     await expect.poll(() => requests.length).toBe(1);
     const body = requests[0].json;
     expect(requests[0].url).toContain(SUBMIT_PATH);
     expect(body.name).toBe(VALID.name);
     expect(String(body.phone)).toContain("999");
+    expect(body.source).toBe("Рекомендация");
     expect(body.website ?? "").toBe("");
   });
 

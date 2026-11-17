@@ -1,0 +1,88 @@
+---
+/**
+ * Посадочная направления: /services/[line]/ — строится циклом по lines.json
+ * (каркас: добавление направления = запись в JSON, ноль правок кода).
+ * Приём из досье GWI: навигатор «Что вы ищете?» — якорное оглавление услуг
+ * (docs/references/globalwaveintegration-reference.md §3).
+ * Рестайл AYOCIN (2026-11-17): Ivory Sand навигатор, карточки 10px, пилл-CTA.
+ */
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import { getLines, getLineServices } from "../../../lib/lines";
+
+export function getStaticPaths() {
+  return getLines().map((line) => ({ params: { line: line.slug }, props: { line } }));
+}
+
+const { line } = Astro.props;
+const services = getLineServices(line.slug);
+
+const priceLabel = (priceFrom: number): string =>
+  priceFrom > 0
+    ? `от ${new Intl.NumberFormat("ru-RU", { maximumFractionDigits: 0 }).format(priceFrom)} ₽`
+    : "по смете";
+---
+
+<BaseLayout
+  title={`${line.title} — услуги`}
+  description={`${line.title} под ключ: ${line.tagline}. Смета и договор до старта, гарантия 3 года. Бесплатный выезд для замера — Москва и область.`}
+>
+  <section class="mx-auto max-w-5xl px-5 py-12 sm:py-16">
+    <header class="mb-10 max-w-2xl">
+      <p class="mb-2 text-xs font-medium uppercase tracking-[0.2em] text-text-muted">
+        услуги // {line.slug}
+      </p>
+      <h1 class="mb-3 text-4xl font-medium">{line.title}</h1>
+      <p class="mb-6 max-w-2xl text-text-muted">
+        {line.tagline}. Работаем по договору, смета фиксируется до старта, гарантия 3 года.
+      </p>
+      <a
+        href="/contacts/"
+        class="inline-flex items-center justify-between gap-6 bg-accent py-3 pl-6 pr-5 text-sm font-medium uppercase tracking-[0.08em] text-accent-contrast hover:opacity-90 focus-visible:outline-2 focus-visible:outline-accent motion-safe:transition-opacity"
+        style="border-radius: var(--radius-btn)"
+      >
+        Бесплатный выезд для замера <span aria-hidden="true">→</span>
+      </a>
+    </header>
+
+    <!-- Навигатор-оглавление: якоря секций ниже, без JS (эвристика 6: выбор виден сразу) -->
+    <nav aria-label={`Услуги направления ${line.title}`} class="mb-12 bg-surface p-4" style="border-radius: var(--radius-s)">
+      <h2 class="mb-3 px-2 pt-2 text-xs font-medium uppercase tracking-[0.2em] text-text-muted">
+        Что вы ищете?
+      </h2>
+      <ul class="grid gap-2 sm:grid-cols-2">
+        {
+          services.map((service) => (
+            <li>
+              <a
+                href={`#${service.slug}`}
+                class="flex items-baseline justify-between gap-4 bg-bg px-5 py-3.5 hover:border hover:border-line motion-safe:transition-colors"
+                style="border-radius: var(--radius-s)"
+              >
+                <span>{service.title}</span>
+                <span class="shrink-0 text-sm text-text-muted">{priceLabel(service.priceFrom)}</span>
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+
+    <div class="flex flex-col gap-10 border-t border-line pt-10">
+      {
+        services.map((service) => (
+          <section id={service.slug} class="scroll-mt-24">
+            <h2 class="mb-1 text-2xl font-medium">{service.title}</h2>
+            <p class="mb-3 text-xl font-medium text-text-muted">{priceLabel(service.priceFrom)}</p>
+            <p class="mb-4 max-w-2xl text-text-muted">{service.summary}</p>
+            <a
+              href="/contacts/"
+              class="text-sm text-text underline decoration-line underline-offset-8 hover:decoration-text motion-safe:transition-colors"
+            >
+              Получить расчёт →
+            </a>
+          </section>
+        ))
+      }
+    </div>
+  </section>
+</BaseLayout>

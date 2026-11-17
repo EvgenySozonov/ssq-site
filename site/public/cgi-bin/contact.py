@@ -30,6 +30,7 @@ RATE_WINDOW_S = 3600
 DEFAULT_RATE_LIMIT = 10
 MAX_NAME_LENGTH = 100
 MAX_COMMENT_LENGTH = 1000
+MAX_SOURCE_LENGTH = 60
 # Строгий Origin-гейт (CONCERNS.md): браузер всегда шлёт Origin, прямой скриптовый
 # POST — нет. Тесты/локальная отладка — через переопределение SSQ_FORM_ALLOWED_ORIGINS.
 DEFAULT_ALLOWED_ORIGINS = ("https://smart-square.ru", "https://www.smart-square.ru")
@@ -64,6 +65,7 @@ def _as_payload(raw: dict) -> Dict[str, Union[str, bool]]:
         "name": str(raw.get("name") or "").strip(),
         "phone": phone if not normalized_phone else normalized_phone,  # валидируем по нормализованному
         "comment": str(raw.get("comment") or ""),
+        "source": str(raw.get("source") or "").strip(),  # «Как вы нас нашли?» — опционально
         "website": str(raw.get("website") or ""),
         "agree": bool(agree),
         "_phone_digits": normalized_phone,
@@ -84,6 +86,8 @@ def validation_error(payload: Dict[str, Union[str, bool]]) -> Optional[str]:
         errors.append("Проверьте номер телефона — похоже, есть опечатка")
     if len(payload["comment"]) > MAX_COMMENT_LENGTH:
         errors.append(f"Комментарий длиннее {MAX_COMMENT_LENGTH} символов — сократите, пожалуйста")
+    if len(str(payload["source"])) > MAX_SOURCE_LENGTH:
+        errors.append("Поле источника — только выбор из списка, снимите ручной ввод")
     if not payload["agree"]:
         errors.append("Без согласия на обработку персональных данных заявка не может быть отправлена")
     return "; ".join(errors) if errors else None
@@ -180,12 +184,15 @@ def _send_telegram(token: Optional[str], chat_id: Optional[str], text: str, time
 
 def build_message(payload: Dict[str, Union[str, bool]], ip: str) -> str:
     comment = str(payload["comment"]).strip() or "—"
+    source = str(payload.get("source") or "").strip()
+    source_line = f"Источник: {source}\n" if source else ""
     return (
         "Новая заявка с сайта «Умный квадрат»\n"
         f"Имя: {payload['name']}\n"
         f"Телефон: {payload['phone']}\n"
         f"Комментарий: {comment}\n"
-        f"IP: {ip}"
+        + source_line
+        + f"IP: {ip}"
     )
 
 

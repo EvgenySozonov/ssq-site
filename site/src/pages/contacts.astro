@@ -10,10 +10,10 @@ import siteData from "../data/site.json";
 >
   <section class="mx-auto max-w-5xl px-5 py-12 sm:py-16">
     <header class="mb-10 max-w-2xl">
-      <p class="mb-2 font-mono text-xs tracking-[0.2em] text-accent uppercase">01 // контакты</p>
-      <h1 class="mb-3 font-display text-3xl text-text sm:text-4xl">
-        Оставьте заявку на бесплатный выезд
-      </h1>
+      <p class="mb-2 text-xs font-medium uppercase tracking-[0.2em] text-text-muted">
+        01 // контакты
+      </p>
+      <h1 class="mb-3 text-4xl font-medium">Оставьте заявку на бесплатный выезд</h1>
       <p class="text-text-muted">
         Приедем, посмотрим объект, измерим и подготовим смету — без обязательств. Заявки берём в
         работу в течение рабочего дня; можно сразу звонить.
@@ -24,31 +24,82 @@ import siteData from "../data/site.json";
       <ContactForm />
 
       <aside
-        class="flex h-fit flex-col gap-6 border-l-3 border-accent bg-surface p-6"
+        class="flex h-fit flex-col gap-6 border border-line bg-surface p-6"
         style="border-radius: var(--radius-s)"
       >
         <div>
-          <p class="mb-1.5 font-mono text-xs tracking-[0.15em] text-text-muted uppercase">
+          <p class="mb-1.5 text-xs font-medium tracking-[0.15em] text-text-muted uppercase">
             Телефон
           </p>
           <a
             href={siteData.phoneHref}
-            class="font-mono text-xl text-accent hover:text-text motion-safe:transition-colors"
+            class="text-lg text-text hover:text-text-muted motion-safe:transition-colors"
           >
             {siteData.phone}
           </a>
         </div>
         <div>
-          <p class="mb-1.5 font-mono text-xs tracking-[0.15em] text-text-muted uppercase">
+          <p class="mb-1.5 text-xs font-medium tracking-[0.15em] text-text-muted uppercase">
             Часы работы
           </p>
           <p class="text-text">Пн–Сб, 9:00–20:00</p>
         </div>
         <div>
-          <p class="mb-1.5 font-mono text-xs tracking-[0.15em] text-text-muted uppercase">Регион</p>
+          <p class="mb-1.5 text-xs font-medium tracking-[0.15em] text-text-muted uppercase">Регион</p>
           <p class="text-text">Москва и область</p>
         </div>
       </aside>
     </div>
+
+    <!-- FAQ = ответы на реальные возражения до заявки (тексты — из референс-визитки) -->
+    <section id="faq" aria-label="Частые вопросы" class="mt-12 max-w-2xl">
+      <h2 class="mb-5 text-3xl font-medium">Частые вопросы</h2>
+      <div class="flex flex-col gap-3">
+        <details
+          class="border border-line bg-surface p-4"
+          style="border-radius: var(--radius-s)"
+        >
+          <summary class="cursor-pointer font-medium text-text">
+            Можно ли сделать только электрику, без умного дома?
+          </summary>
+          <p class="mt-3 text-sm leading-relaxed text-text-muted">
+            Да. Основная часть работ — классический электромонтаж. Но закладываем возможности
+            автоматизации заранее: кабельные трассы, место в щите и в слаботочке, чтобы апгрейд
+            потом стоил дешевле.
+          </p>
+        </details>
+        <details
+          class="border border-line bg-surface p-4"
+          style="border-radius: var(--radius-s)"
+        >
+          <summary class="cursor-pointer font-medium text-text">Сколько занимают работы?</summary>
+          <p class="mt-3 text-sm leading-relaxed text-text-muted">
+            Квартира-студия — 3–5 дней разводки; умный свет — до недели. Сроки фиксируем в договоре
+            и сдаём по графику, стыкуясь с вашим ремонтом по дням.
+          </p>
+        </details>
+        <details
+          class="border border-line bg-surface p-4"
+          style="border-radius: var(--radius-s)"
+        >
+          <summary class="cursor-pointer font-medium text-text">
+            Смета может вырасти в процессе?
+          </summary>
+          <p class="mt-3 text-sm leading-relaxed text-text-muted">
+            Смета фиксируется до старта и не меняется без вашего решения. Любые изменения — только
+            вашим отдельным решением, с переписанной сметой, а не «внезапной доплатой».
+          </p>
+        </details>
+        <details
+          class="border border-line bg-surface p-4"
+          style="border-radius: var(--radius-s)"
+        >
+          <summary class="cursor-pointer font-medium text-text">Какая гарантия?</summary>
+          <p class="mt-3 text-sm leading-relaxed text-text-muted">
+            Гарантия 3 года на работы — по договору, с документами и протоколами тестов линий.
+          </p>
+        </details>
+      </div>
+    </section>
   </section>
 </BaseLayout>

@@ -2,15 +2,17 @@
 /**
  * Форма заявки — единственная интерактивная kpi-функция сайта (Astro + vanilla JS,
  * React-остров не обоснован: валидация и состояния формы — ~100 строк, без state-графа).
- * Контракт: docs/architecture.md «Форма и заявки», docs/specs/ssq-site-stack-design.md §6.1.
+ * Контракт: .planning/codebase/ARCHITECTURE.md «Форма и заявки»,
+ * docs/specs/ssq-site-stack-design.md §6.1.
  * E2E-испытания контракта: site/e2e/form.spec.ts.
+ * Стилизация AYOCIN (2026-11-17): Espresso Underline Input (транспарентные поля
+ * с подчёркиванием, радиус 0), конверсионный пилл Espresso c карманом-стрелкой.
  */
 import siteData from "../data/site.json";
 ---
 
 <form
-  class="relative border-l-3 border-accent bg-surface p-6 sm:p-8"
-  style="border-radius: var(--radius-s)"
+  class="relative bg-bg p-6 sm:p-0"
   novalidate
   data-contact-form
   data-endpoint={siteData.endpoint}
@@ -28,13 +30,13 @@ import siteData from "../data/site.json";
     aria-hidden="true"
   />
 
-  <div class="flex flex-col gap-5">
+  <div class="flex flex-col gap-6">
     <div>
       <label
         for="contact-name"
-        class="mb-1.5 block font-mono text-xs tracking-[0.15em] text-text-muted uppercase"
+        class="mb-1.5 block text-xs font-medium tracking-[0.15em] text-text-muted uppercase"
       >
-        Имя <span class="text-accent">*</span>
+        Имя <span class="text-danger">*</span>
       </label>
       <input
         type="text"
@@ -44,8 +46,8 @@ import siteData from "../data/site.json";
         maxlength={100}
         placeholder="Как к вам обращаться"
         aria-describedby="contact-name-error"
-        class="w-full border border-line bg-bg px-3 py-2.5 text-text placeholder:text-text-muted focus:border-accent focus:outline-none motion-safe:transition-colors"
-        style="border-radius: var(--radius-s)"
+        class="w-full border border-0 border-b border-line bg-transparent px-0 py-2.5 text-text placeholder:text-text-muted/70 focus:border-text focus:outline-none motion-safe:transition-colors"
+        style="border-radius: 0"
       />
       <p
         id="contact-name-error"
@@ -58,9 +60,9 @@ import siteData from "../data/site.json";
     <div>
       <label
         for="contact-phone"
-        class="mb-1.5 block font-mono text-xs tracking-[0.15em] text-text-muted uppercase"
+        class="mb-1.5 block text-xs font-medium tracking-[0.15em] text-text-muted uppercase"
       >
-        Телефон <span class="text-accent">*</span>
+        Телефон <span class="text-danger">*</span>
       </label>
       <input
         type="tel"
@@ -70,8 +72,8 @@ import siteData from "../data/site.json";
         inputmode="tel"
         placeholder="+7 (___) ___-__-__"
         aria-describedby="contact-phone-error"
-        class="w-full border border-line bg-bg px-3 py-2.5 text-text placeholder:text-text-muted focus:border-accent focus:outline-none motion-safe:transition-colors"
-        style="border-radius: var(--radius-s)"
+        class="w-full border border-0 border-b border-line bg-transparent px-0 py-2.5 text-text placeholder:text-text-muted/70 focus:border-text focus:outline-none motion-safe:transition-colors"
+        style="border-radius: 0"
       />
       <p
         id="contact-phone-error"
@@ -84,7 +86,7 @@ import siteData from "../data/site.json";
     <div>
       <label
         for="contact-comment"
-        class="mb-1.5 block font-mono text-xs tracking-[0.15em] text-text-muted uppercase"
+        class="mb-1.5 block text-xs font-medium tracking-[0.15em] text-text-muted uppercase"
       >
         Комментарий
       </label>
@@ -95,8 +97,8 @@ import siteData from "../data/site.json";
         maxlength={1000}
         placeholder="Объект, этап ремонта, что нужно сделать"
         aria-describedby="contact-comment-error"
-        class="w-full border border-line bg-bg px-3 py-2.5 text-text placeholder:text-text-muted focus:border-accent focus:outline-none motion-safe:transition-colors"
-        style="border-radius: var(--radius-s)"
+        class="w-full border border-0 border-b border-line bg-transparent px-0 py-2.5 text-text placeholder:text-text-muted/70 focus:border-text focus:outline-none motion-safe:transition-colors"
+        style="border-radius: 0"
       ></textarea>
       <p
         id="contact-comment-error"
@@ -108,6 +110,28 @@ import siteData from "../data/site.json";
 
     <div>
       <label
+        for="contact-source"
+        class="mb-1.5 block text-xs font-medium tracking-[0.15em] text-text-muted uppercase"
+      >
+        Как вы нас нашли?
+      </label>
+      <select
+        id="contact-source"
+        name="source"
+        class="w-full border border-0 border-b border-line bg-transparent px-0 py-2.5 text-text focus:border-text focus:outline-none motion-safe:transition-colors"
+        style="border-radius: 0"
+      >
+        <option value="">Не важно / пропустить</option>
+        <option value="Google">Google</option>
+        <option value="Яндекс">Яндекс</option>
+        <option value="Соцсети">Соцсети</option>
+        <option value="Рекомендация">Рекомендация</option>
+        <option value="Другое">Другое</option>
+      </select>
+    </div>
+
+    <div>
+      <label
         for="contact-consent"
         class="flex cursor-pointer items-start gap-2.5 text-sm text-text"
       >
@@ -115,13 +139,13 @@ import siteData from "../data/site.json";
           type="checkbox"
           id="contact-consent"
           name="agree"
-          class="mt-0.5 size-4 shrink-0 accent-accent"
+          class="mt-0.5 size-4 shrink-0"
         />
         <span>
           Я согласен на обработку персональных данных в соответствии с
           <a
             href="/legal/privacy/"
-            class="text-accent underline decoration-dotted underline-offset-4 hover:text-text"
+            class="underline decoration-line underline-offset-4 hover:decoration-text"
           >
             политикой конфиденциальности
           </a>
@@ -138,10 +162,11 @@ import siteData from "../data/site.json";
     <div class="pt-1">
       <button
         type="submit"
-        class="w-full bg-accent px-6 py-3 font-mono text-sm font-medium tracking-[0.1em] text-accent-contrast uppercase focus-visible:outline-2 focus-visible:outline-accent hover:opacity-85 disabled:cursor-wait disabled:opacity-60 motion-safe:transition-opacity"
-        style="border-radius: var(--radius-s)"
+        class="flex w-full items-center justify-between gap-6 bg-accent py-3 pl-6 pr-5 text-sm font-medium uppercase tracking-[0.08em] text-accent-contrast hover:opacity-90 disabled:cursor-wait disabled:opacity-60 focus-visible:outline-2 focus-visible:outline-accent motion-safe:transition-opacity"
+        style="border-radius: var(--radius-btn)"
       >
-        Отправить заявку
+        <span>Отправить заявку</span>
+        <span aria-hidden="true" data-submit-arrow>→</span>
       </button>
       <p id="contact-status" role="status" hidden class="mt-4 text-sm leading-relaxed"></p>
     </div>
@@ -160,7 +185,9 @@ import siteData from "../data/site.json";
     const commentInput = form.querySelector<HTMLTextAreaElement>("#contact-comment")!;
     const consentInput = form.querySelector<HTMLInputElement>("#contact-consent")!;
     const honeypot = form.querySelector<HTMLInputElement>("#contact-website")!;
+    const sourceInput = form.querySelector<HTMLSelectElement>("#contact-source")!;
     const submitButton = form.querySelector<HTMLButtonElement>("button[type=submit]")!;
+    const submitArrow = form.querySelector<HTMLElement>("[data-submit-arrow]")!;
     const statusEl = form.querySelector<HTMLParagraphElement>("#contact-status")!;
 
     // Нормализация телефона РФ: +7 (999) 123-45-67 | +79991234567 | 8 999 123-45-67
@@ -243,9 +270,9 @@ import siteData from "../data/site.json";
       (invalids.length ? invalids : consentError ? [consentInput] : [])[0]?.focus();
       if (invalids.length || consentError) return;
 
-      // idle → sending
+      // idle → sending: стрелка-карман гасит ход (AYOCIN-пилл), состояние видно
       submitButton.disabled = true;
-      submitButton.textContent = "Отправляем…";
+      submitArrow.textContent = "…";
       statusEl.hidden = true;
 
       try {
@@ -256,6 +283,7 @@ import siteData from "../data/site.json";
             name: nameInput.value.trim(),
             phone: phoneInput.value.trim(),
             comment: commentInput.value,
+            source: sourceInput.value,
             agree: consentInput.checked,
             website: honeypot.value,
           }),
@@ -282,7 +310,7 @@ import siteData from "../data/site.json";
         setStatus("Не удалось отправить заявку. Попробуйте ещё раз или позвоните нам:", true);
       } finally {
         submitButton.disabled = false;
-        submitButton.textContent = "Отправить заявку";
+        submitArrow.textContent = "→";
       }
     });
   }

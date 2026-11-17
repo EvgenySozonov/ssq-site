@@ -1,14 +1,23 @@
 @theme {
-  --color-bg: #101014;
-  --color-surface: #17191d;
-  --color-text: #eceae6;
-  --color-text-muted: #9a9a9a;
-  --color-accent: #c9a15a;
-  --color-accent-contrast: #101014;
-  --color-line: #2a2d33;
-  --color-danger: #e5695c; /* ошибки валидации формы: текст/бордер, контраст AA на bg */
-  --radius-s: 2px;
-  --font-display: "Lora", Georgia, serif;
+  /* Рестайл под референс AYOCIN (design.md — AYOCIN Style Reference, цель владельца 2026-11-17).
+     Замены-адаптации помечены: Systemia нет на Google Fonts → Manrope (subst. из референса);
+     muted-текст и danger — вывод, у референса их нет. */
+  --color-bg: #fcf6ec; /* Porcelain Cream */
+  --color-surface: #f4e8d7; /* Ivory Sand: вторичная поверхность/карточки */
+  --color-text: #2e2521; /* Espresso Ink */
+  --color-text-muted: #8d7f72; /* адаптация: тёплый muted (у референса muted-текста нет) */
+  --color-accent: #2e2521; /* конверсионный пилл = Espresso; акцентный текст на крем-базе */
+  --color-accent-contrast: #fcf6ec;
+  --color-line: #d3ccc3; /* Parchment Border: hairline-разделители */
+  --color-stone: #cec1b2; /* Stone Haze: hero-бэкдроп / мягкие поля */
+  --color-wash-day: #fdf0c7; /* Daylight Wash: широкая тёплая секция-банд */
+  --color-wash-peach: #fdc6b3; /* Peach Wash: альтернирующая тёплая секция */
+  --color-espresso-surface: #2c2722; /* Espresso Content Card (тёмная карточка) */
+  --color-danger: #9c3324; /* адаптация: функциональный цвет ошибок формы (AA на крем) */
+  --radius-s: 10px; /* карточки */
+  --radius-btn: 20px; /* конверсионные кнопки */
+  --radius-pill: 9999px; /* компактные пиллы/теги (не для карточек) */
+  --font-display: "Manrope", system-ui, sans-serif; /* substitute for Systemia (референс) */
   --font-sans: "Manrope", system-ui, sans-serif;
-  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+  --font-mono: "Azeret Mono", ui-monospace, monospace; /* только крупные числовые выноски */
 }

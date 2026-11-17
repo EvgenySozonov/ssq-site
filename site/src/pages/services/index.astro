@@ -1,0 +1,69 @@
+---
+/**
+ * Обзор направлений услуг: карточки из lines.json (единый источник маршрутов).
+ * Добавление третьего направления — правка lines.json, ноль правок кода.
+ * Рестайл AYOCIN (2026-11-17): Ivory Sand банд, карточки 10px без теней.
+ */
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { getLines } from "../../lib/lines";
+
+const lines = getLines();
+
+/* Фото направлений — CC0 StockSnap; источники: docs/references/landing-images-sources.md */
+const lineImages: Record<string, { src: string; alt: string }> = {
+  elektromontazh: {
+    src: "/images/direction-electromontazh.jpg",
+    alt: "Электромонтажник устанавливает выключатель на белой стене",
+  },
+  "umniy-dom": {
+    src: "/images/direction-umniy-dom.jpg",
+    alt: "Тёплый вечерний свет в столовой загородного дома",
+  },
+};
+---
+
+<BaseLayout
+  title="Услуги"
+  description="Направления услуг «Умного квадрата»: электромонтаж и умный дом под ключ — разводка, щит, свет, сценарии, климат. Москва и область."
+>
+  <section class="mx-auto max-w-5xl px-5 py-12 sm:py-16">
+    <header class="mb-10 max-w-2xl">
+      <p class="mb-2 text-xs font-medium uppercase tracking-[0.2em] text-text-muted">
+        01 // услуги
+      </p>
+      <h1 class="mb-3 text-4xl font-medium">Направления услуг</h1>
+      <p class="text-text-muted">
+        Электромонтаж и умный дом — как одно целое: щит, свет, климат, безопасность и сценарии
+        проектируются вместе. Выберите направление — внутри навигатор услуг и цены-ориентиры.
+      </p>
+    </header>
+    <div class="grid gap-5 sm:grid-cols-2">
+      {
+        lines.map((line) => (
+          <a
+            href={`/services/${line.slug}/`}
+            class="block overflow-hidden border border-line bg-bg text-text no-underline hover:border-accent motion-safe:transition-colors"
+            style="border-radius: var(--radius-s)"
+          >
+            {
+              lineImages[line.slug] && (
+                <img
+                  src={lineImages[line.slug].src}
+                  alt={lineImages[line.slug].alt}
+                  class="aspect-[4/3] w-full object-cover"
+                  width="960"
+                  height="720"
+                  loading="lazy"
+                />
+              )
+            }
+            <div class="p-8">
+              <h2 class="mb-2 text-2xl font-medium">{line.title}</h2>
+              <p class="text-text-muted">{line.tagline}</p>
+            </div>
+          </a>
+        ))
+      }
+    </div>
+  </section>
+</BaseLayout>
