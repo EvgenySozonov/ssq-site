@@ -91,39 +91,6 @@ const steps = [
     </div>
   </section>
 
-  <!-- Сигнатура: рулированная смета. Offer первой секцией после hero (draw 0f0a46) -->
-  <section class="shell mt-32" aria-labelledby="pricing">
-    <div class="mb-12 max-w-[640px]">
-      <h2 id="pricing">Ориентиры по ценам</h2>
-      <p class="lead mt-4">Смета фиксируется до старта и не меняется без вашего решения.</p>
-    </div>
-    <div class="grid gap-8 lg:grid-cols-2">
-      {lines.map((line) => (
-        <div class="well p-7 sm:p-8">
-          <h3 class="text-base font-medium [font-family:var(--font-sans)]">{line.title}</h3>
-          <div class="mt-4">
-            {line.services.map((service) => (
-              <div class="price-row">
-                <span class="small-print">{service.title}</span>
-                <b>{priceLabel(service.priceFrom)}</b>
-                <span class="small-print col-span-full opacity-80">{service.summary}</span>
-              </div>
-            ))}
-          </div>
-          <a href={`/services/${line.slug}/`} class="btn btn-secondary no-underline mt-6">
-            Все услуги направления
-          </a>
-        </div>
-      ))}
-    </div>
-    <div class="mt-10 flex flex-col items-start gap-4 sm:flex-row sm:items-center sm:gap-8">
-      <a href="/contacts/" class="btn btn-primary">
-        Заказать бесплатный замер
-      </a>
-      <p class="small-print">Выезд и замер бесплатны.</p>
-    </div>
-  </section>
-
   <!-- Split: подход, фото справа -->
   <section class="shell mt-36" aria-labelledby="approach">
     <div class="grid items-center gap-10 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)]">
@@ -180,6 +147,39 @@ const steps = [
         </li>
       ))}
     </ol>
+  </section>
+
+  <!-- Сигнатура: рулированная смета. Offer первой секцией после hero (draw 0f0a46) -->
+  <section class="shell mt-32" aria-labelledby="pricing">
+    <div class="mb-12 max-w-[640px]">
+      <h2 id="pricing">Ориентиры по ценам</h2>
+      <p class="lead mt-4">Смета фиксируется до старта и не меняется без вашего решения.</p>
+    </div>
+    <div class="grid gap-8 lg:grid-cols-2">
+      {lines.map((line) => (
+        <div class="well p-7 sm:p-8">
+          <h3 class="text-base font-medium [font-family:var(--font-sans)]">{line.title}</h3>
+          <div class="mt-4">
+            {line.services.map((service) => (
+              <div class="price-row">
+                <span class="small-print">{service.title}</span>
+                <b>{priceLabel(service.priceFrom)}</b>
+                <span class="small-print col-span-full opacity-80">{service.summary}</span>
+              </div>
+            ))}
+          </div>
+          <a href={`/services/${line.slug}/`} class="btn btn-secondary no-underline mt-6">
+            Все услуги направления
+          </a>
+        </div>
+      ))}
+    </div>
+    <div class="mt-10 flex flex-col items-start gap-4 sm:flex-row sm:items-center sm:gap-8">
+      <a href="/contacts/" class="btn btn-primary">
+        Заказать бесплатный замер
+      </a>
+      <p class="small-print">Выезд и замер бесплатны.</p>
+    </div>
   </section>
 
   <!-- Закрытие: заявка рядом с последним фото (split зеркальный) -->
