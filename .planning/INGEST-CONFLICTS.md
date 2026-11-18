@@ -12,7 +12,7 @@
   Found: docs/architecture.md описывает `lines.json` как `{ slug, title, tagline, accentColor }` (стр. 61)
   Found: docs/specs/ssq-site-stack-design.md (§4.1, confidence high) — `{ slug, title, tagline, order }` + zod-схема (slug kebab-case, уникален)
   Found: docs/plans/ssq-site-implementation-plan.md (Task 2) определяет `Line { slug, title, tagline, order }` — совпадает со спецификацией
-  Impact: Оба источника одного приоритета (SPEC, precedence не задан); авто-вывод нарушил бы правило приоритета без основания между однотипными спецификациями. Обе версии сохранены в `intel/constraints.md` (SCH-lines с пометкой ВАРИАНТ).
+  Impact: Оба источника одного приоритета (SPEC, precedence не задан); авто-вывод нарушил бы правило приоритета без основания между однотипными спецификациями. Обе версии сохранены в [intel/constraints.md](intel/constraints.md) (SCH-lines с пометкой ВАРИАНТ).
   → Подтвердить владельцем контракту спецификации §4.1 (`order`, без accentColor); затем править architecture.md (по правилу докс = источник правды) и снять WARNING.
 
 [WARNING] Дрейф докс ↔ код: React-острова

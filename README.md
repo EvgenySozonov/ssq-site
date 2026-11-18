@@ -54,21 +54,12 @@
 
 ## Workflow (GSD Core)
 
-Работа ведётся по фазам из [.planning/ROADMAP.md](.planning/ROADMAP.md) (4 фазы v1.0 + 3 фазы v1.1+):
+Работа ведётся по фазам из `.planning/ROADMAP.md` (4 фазы v1.0 + 3 фазы v1.1+):
 
 1. `/gsd-plan-phase 1` — план фазы (`PLAN.md` в `.planning/phases/…`).
 2. `/gsd-execute-phase 1` — исполнение (атомарные коммиты, гейты).
 3. `/gsd-verify-work` / `/gsd-ship` — приёмка и выкат.
 - Ситуативный вход: `/gsd-next` (определяет состояние и маршрут) и `/gsd-manager` (командный центр).
-
-**Прослеживаемость решений.** Через discuss→plan идут не только фазы — визуал и референсы тоже:
-
-| Решение | Где решено и обосновано |
-|---|---|
-| Тема оформления (AYOCIN → Solstice, AA-адаптация токенов) | [memory.md](docs/memory.md) (2026-11-17); канон темы — [design.md](docs/design.md) |
-| Перенос приёмов из референс-досье GWI (8 приёмов) | [globalwaveintegration-reference.md](docs/references/globalwaveintegration-reference.md) |
-| Каркас направлений `lines.json` + zod-схемы | [01-CONTEXT.md](.planning/phases/01-dannye-i-karkas-uslug/01-CONTEXT.md) → [01-PLAN.md](.planning/phases/01-dannye-i-karkas-uslug/01-01-PLAN.md) |
-| Контракт формы/CGI | скилл [ssq-form-cgi](.claude/skills/ssq-form-cgi/SKILL.md); решения — в 01-CONTEXT.md |
 
 ## Запуск для проверки
 
