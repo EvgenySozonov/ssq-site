@@ -1,6 +1,6 @@
 # Decisions (extracted from ADRs)
 
-Source doc: all from `/Users/mac/Documents/_Projects/SSQ-site/docs/memory.md` (тип ADR, confidence medium, **locked=false** — ни одна запись не имеет Status=Accepted; классификатор: мульти-решенческий лог без полей Status/Context/Decision/Consequences). Записи ниже сохранены по отдельности; синтез выбора — задача роадмаппера, не этого шага.
+Source doc: all from [docs/memory.md](../../docs/memory.md) (тип ADR, confidence medium, **locked=false** — ни одна запись не имеет Status=Accepted; классификатор: мульти-решенческий лог без полей Status/Context/Decision/Consequences). Записи ниже сохранены по отдельности; синтез выбора — задача роадмаппера, не этого шага.
 
 ## 2026-10-15: Старт с одностраничной визиткой на чистом HTML/CSS/JS
 - source: docs/memory.md

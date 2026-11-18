@@ -10,9 +10,9 @@ Manage the background server with `astro dev stop`, `astro dev status`, and `ast
 
 ## Project rules for agents
 
-Repo-level rules and boundaries for AI agents live in `../CLAUDE.md` (work contract,
-gates, secrets policy) and `../docs/about.md` (AI-stack: skills, path-scoped rules,
-hooks, path-scoped rules). `../docs/qa.md` — acceptance checklists. Read them before changing code.
+Repo-level rules and boundaries for AI agents live in [../CLAUDE.md](../CLAUDE.md) (work contract,
+gates, secrets policy) and [../README.md](../README.md) (AI-stack: skills, path-scoped rules,
+hooks, path-scoped rules). [../docs/qa.md](../docs/qa.md) — acceptance checklists. Read them before changing code.
 
 ## Documentation
 

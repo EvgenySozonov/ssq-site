@@ -1,6 +1,6 @@
 # Requirements (extracted from PRDs)
 
-Source doc: `/Users/mac/Documents/_Projects/SSQ-site/docs/product.md` (тип PRD, confidence high, locked=false). Единственный PRD в наборе — конкурирующих вариантов не обнаружено. Один PRD дал несколько требований.
+Source doc: [docs/product.md](../../docs/product.md) (тип PRD, confidence high, locked=false). Единственный PRD в наборе — конкурирующих вариантов не обнаружено. Один PRD дал несколько требований.
 
 ## REQ-multipage-site
 - source: docs/product.md

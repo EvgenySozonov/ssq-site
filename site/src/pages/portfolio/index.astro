@@ -45,31 +45,29 @@ const caseCards: CaseCard[] = [
 
 <BaseLayout
   title="Работы"
-  description="Объекты «Умного квадрата»: электромонтаж и умный дом под ключ. Страница готовится — реальные фото и кейсы скоро."
+  description="Объекты «Умного квадрата»: электромонтаж и умный дом под ключ. Страница готовится: реальные фото и кейсы скоро."
   noindex
 >
-  <section class="mx-auto max-w-5xl px-5 py-12 sm:py-16">
+  <section class="shell mt-6 sm:mt-10">
     <header class="mb-10 max-w-2xl">
-      <p class="mb-2 text-xs font-medium uppercase tracking-[0.2em] text-accent">04 // работы</p>
-      <h1 class="mb-3 font-display text-3xl text-text sm:text-4xl">Наши работы</h1>
-      <p class="text-text-muted">
-        Каркас раздела. Кейсы публикуются с реальными фото объектов и протоколами тестов — до того
+      <h1>Наши работы</h1>
+      <p class="lead mt-5">
+        Каркас раздела. Кейсы публикуются с реальными фото объектов и протоколами тестов. До того
         раздел остаётся вне навигации.
       </p>
     </header>
-    <div class="grid gap-5 sm:grid-cols-2">
+    <div class="flex flex-col">
       {
         caseCards.map((card) => (
-          <article
-            class="border border-line bg-bg p-6"
-            style="border-radius: var(--radius-s)"
-          >
-            <p class="mb-2 text-xs font-medium tracking-[0.15em] text-text-muted uppercase">
-              {card.line}
-            </p>
-            <h2 class="mb-2 font-display text-xl">{card.title}</h2>
-            <p class="mb-2 text-sm text-text-muted">{card.problem}</p>
-            <p class="text-sm text-accent">→ {card.result}</p>
+          <article class="grid gap-1 border-t-2 border-text py-6 sm:grid-cols-[minmax(0,2fr)_minmax(0,3fr)]">
+            <div>
+              <h2 class="text-2xl">{card.title}</h2>
+              <p class="small-print mt-1">{card.line}</p>
+            </div>
+            <div>
+              <p class="text-text-muted">{card.problem}</p>
+              <p class="mt-2 text-sm font-medium text-accent">{card.result}</p>
+            </div>
           </article>
         ))
       }

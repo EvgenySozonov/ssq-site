@@ -26,15 +26,12 @@ const lineImages: Record<string, { src: string; alt: string }> = {
   title="Услуги"
   description="Направления услуг «Умного квадрата»: электромонтаж и умный дом под ключ — разводка, щит, свет, сценарии, климат. Москва и область."
 >
-  <section class="mx-auto max-w-5xl px-5 py-12 sm:py-16">
+  <section class="shell mt-6 sm:mt-10">
     <header class="mb-10 max-w-2xl">
-      <p class="mb-2 text-xs font-medium uppercase tracking-[0.2em] text-text-muted">
-        01 // услуги
-      </p>
-      <h1 class="mb-3 text-4xl font-medium">Направления услуг</h1>
-      <p class="text-text-muted">
-        Электромонтаж и умный дом — как одно целое: щит, свет, климат, безопасность и сценарии
-        проектируются вместе. Выберите направление — внутри навигатор услуг и цены-ориентиры.
+      <h1>Направления услуг</h1>
+      <p class="lead mt-5">
+        Электромонтаж и умный дом проектируются как одно целое: щит, свет, климат, безопасность и сценарии
+        проектируются вместе. Внутри каждого направления есть навигатор услуг и цены-ориентиры.
       </p>
     </header>
     <div class="grid gap-5 sm:grid-cols-2">
@@ -42,24 +39,26 @@ const lineImages: Record<string, { src: string; alt: string }> = {
         lines.map((line) => (
           <a
             href={`/services/${line.slug}/`}
-            class="block overflow-hidden border border-line bg-bg text-text no-underline hover:border-accent motion-safe:transition-colors"
+            class="group block border-2 border-text bg-surface shadow-[10px_10px_0_var(--color-well)] text-text no-underline hover:-translate-y-1 motion-safe:transition-transform"
             style="border-radius: var(--radius-s)"
           >
             {
               lineImages[line.slug] && (
-                <img
-                  src={lineImages[line.slug].src}
-                  alt={lineImages[line.slug].alt}
-                  class="aspect-[4/3] w-full object-cover"
-                  width="960"
-                  height="720"
-                  loading="lazy"
-                />
+                <div class="photo-frame">
+                  <img
+                    src={lineImages[line.slug].src}
+                    alt={lineImages[line.slug].alt}
+                    class="aspect-[4/3] w-full object-cover"
+                    width="960"
+                    height="720"
+                    loading="lazy"
+                  />
+                </div>
               )
             }
             <div class="p-8">
-              <h2 class="mb-2 text-2xl font-medium">{line.title}</h2>
-              <p class="text-text-muted">{line.tagline}</p>
+              <h2 class="mb-2 text-2xl group-hover:text-accent motion-safe:transition-colors">{line.title}</h2>
+              <p class="text-text-muted">{line.tagline}</p> <span class="small-print mt-3 block">Услуги и цены</span>
             </div>
           </a>
         ))

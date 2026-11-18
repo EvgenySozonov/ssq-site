@@ -1,11 +1,218 @@
+/* Hallmark · shape: Photographic (draw 0f0a46) · genre: editorial · theme: Solstice (by request) · redesign: full
+ * hero: Ledge · nav: floating pill · footer: colophon block · imagery: photographs, свои 4 (CC0) · signature: рулированная смета (Yeseva-числа на золотых пунктирах)
+ * axes: light/high-contrast-serif/warm · posture: restrained · solstice: long-light · draw: 0f0a46 · contrast: pass · fold: pass · v2.0.0 */
+/* Hallmark · pre-emit critique: P4 H4 E4 S4 R4 V4 · weakest: S, сигнатура «рулированная смета» вынесена в Offer первой секцией; R, срезаны wash-банды AYOCIN */
+/* Hallmark · dismissed 49 · primary-knопки носят .btn и его white-space: nowrap в глобальном стиле */
+/* Hallmark · hero-review: fix, 5 findings, 5 resolved: warm-тритмент фото, full-bleed hero, цена и гарантия в первом экране */
+/* Hallmark · finish-review: subagent, 3 findings, 3 resolved: тёплый тритмент на карточках услуг, FAQ-фраза пересобрана, цена на линии заголовка секций направления */
 @import "tailwindcss";
 @import "./tokens.css";
-@import "https://fonts.googleapis.com/css2?family=Manrope:wght@400;500&family=Azeret+Mono:wght@500&display=swap";
+@import "https://fonts.googleapis.com/css2?family=Yeseva+One&family=Archivo:wght@400;500&family=Archivo+Narrow:wght@600&display=swap";
 
+/* Solstice base: квадратные поверхности, золотые линейки, жёсткая бумажная тень */
+:root {
+  --container: 1440px;
+  --gutter: clamp(16px, 4vw, 64px);
+  --rule-hair: 1px;
+  --rule-bar: 2px;
+  --shadow-card: 10px 10px 0 var(--color-well);
+  --color-accent-ink: var(--color-accent-contrast);
+}
+
+html,
 body {
-  background: var(--color-bg);
+  overflow-x: clip;
+}
+
+html {
+  scrollbar-color: var(--color-text-muted) var(--color-bg);
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-display);
+  font-weight: 400;
+  letter-spacing: -0.005em;
+  line-height: 1.02;
+  text-wrap: balance;
+  overflow-wrap: break-word;
+  min-width: 0;
+}
+
+h1 {
+  font-size: clamp(2.5rem, 4.4vw + 0.9rem, 5rem);
+  max-width: 20ch;
+}
+
+h2 {
+  font-size: clamp(2rem, 2.5vw + 1rem, 3.5rem);
+  max-width: 24ch;
+}
+
+h3 {
+  font-size: 1.5625rem;
+  max-width: 40ch;
+}
+
+.lead {
+  font-size: 1.25rem;
+  line-height: 1.45;
+  max-width: 56ch;
+}
+
+.shell {
+  width: 100%;
+  max-width: var(--container);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+.small-print {
+  font: 600 13px/1.4 var(--font-narrow);
+  color: var(--color-text-muted);
+}
+
+/* Кнопки: вермильон-пилл и чернильное подчёркивание */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 48px;
+  padding: 12px 32px;
+  white-space: nowrap;
+  border: 0;
+  font: 600 15px/1 var(--font-narrow);
+  border-radius: var(--radius-pill);
+  transition:
+    background-color var(--dur-micro, 120ms) ease-out,
+    transform var(--dur-micro, 120ms) ease-out;
+}
+
+.btn:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.btn:active {
+  transform: translateY(1px);
+}
+
+.btn-primary {
+  background: var(--color-accent);
+  color: var(--color-accent-contrast);
+}
+
+.btn-primary:hover {
+  background: color-mix(in oklab, var(--color-accent) 88%, var(--color-text));
+}
+
+.btn-secondary {
+  background: none;
   color: var(--color-text);
-  font-family: var(--font-sans);
+  padding: 12px 2px;
+  border-radius: 0;
+  border-bottom: var(--rule-bar) solid var(--color-text);
+}
+
+.btn-secondary:hover {
+  color: var(--color-accent);
+  border-bottom-color: var(--color-accent);
+}
+
+/* Well: квадрат, чернильная рамка 2px, золотая hairline с отступом, жёсткая тень */
+.well {
+  background: var(--color-surface);
+  border: var(--rule-bar) solid var(--color-text);
+  outline: var(--rule-hair) solid var(--color-gold);
+  outline-offset: -7px;
+  box-shadow: var(--shadow-card);
+}
+
+/* Рулированная строка сметы: мелочёвка слева, Yeseva-цифра справа, золотой пунктир */
+.price-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: baseline;
+  gap: 8px 16px;
+  padding-block: 12px;
+  border-bottom: 1px dotted var(--color-gold);
+}
+
+.price-row:last-child {
+  border-bottom: 0;
+}
+
+.price-row b {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: 1.375rem;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+/* Поля формы: квадрат, бумага-2, 1px чернильная рамка, вермильон-фокус inset */
+.field {
+  width: 100%;
+  padding: 12px 16px;
+  background: var(--color-surface);
+  border: 1px solid var(--color-text);
+  border-radius: 0;
+  color: var(--color-text);
+  transition: border-color var(--dur-micro, 120ms) ease-out;
+}
+
+.field:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.field:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: -1px;
+}
+
+.field[aria-invalid="true"] {
+  border-color: var(--color-danger);
+  outline: none;
+}
+
+.field[aria-invalid="true"]:focus-visible {
+  outline-color: var(--color-danger);
+}
+
+.field::placeholder {
+  color: color-mix(in oklab, var(--color-text-muted) 75%, var(--color-surface));
+}
+
+/* Фото: волосяная чернильная рамка 10% (Solstice, без тени) */
+.photo-frame img {
+  outline: 1px solid color-mix(in oklab, var(--color-text) 10%, transparent);
+  outline-offset: -1px;
+  filter: sepia(0.28) saturate(0.94) brightness(0.96);
+}
+
+a {
+  text-underline-offset: 0.16em;
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+a:hover {
+  text-decoration-color: var(--color-accent);
+}
+
+::selection {
+  background: color-mix(in oklab, var(--color-gold) 40%, transparent);
+}
+
+@media (max-width: 40rem) {
+  .price-row b {
+    font-size: 1.125rem;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {

@@ -31,7 +31,10 @@ export type Service = z.infer<typeof serviceSchema>;
 
 const LINE_SLUGS = ["elektromontazh", "umniy-dom"] as const;
 
-const lineModules = import.meta.glob("../data/services/*.json", { eager: true });
+const lineModules = import.meta.glob("../data/services/*.json", { eager: true }) as Record<
+  string,
+  { default: unknown }
+>;
 
 /** Направления из lines.json, отсортированные по order. */
 export const getLines = (): Line[] => {
