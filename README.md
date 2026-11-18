@@ -28,9 +28,9 @@
 
 ## Как агент работает в проекте
 
-Состав (правила и границы — `CLAUDE.md`, главный источник; доказательства работы среды — отчёт приёмки [2026-10-18](docs/reports/2026-10-18-отчет-приемки-в-репо.md)):
+Состав (правила и границы — [CLAUDE.md](CLAUDE.md), главный источник; доказательства работы среды — отчёт приёмки [2026-10-18](docs/reports/2026-10-18-отчет-приемки-в-репо.md)):
 
-- **Правила и границы** — `CLAUDE.md` (главный источник): границы («не удалить/не править вне проекта/не коммитить без спроса»), формат ответа, правило деплоя. Разрешительная политика — `.claude/settings.json` (allow: гейты+коммит; ask: push; deny: `.env` и разрушающие операции).
+- **Правила и границы** — [CLAUDE.md](CLAUDE.md) (главный источник): границы («не удалить/не править вне проекта/не коммитить без спроса»), формат ответа, правило деплоя. Разрешительная политика — [.claude/settings.json](.claude/settings.json) (allow: гейты+коммит; ask: push; deny: `.env` и разрушающие операции).
 - **Path-scoped rules** — `.claude/rules/*.md`, зоны через frontmatter `paths:`; при обращении к файлу зоны правило инжектится в контекст (system hook):
 
 | Правило | Зона (`paths:`) | Что enforced |
@@ -40,7 +40,7 @@
 | `style-tokens.md` | `site/src/styles/**` | design-значения только из tokens.css, reduced-motion |
 | `form-cgi.md` | `site/public/cgi-bin/**`, `site/src/pages/contacts*` | контракт ssq-form-cgi, чек-лист qa.md после правок |
 | `deploy-secrets.md` | `deploy.sh`, `.env*`, `site/public/**` | `.env` вне git, секреты вне docroot |
-| `docs-truth.md` | `docs/**`, `CLAUDE.md` | синхронность докса и кода, лог решений в memory.md |
+| `docs-truth.md` | `docs/**`, [CLAUDE.md](CLAUDE.md) | синхронность докса и кода, лог решений в memory.md |
 
 - **Скиллы** — `.claude/skills/`; один-лайнеры:
   - `ssq-astro-conventions` — каркас: маршруты из `lines.json`, ноль JS вне островов, данные в `site/src/data/`.
@@ -54,12 +54,21 @@
 
 ## Workflow (GSD Core)
 
-Работа ведётся по фазам из `.planning/ROADMAP.md` (4 фазы v1.0 + 3 фазы v1.1+):
+Работа ведётся по фазам из [.planning/ROADMAP.md](.planning/ROADMAP.md) (4 фазы v1.0 + 3 фазы v1.1+):
 
 1. `/gsd-plan-phase 1` — план фазы (`PLAN.md` в `.planning/phases/…`).
 2. `/gsd-execute-phase 1` — исполнение (атомарные коммиты, гейты).
 3. `/gsd-verify-work` / `/gsd-ship` — приёмка и выкат.
 - Ситуативный вход: `/gsd-next` (определяет состояние и маршрут) и `/gsd-manager` (командный центр).
+
+**Прослеживаемость решений.** Через discuss→plan идут не только фазы — визуал и референсы тоже:
+
+| Решение | Где решено и обосновано |
+|---|---|
+| Тема оформления (AYOCIN → Solstice, AA-адаптация токенов) | [memory.md](docs/memory.md) (2026-11-17); канон темы — [design.md](docs/design.md) |
+| Перенос приёмов из референс-досье GWI (8 приёмов) | [globalwaveintegration-reference.md](docs/references/globalwaveintegration-reference.md) |
+| Каркас направлений `lines.json` + zod-схемы | [01-CONTEXT.md](.planning/phases/01-dannye-i-karkas-uslug/01-CONTEXT.md) → [01-01-PLAN.md](.planning/phases/01-dannye-i-karkas-uslug/01-01-PLAN.md) |
+| Контракт формы/CGI | скилл [ssq-form-cgi](.claude/skills/ssq-form-cgi/SKILL.md); решения — в 01-CONTEXT.md |
 
 ## Запуск для проверки
 
